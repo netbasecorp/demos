@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Printcart Studio — Photobooks, canvas prints, and photo gifts</title>
+<style>
+  /* =========================================================
+     Printcart Studio — Photobook Storefront (Editorial v2)
+     Tokens: Printcart Stores v2.5 (preserved)
+     Extended: 2 warm accents for photobook emotional tone
+     ========================================================= */
+  :root {
+    --nbd-mb-primary: #2563eb;
+    --nbd-mb-primary-pressed: #1d4ed8;
+    --nbd-mb-primary-soft: #dbeafe;
+    --nbd-mb-text: #1f2937;
+    --nbd-mb-text-soft: #6b7280;
+    --nbd-mb-bg: #ffffff;
+    --nbd-mb-bg-soft: #f9fafb;
+    --nbd-mb-border: #e5e7eb;
+    --nbd-mb-border-strong: #d1d5db;
+    --nbd-mb-border-subtle: #f3f4f6;
+    --nbd-color-success: #10b981;
+
+    --nbd-space-1: 4px;
+    --nbd-space-2: 8px;
+    --nbd-space-3: 12px;
+    --nbd-space-4: 16px;
+    --nbd-space-6: 24px;
+    --nbd-space-8: 32px;
+    --nbd-space-12: 48px;
+    --nbd-space-16: 64px;
+    --nbd-space-20: 80px;
+    --nbd-space-24: 96px;
+
+    --nbd-radius-sm: 4px;
+    --nbd-radius-md: 6px;
+    --nbd-radius-lg: 8px;
+    --nbd-radius-xl: 12px;
+    --nbd-radius-2xl: 16px;
+    --nbd-radius-3xl: 24px;
+    --nbd-radius-full: 9999px;
+
+    --nbd-shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+    --nbd-shadow-md: 0 2px 4px 0 rgba(0,0,0,0.08);
+    --nbd-shadow-lg: 0 4px 12px 0 rgba(0,0,0,0.08);
+    --nbd-shadow-xl: 0 8px 24px 0 rgba(0,0,0,0.16);
+    --nbd-shadow-2xl: 0 24px 60px 0 rgba(0,0,0,0.18);
+
+    --nbd-duration-fast: 120ms;
+    --nbd-duration-normal: 220ms;
+    --nbd-duration-slow: 400ms;
+    --nbd-ease-out: ease-out;
+
+    --nbd-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                       "Helvetica Neue", Arial, sans-serif;
+    --nbd-font-display: Georgia, "Times New Roman", "Iowan Old Style", serif;
+
+    --nbd-topbar-h: 68px;
+    --nbd-cta-h: 44px;
+
+    /* === EXTENDED ACCENTS === */
+    --pc-coral:       #E97862;
+    --pc-coral-soft:  #FDEDE7;
+    --pc-cream:       #FAF6EE;
+    --pc-cream-warm:  #F4EDDF;
+    --pc-ink-warm:    #2A2520;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--nbd-font-family);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--nbd-mb-text);
+    background: var(--nbd-mb-bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  button { font-family: inherit; cursor: pointer; border: 0; background: none; padding: 0; color: inherit; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0ms !important;
+      transition-duration: 0ms !important;
+    }
+  }
+
+  .container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 var(--nbd-space-6);
+  }
+  @media (max-width: 767px) { .container { padding: 0 var(--nbd-space-4); } }
+
+  /* ===== UTIL BAR ===== */
+  .util-bar {
+    background: var(--nbd-mb-text);
+    color: var(--nbd-mb-bg);
+    font-size: 12px;
+    padding: 7px var(--nbd-space-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .util-bar .right { display: flex; gap: var(--nbd-space-4); }
+  .util-bar a { opacity: 0.8; transition: opacity var(--nbd-duration-fast); }
+  .util-bar a:hover { opacity: 1; }
+  .util-bar .dot {
+    width: 6px; height: 6px;
+    background: var(--nbd-color-success);
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: var(--nbd-space-1);
+  }
+  @media (max-width: 767px) { .util-bar .hide-mobile { display: none; } }
+
+  /* ===== TOPBAR ===== */
+  .topbar {
+    height: var(--nbd-topbar-h);
+    background: var(--nbd-mb-bg);
+    border-bottom: 1px solid var(--nbd-mb-border-subtle);
+    padding: 0 var(--nbd-space-6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nbd-space-4);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .brand { display: inline-flex; align-items: center; gap: var(--nbd-space-3); }
+  .brand-logo {
+    width: 40px; height: 40px;
+    background: var(--nbd-mb-primary);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    border-radius: var(--nbd-radius-lg);
+    font-size: 20px;
+    font-weight: 700;
+    box-shadow: var(--nbd-shadow-md);
+  }
+  .brand-name {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+  .brand-name small {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--nbd-mb-text-soft);
+    margin-top: 1px;
+  }
+  .topbar-nav { display: flex; gap: var(--nbd-space-1); }
+  .nav-link {
+    height: 36px;
+    padding: 0 var(--nbd-space-3);
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--nbd-radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background var(--nbd-duration-fast);
+  }
+  .nav-link:hover { background: rgba(0,0,0,0.04); }
+  @media (max-width: 900px) { .topbar-nav { display: none; } }
+  .topbar-actions { display: flex; align-items: center; gap: var(--nbd-space-1); }
+  .icon-btn {
+    width: 40px; height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--nbd-radius-md);
+    transition: background var(--nbd-duration-fast);
+  }
+  .icon-btn:hover { background: rgba(0,0,0,0.04); }
+  .icon-btn svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 1.6; fill: none; }
+  .login-btn {
+    height: 38px;
+    padding: 0 var(--nbd-space-4);
+    background: var(--nbd-mb-bg);
+    border: 1px solid var(--nbd-mb-border-strong);
+    border-radius: var(--nbd-radius-lg);
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: var(--nbd-space-2);
+    transition: all var(--nbd-duration-fast);
+  }
+  .login-btn:hover { background: var(--nbd-mb-bg-soft); border-color: var(--nbd-mb-text); }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    height: var(--nbd-cta-h);
+    padding: 0 var(--nbd-space-6);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--nbd-space-2);
+    border-radius: var(--nbd-radius-lg);
+    font-size: 14px;
+    font-weight: 600;
+    transition: all var(--nbd-duration-fast);
+    letter-spacing: 0.01em;
+  }
+  .btn svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; }
+  .btn-primary { background: var(--nbd-mb-text); color: #fff; }
+  .btn-primary:hover { background: #000; transform: translateY(-1px); }
+  .btn-accent { background: var(--pc-coral); color: #fff; }
+  .btn-accent:hover { background: #d35e48; transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--nbd-mb-text);
+    border: 1px solid var(--nbd-mb-border-strong);
+  }
+  .btn-secondary:hover { border-color: var(--nbd-mb-text); background: var(--nbd-mb-bg-soft); }
+  .btn-ghost-on-dark {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.35);
+  }
+  .btn-ghost-on-dark:hover { background: rgba(255,255,255,0.08); border-color: #fff; }
+  .btn-lg { height: 52px; padding: 0 var(--nbd-space-8); font-size: 15px; }
+
+  /* ===== EDITORIAL TYPE ===== */
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--nbd-mb-text-soft);
+    margin-bottom: var(--nbd-space-3);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nbd-space-2);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 24px;
+    height: 1px;
+    background: currentColor;
+  }
+  .section-title {
+    font-family: var(--nbd-font-display);
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--nbd-mb-text);
+    margin: 0 0 var(--nbd-space-4);
+  }
+  .section-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--pc-coral);
+  }
+  .section-sub {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--nbd-mb-text-soft);
+    margin: 0;
+    max-width: 600px;
+  }
+
+  /* ===== SECTION SHELLS ===== */
+  .section { padding: var(--nbd-space-24) 0; }
+  .section--soft { background: var(--nbd-mb-bg-soft); }
+  .section--paper {
+    background: var(--pc-cream);
+    color: var(--pc-ink-warm);
+  }
+  .section--paper .section-title { color: var(--pc-ink-warm); }
+  .section--paper .section-sub { color: rgba(42,37,32,0.7); }
+  @media (max-width: 767px) { .section { padding: var(--nbd-space-16) 0; } }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--nbd-space-8);
+    align-items: end;
+    margin-bottom: var(--nbd-space-16);
+  }
+  @media (max-width: 767px) {
+    .section-head { grid-template-columns: 1fr; gap: var(--nbd-space-4); margin-bottom: var(--nbd-space-8); }
+  }
+  .section-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--nbd-mb-text);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nbd-space-2);
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--nbd-mb-text);
+    transition: gap var(--nbd-duration-fast);
+  }
+  .section-link:hover { gap: var(--nbd-space-3); }
+  .section-link svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    min-height: 720px;
+    overflow: hidden;
+    background: var(--pc-cream);
+  }
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(233,120,98,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 20% 80%, rgba(37,99,235,0.15) 0%, transparent 60%),
+      linear-gradient(135deg, #F4EDDF 0%, #EDE3CF 60%, #DCC9A8 100%);
+  }
+  .hero-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 12% 25%, rgba(0,0,0,0.04) 0.5px, transparent 1px);
+    background-size: 4px 4px;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .hero-book {
+    position: absolute;
+    right: 8%;
+    top: 50%;
+    transform: translateY(-50%) rotate(-6deg);
+    width: 340px;
+    aspect-ratio: 8/11;
+    background: linear-gradient(135deg, #2A3E70 0%, #1A2548 100%);
+    border-radius: 4px 8px 8px 4px;
+    box-shadow: var(--nbd-shadow-2xl);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--nbd-space-8) var(--nbd-space-6);
+  }
+  .hero-book::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 14px;
+    width: 1px;
+    height: 100%;
+    background: rgba(255,255,255,0.15);
+  }
+  .hero-book::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, rgba(255,255,255,0.08), transparent 30%);
+    pointer-events: none;
+  }
+  .hero-book-meta {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: rgba(255,220,140,0.7);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .hero-book-photo {
+    flex: 1;
+    margin: var(--nbd-space-4) 0;
+    background:
+      radial-gradient(circle at 40% 35%, rgba(255,200,120,0.5) 0%, transparent 50%),
+      radial-gradient(circle at 65% 60%, rgba(120,150,200,0.4) 0%, transparent 50%),
+      linear-gradient(135deg, #3C4D7A 0%, #1A2548 100%);
+    border-radius: 2px;
+  }
+  .hero-book-title {
+    font-family: var(--nbd-font-display);
+    font-style: italic;
+    font-size: 24px;
+    color: #FFE9C2;
+    line-height: 1.05;
+    margin: 0;
+  }
+  .hero-book-title small {
+    display: block;
+    font-style: normal;
+    font-family: var(--nbd-font-family);
+    font-size: 10px;
+    color: rgba(255,233,194,0.55);
+    letter-spacing: 0.18em;
+    margin-top: var(--nbd-space-2);
+    text-transform: uppercase;
+  }
+  .hero-polaroid {
+    position: absolute;
+    background: #fff;
+    padding: 10px 10px 36px;
+    box-shadow: var(--nbd-shadow-xl);
+  }
+  .hero-polaroid-img {
+    width: 100px;
+    aspect-ratio: 1;
+    background-size: cover;
+    background-position: center;
+  }
+  .hero-polaroid-1 {
+    right: 36%;
+    top: 20%;
+    transform: rotate(-12deg);
+    z-index: 1;
+  }
+  .hero-polaroid-1 .hero-polaroid-img {
+    background: radial-gradient(circle at 30% 40%, #FFD89F, transparent 60%), linear-gradient(135deg, #E97862, #C44A35);
+  }
+  .hero-polaroid-2 {
+    right: 24%;
+    bottom: 14%;
+    transform: rotate(8deg);
+    z-index: 1;
+  }
+  .hero-polaroid-2 .hero-polaroid-img {
+    width: 90px;
+    background: radial-gradient(circle at 70% 30%, #BFD9F2, transparent 50%), linear-gradient(135deg, #4A6FA5, #2A3E70);
+  }
+  .hero-polaroid-3 {
+    left: 36%;
+    bottom: 18%;
+    transform: rotate(-5deg);
+    z-index: 1;
+  }
+  .hero-polaroid-3 .hero-polaroid-img {
+    width: 80px;
+    background: radial-gradient(circle at 50% 40%, #F4D8B0, transparent 50%), linear-gradient(135deg, #8B7860, #5C4D3A);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 5;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: var(--nbd-space-24) var(--nbd-space-6);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 720px;
+  }
+  .hero-content-inner { max-width: 580px; }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nbd-space-2);
+    padding: 6px var(--nbd-space-3);
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(0,0,0,0.06);
+    backdrop-filter: blur(8px);
+    border-radius: var(--nbd-radius-full);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--pc-ink-warm);
+    margin-bottom: var(--nbd-space-6);
+  }
+  .hero-eyebrow .dot {
+    width: 6px; height: 6px;
+    background: var(--pc-coral);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .hero-title {
+    font-family: var(--nbd-font-display);
+    font-weight: 400;
+    font-size: clamp(44px, 6.5vw, 84px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin: 0 0 var(--nbd-space-6);
+    color: var(--pc-ink-warm);
+  }
+  .hero-title em { font-style: italic; color: var(--pc-coral); }
+  .hero-desc {
+    font-size: 18px;
+    line-height: 1.55;
+    color: rgba(42,37,32,0.75);
+    margin: 0 0 var(--nbd-space-8);
+    max-width: 480px;
+  }
+  .hero-cta-row { display: flex; gap: var(--nbd-space-3); flex-wrap: wrap; }
+  .hero-meta {
+    display: flex;
+    gap: var(--nbd-space-6);
+    margin-top: var(--nbd-space-12);
+    padding-top: var(--nbd-space-6);
+    border-top: 1px solid rgba(42,37,32,0.12);
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--nbd-space-2);
+    font-size: 13px;
+    color: rgba(42,37,32,0.7);
+  }
+  .hero-meta-item strong { color: var(--pc-ink-warm); font-weight: 700; }
+  .hero-meta-item svg { width: 16px; height: 16px; color: var(--pc-coral); stroke: currentColor; stroke-width: 1.8; fill: none; }
+  @media (max-width: 900px) {
+    .hero { min-height: auto; }
+    .hero-content { padding: var(--nbd-space-16) var(--nbd-space-4) var(--nbd-space-24); min-height: auto; }
+    .hero-book, .hero-polaroid { display: none; }
+  }
+
+  /* ===== COLLECTIONS — asymmetric grid ===== */
+  .collections-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--nbd-space-4);
+  }
+  .col-card-hero    { grid-column: span 8; aspect-ratio: 16/9; }
+  .col-card-medium  { grid-column: span 4; aspect-ratio: 4/5; }
+  .col-card-third   { grid-column: span 4; aspect-ratio: 4/5; }
+  .col-card-wide    { grid-column: span 8; aspect-ratio: 16/9; }
+  .col-card-tall    { grid-column: span 4; aspect-ratio: 4/5; }
+  @media (max-width: 900px) {
+    .col-card-hero, .col-card-wide { grid-column: span 12; aspect-ratio: 4/3; }
+    .col-card-medium, .col-card-third, .col-card-tall { grid-column: span 6; }
+  }
+  @media (max-width: 540px) {
+    .col-card-medium, .col-card-third, .col-card-tall { grid-column: span 12; aspect-ratio: 4/3; }
+  }
+
+  .col-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--nbd-radius-2xl);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--nbd-space-8);
+    transition: transform var(--nbd-duration-normal) var(--nbd-ease-out),
+                box-shadow var(--nbd-duration-normal) var(--nbd-ease-out);
+    isolation: isolate;
+    box-shadow: var(--nbd-shadow-md);
+  }
+  .col-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(0,0,0,0.2) 0%, transparent 55%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .col-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.55) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .col-card:hover { transform: translateY(-4px); box-shadow: var(--nbd-shadow-2xl); }
+  .col-card-illo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: grid;
+    place-items: center;
+    color: rgba(255,255,255,0.4);
+  }
+  .col-card-illo svg { width: 45%; max-width: 200px; }
+  .col-card-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+  .col-card-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: var(--nbd-space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--nbd-space-2);
+  }
+  .col-card-num::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.25);
+  }
+  .col-card-title {
+    font-family: var(--nbd-font-display);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 var(--nbd-space-2);
+  }
+  .col-card-hero .col-card-title,
+  .col-card-wide .col-card-title { font-size: 40px; }
+  .col-card-title em { font-style: italic; font-weight: 400; }
+  .col-card-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    margin: 0 0 var(--nbd-space-4);
+  }
+  .col-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nbd-space-2);
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    padding-bottom: 2px;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    transition: gap var(--nbd-duration-fast), border-color var(--nbd-duration-fast);
+  }
+  .col-card-cta svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; }
+  .col-card:hover .col-card-cta { gap: var(--nbd-space-3); border-color: #fff; }
+  .col-card-badge {
+    position: absolute;
+    top: var(--nbd-space-6);
+    right: var(--nbd-space-6);
+    z-index: 3;
+    padding: 6px var(--nbd-space-3);
+    background: var(--pc-coral);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    border-radius: var(--nbd-radius-full);
+    text-transform: uppercase;
+  }
+  .col-c-wedding   { background: linear-gradient(135deg, #2A3E70 0%, #1A2548 100%); }
+  .col-c-travel    { background: linear-gradient(135deg, #B8542F 0%, #6B2D14 100%); }
+  .col-c-family    { background: linear-gradient(135deg, #2D5C3D 0%, #163522 100%); }
+  .col-c-baby      { background: linear-gradient(135deg, #D89BA5 0%, #9A5B66 100%); }
+  .col-c-school    { background: linear-gradient(135deg, #1F2937 0%, #0F172A 100%); }
+  .col-c-canvas    { background: linear-gradient(135deg, #6B47A8 0%, #3D2670 100%); }
+  .col-c-photogift { background: linear-gradient(135deg, #2F6660 0%, #14403B 100%); }
+
+  /* ===== POPULAR — taller product cards ===== */
+  .product-grid-v2 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--nbd-space-8);
+  }
+  @media (max-width: 1023px) { .product-grid-v2 { grid-template-columns: repeat(2, 1fr); gap: var(--nbd-space-6); } }
+  @media (max-width: 540px) { .product-grid-v2 { grid-template-columns: 1fr; } }
+
+  .product-card-v2 {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--nbd-duration-normal) var(--nbd-ease-out);
+  }
+  .product-card-v2:hover { transform: translateY(-4px); }
+  .product-card-v2-thumb {
+    aspect-ratio: 4/5;
+    background: var(--thumb-bg, var(--nbd-mb-bg-soft));
+    border-radius: var(--nbd-radius-xl);
+    overflow: hidden;
+    position: relative;
+    margin-bottom: var(--nbd-space-4);
+    display: grid;
+    place-items: center;
+    transition: box-shadow var(--nbd-duration-normal);
+  }
+  .product-card-v2:hover .product-card-v2-thumb { box-shadow: var(--nbd-shadow-lg); }
+  .product-card-v2-thumb::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.15) 100%);
+    pointer-events: none;
+  }
+  .product-book {
+    width: 60%;
+    aspect-ratio: 8/11;
+    background: var(--book-bg, linear-gradient(135deg, #2A3E70, #1A2548));
+    border-radius: 2px 4px 4px 2px;
+    box-shadow: var(--nbd-shadow-xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--nbd-space-3);
+    position: relative;
+    transform: rotate(-3deg);
+    transition: transform var(--nbd-duration-normal);
+  }
+  .product-card-v2:hover .product-book { transform: rotate(0deg); }
+  .product-book::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 6px;
+    width: 1px;
+    height: 100%;
+    background: rgba(255,255,255,0.12);
+  }
+  .product-book-meta {
+    font-size: 7px;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.55);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .product-book-photo {
+    flex: 1;
+    margin: 6px 0;
+    background: var(--book-photo, radial-gradient(circle at 40% 40%, rgba(255,200,120,0.5) 0%, transparent 50%), linear-gradient(135deg, #3C4D7A 0%, #1A2548 100%));
+    border-radius: 1px;
+  }
+  .product-book-title {
+    font-family: var(--nbd-font-display);
+    font-style: italic;
+    font-size: 11px;
+    color: var(--book-fg, #FFE9C2);
+    line-height: 1.05;
+  }
+  .product-card-v2-badge {
+    position: absolute;
+    top: var(--nbd-space-3);
+    left: var(--nbd-space-3);
+    z-index: 2;
+    padding: 4px var(--nbd-space-2);
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    border-radius: var(--nbd-radius-sm);
+    text-transform: uppercase;
+    backdrop-filter: blur(4px);
+  }
+  .product-card-v2-badge.is-accent { background: var(--pc-coral); }
+  .product-card-v2-cat {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pc-coral);
+    margin-bottom: var(--nbd-space-1);
+  }
+  .product-card-v2-title {
+    font-family: var(--nbd-font-display);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 var(--nbd-space-2);
+  }
+  .product-card-v2-meta {
+    font-size: 13px;
+    color: var(--nbd-mb-text-soft);
+    line-height: 1.45;
+    margin: 0 0 var(--nbd-space-4);
+  }
+  .product-card-v2-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: var(--nbd-space-3);
+    border-top: 1px solid var(--nbd-mb-border);
+  }
+  .product-card-v2-price {
+    font-family: var(--nbd-font-display);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .product-card-v2-price small {
+    font-family: var(--nbd-font-family);
+    font-size: 11px;
+    color: var(--nbd-mb-text-soft);
+    font-weight: 400;
+    margin-right: 4px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .product-card-v2-prod {
+    font-size: 11px;
+    color: var(--nbd-mb-text-soft);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== QUOTE ===== */
+  .quote-block { text-align: center; max-width: 880px; margin: 0 auto; }
+  .quote-mark {
+    font-family: var(--nbd-font-display);
+    font-size: 96px;
+    line-height: 0.6;
+    color: var(--pc-coral);
+    margin-bottom: var(--nbd-space-4);
+  }
+  .quote-text {
+    font-family: var(--nbd-font-display);
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--pc-ink-warm);
+    margin: 0 0 var(--nbd-space-8);
+  }
+  .quote-author {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nbd-space-3);
+    font-size: 13px;
+    color: rgba(42,37,32,0.7);
+  }
+  .quote-author-name { font-weight: 700; color: var(--pc-ink-warm); }
+  .quote-author-divider { width: 24px; height: 1px; background: rgba(42,37,32,0.3); }
+
+  /* ===== STEPS ===== */
+  .steps-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--nbd-space-8);
+    position: relative;
+  }
+  .steps-row::before {
+    content: "";
+    position: absolute;
+    top: 32px;
+    left: 14%;
+    right: 14%;
+    height: 1px;
+    background: repeating-linear-gradient(to right, rgba(42,37,32,0.3) 0 6px, transparent 6px 12px);
+    z-index: 0;
+  }
+  @media (max-width: 767px) {
+    .steps-row { grid-template-columns: 1fr; }
+    .steps-row::before { display: none; }
+  }
+  .step-item { position: relative; z-index: 1; text-align: center; }
+  .step-num-circle {
+    width: 64px; height: 64px;
+    margin: 0 auto var(--nbd-space-6);
+    background: var(--pc-cream);
+    border: 2px solid var(--pc-coral);
+    color: var(--pc-coral);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--nbd-font-display);
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .step-title {
+    font-family: var(--nbd-font-display);
+    font-size: 22px;
+    font-weight: 400;
+    margin: 0 0 var(--nbd-space-3);
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: var(--pc-ink-warm);
+  }
+  .step-desc {
+    font-size: 14px;
+    color: rgba(42,37,32,0.7);
+    line-height: 1.55;
+    margin: 0 auto;
+    max-width: 280px;
+  }
+
+  /* ===== B2B BANNER ===== */
+  .b2b-banner {
+    background: var(--nbd-mb-text);
+    color: #fff;
+    border-radius: var(--nbd-radius-3xl);
+    overflow: hidden;
+    position: relative;
+    padding: var(--nbd-space-16) var(--nbd-space-12);
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--nbd-space-12);
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    .b2b-banner {
+      grid-template-columns: 1fr;
+      padding: var(--nbd-space-8);
+    }
+  }
+  .b2b-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 100% at 100% 50%, rgba(233,120,98,0.2) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .b2b-content { position: relative; z-index: 2; }
+  .b2b-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--pc-coral);
+    text-transform: uppercase;
+    margin-bottom: var(--nbd-space-4);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nbd-space-2);
+  }
+  .b2b-eyebrow::before { content: ""; width: 24px; height: 1px; background: currentColor; }
+  .b2b-title {
+    font-family: var(--nbd-font-display);
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 var(--nbd-space-4);
+  }
+  .b2b-title em { font-style: italic; color: var(--pc-coral); }
+  .b2b-desc {
+    font-size: 16px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.75);
+    margin: 0 0 var(--nbd-space-8);
+    max-width: 540px;
+  }
+  .b2b-actions { display: flex; gap: var(--nbd-space-3); flex-wrap: wrap; }
+  .b2b-stats {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--nbd-space-6);
+  }
+  .b2b-stat { padding: var(--nbd-space-4) 0; }
+  .b2b-stat-num {
+    font-family: var(--nbd-font-display);
+    font-size: 42px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--pc-coral);
+    margin-bottom: var(--nbd-space-2);
+    letter-spacing: -0.02em;
+  }
+  .b2b-stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ===== UGC MASONRY ===== */
+  .ugc-masonry {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 80px;
+    gap: var(--nbd-space-3);
+  }
+  .ugc-tile {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--nbd-radius-lg);
+    cursor: pointer;
+    transition: transform var(--nbd-duration-normal) var(--nbd-ease-out),
+                box-shadow var(--nbd-duration-normal) var(--nbd-ease-out);
+    background: var(--tile-bg, linear-gradient(135deg, #2A3E70, #1A2548));
+    display: grid;
+    place-items: center;
+    color: rgba(255,255,255,0.8);
+  }
+  .ugc-tile::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(0,0,0,0.25) 0%, transparent 55%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .ugc-tile:hover { transform: translateY(-2px); box-shadow: var(--nbd-shadow-lg); }
+  .ugc-tile-glyph {
+    font-size: 40px;
+    z-index: 2;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35));
+  }
+  .ugc-tile-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.75));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: var(--nbd-space-3);
+    color: #fff;
+    opacity: 0;
+    transition: opacity var(--nbd-duration-fast);
+    z-index: 2;
+  }
+  .ugc-tile:hover .ugc-tile-overlay { opacity: 1; }
+  .ugc-tile-author { font-size: 12px; font-weight: 700; }
+  .ugc-tile-product { font-size: 10px; color: rgba(255,255,255,0.8); margin-top: 2px; }
+  .ugc-tile-tag {
+    position: absolute;
+    top: var(--nbd-space-2);
+    left: var(--nbd-space-2);
+    z-index: 2;
+    padding: 3px var(--nbd-space-2);
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    border-radius: var(--nbd-radius-sm);
+    backdrop-filter: blur(4px);
+  }
+  .ugc-s    { grid-column: span 3; grid-row: span 3; }
+  .ugc-m    { grid-column: span 3; grid-row: span 4; }
+  .ugc-l    { grid-column: span 4; grid-row: span 5; }
+  .ugc-xl   { grid-column: span 5; grid-row: span 5; }
+  .ugc-tall { grid-column: span 3; grid-row: span 6; }
+  .ugc-wide { grid-column: span 4; grid-row: span 3; }
+  @media (max-width: 1023px) {
+    .ugc-masonry { grid-template-columns: repeat(6, 1fr); }
+    .ugc-s, .ugc-m, .ugc-l, .ugc-xl, .ugc-tall, .ugc-wide {
+      grid-column: span 3;
+      grid-row: span 3;
+    }
+    .ugc-l, .ugc-xl { grid-column: span 6; grid-row: span 4; }
+  }
+  @media (max-width: 540px) {
+    .ugc-masonry { grid-template-columns: repeat(2, 1fr); }
+    .ugc-s, .ugc-m, .ugc-l, .ugc-xl, .ugc-tall, .ugc-wide {
+      grid-column: span 1;
+      grid-row: span 3;
+    }
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--nbd-mb-text);
+    color: rgba(255,255,255,0.7);
+    padding: var(--nbd-space-16) 0 var(--nbd-space-6);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--nbd-space-12);
+  }
+  @media (max-width: 767px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: var(--nbd-space-6); } }
+  .footer-brand-name {
+    font-family: var(--nbd-font-display);
+    font-style: italic;
+    font-size: 26px;
+    color: #fff;
+    margin-bottom: var(--nbd-space-3);
+  }
+  .footer-tagline {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.55);
+    max-width: 320px;
+    margin-bottom: var(--nbd-space-6);
+  }
+  .footer-newsletter {
+    display: flex;
+    gap: var(--nbd-space-2);
+    max-width: 340px;
+  }
+  .footer-newsletter input {
+    flex: 1;
+    height: 40px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--nbd-radius-lg);
+    color: #fff;
+    padding: 0 var(--nbd-space-3);
+    font-family: inherit;
+    font-size: 13px;
+  }
+  .footer-newsletter input::placeholder { color: rgba(255,255,255,0.45); }
+  .footer-newsletter input:focus { outline: 1px solid var(--pc-coral); border-color: var(--pc-coral); }
+  .footer-newsletter button {
+    height: 40px;
+    padding: 0 var(--nbd-space-4);
+    background: var(--pc-coral);
+    color: #fff;
+    border-radius: var(--nbd-radius-lg);
+    font-weight: 700;
+    font-size: 13px;
+    transition: background var(--nbd-duration-fast);
+  }
+  .footer-newsletter button:hover { background: #d35e48; }
+  .footer h4 {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin: 0 0 var(--nbd-space-4);
+  }
+  .footer ul { list-style: none; padding: 0; margin: 0; }
+  .footer ul li { margin-bottom: var(--nbd-space-3); }
+  .footer ul a {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    transition: color var(--nbd-duration-fast);
+  }
+  .footer ul a:hover { color: var(--pc-coral); }
+  .footer-bottom {
+    margin-top: var(--nbd-space-16);
+    padding-top: var(--nbd-space-6);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--nbd-space-2);
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+  }
+  .footer-bottom a:hover { color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="util-bar">
+  <div class="left">
+    <span><span class="dot"></span>Holiday orders ship by Dec 18 · Free shipping over $59</span>
+  </div>
+  <div class="right">
+    <a href="#" class="hide-mobile">FAQs</a>
+    <a href="#" class="hide-mobile">Design tips</a>
+    <a href="#">Track order</a>
+  </div>
+</div>
+
+<header class="topbar">
+  <a href="#" class="brand">
+    <span class="brand-logo">P</span>
+    <span class="brand-name">Printcart<small>Studio</small></span>
+  </a>
+  <nav class="topbar-nav">
+    <a href="#collections" class="nav-link">Photobooks</a>
+    <a href="#collections" class="nav-link">Photo gifts</a>
+    <a href="#popular" class="nav-link">Popular</a>
+    <a href="#how" class="nav-link">How it works</a>
+    <a href="#b2b" class="nav-link">For studios</a>
+  </nav>
+  <div class="topbar-actions">
+    <button class="icon-btn" aria-label="My photos">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+    </button>
+    <button class="icon-btn" aria-label="Cart">
+      <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 002 1.6h9.7a2 2 0 002-1.6L23 6H6"/></svg>
+    </button>
+    <button class="login-btn">Log in</button>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-image"></div>
+  <div class="hero-book" aria-hidden="true">
+    <div class="hero-book-meta">Vol. XII · 2024</div>
+    <div class="hero-book-photo"></div>
+    <div class="hero-book-title">Late Summer<br/>in Liguria<small>Travel Photobook · 60 pp</small></div>
+  </div>
+  <div class="hero-polaroid hero-polaroid-1" aria-hidden="true"><div class="hero-polaroid-img"></div></div>
+  <div class="hero-polaroid hero-polaroid-2" aria-hidden="true"><div class="hero-polaroid-img"></div></div>
+  <div class="hero-polaroid hero-polaroid-3" aria-hidden="true"><div class="hero-polaroid-img"></div></div>
+
+  <div class="hero-content">
+    <div class="hero-content-inner">
+      <div class="hero-eyebrow">
+        <span class="dot"></span>
+        Holiday orders ship by Dec 18
+      </div>
+      <h1 class="hero-title">
+        Your photos,<br/>
+        <em>bound by hand.</em>
+      </h1>
+      <p class="hero-desc">
+        Photobooks, canvas prints, and photo gifts from the photos you already love. Printed on archival paper, bound in our Verona studio.
+      </p>
+      <div class="hero-cta-row">
+        <a href="#collections" class="btn btn-accent btn-lg">
+          Start a photobook
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#popular" class="btn btn-secondary btn-lg">Browse all products</a>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span><strong>5–7 day</strong> turnaround</span>
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-6 9 6v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg>
+          <span><strong>No login</strong> to design</span>
+        </div>
+        <div class="hero-meta-item">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <span><strong>30-day</strong> quality guarantee</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COLLECTIONS ===== -->
+<section class="section" id="collections">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Seven Collections</div>
+        <h2 class="section-title">A photobook for <em>every story</em>.</h2>
+        <p class="section-sub">From the wedding album passed down generations, to the school yearbook ordered in lots of two hundred — pick the photobook built for your story.</p>
+      </div>
+      <a href="#" class="section-link">
+        View all
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="collections-grid">
+      <a href="#" class="col-card col-card-hero col-c-wedding">
+        <span class="col-card-badge">Bestseller</span>
+        <div class="col-card-illo">
+          <svg viewBox="0 0 200 140" stroke="currentColor" stroke-width="1.2" fill="none">
+            <path d="M30 30 L100 22 L100 110 L30 118 Z" fill="rgba(255,255,255,0.06)"/>
+            <path d="M100 22 L170 30 L170 118 L100 110 Z" fill="rgba(255,255,255,0.06)"/>
+            <line x1="100" y1="22" x2="100" y2="110" opacity="0.4"/>
+            <rect x="40" y="40" width="50" height="40" fill="currentColor" opacity="0.3"/>
+            <rect x="40" y="86" width="50" height="4" fill="currentColor" opacity="0.25"/>
+            <rect x="110" y="40" width="22" height="22" fill="currentColor" opacity="0.3"/>
+            <rect x="138" y="40" width="22" height="22" fill="currentColor" opacity="0.25"/>
+            <rect x="110" y="66" width="22" height="22" fill="currentColor" opacity="0.25"/>
+            <rect x="138" y="66" width="22" height="22" fill="currentColor" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="col-card-content">
+          <div class="col-card-num">N° 01 · Wedding</div>
+          <h3 class="col-card-title">The <em>Verona</em> Wedding Album</h3>
+          <p class="col-card-sub">Hand-bound layflat albums for the big day · linen and leather covers · 30–100 pages · From $129</p>
+          <span class="col-card-cta">
+            Configure album
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a href="#" class="col-card col-card-medium col-c-travel">
+        <div class="col-card-illo">
+          <svg viewBox="0 0 160 200" stroke="currentColor" stroke-width="1.2" fill="none">
+            <rect x="40" y="40" width="80" height="120" rx="2" fill="rgba(255,255,255,0.08)"/>
+            <path d="M50 120 L70 90 L85 105 L105 75 L120 120 Z" fill="currentColor" opacity="0.3"/>
+            <circle cx="105" cy="70" r="6" fill="currentColor" opacity="0.4"/>
+            <line x1="50" y1="135" x2="110" y2="135" opacity="0.4"/>
+            <line x1="50" y1="143" x2="100" y2="143" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="col-card-content">
+          <div class="col-card-num">N° 02 · Travel</div>
+          <h3 class="col-card-title">Travel <em>Diary</em></h3>
+          <p class="col-card-sub">20–80 pages · From $59</p>
+          <span class="col-card-cta">
+            Start your diary
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a href="#" class="col-card col-card-third col-c-family">
+        <div class="col-card-illo">
+          <svg viewBox="0 0 160 200" stroke="currentColor" stroke-width="1.2" fill="none">
+            <rect x="30" y="130" width="100" height="20" rx="2" fill="rgba(255,255,255,0.08)"/>
+            <rect x="34" y="106" width="92" height="20" rx="2" fill="rgba(255,255,255,0.1)"/>
+            <rect x="38" y="82" width="84" height="20" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <rect x="42" y="44" width="76" height="36" rx="3" fill="rgba(255,255,255,0.15)"/>
+            <text x="80" y="66" fill="currentColor" font-size="11" text-anchor="middle" font-weight="700" font-family="serif" opacity="0.7" font-style="italic">2024</text>
+          </svg>
+        </div>
+        <div class="col-card-content">
+          <div class="col-card-num">N° 03 · Family</div>
+          <h3 class="col-card-title">Family <em>Yearbook</em></h3>
+          <p class="col-card-sub">Hardcover · 40–120 pages · From $89</p>
+          <span class="col-card-cta">
+            Build the archive
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a href="#" class="col-card col-card-third col-c-baby">
+        <span class="col-card-badge">New</span>
+        <div class="col-card-illo">
+          <svg viewBox="0 0 160 200" stroke="currentColor" stroke-width="1.2" fill="none">
+            <rect x="35" y="40" width="90" height="120" rx="6" fill="rgba(255,255,255,0.12)"/>
+            <rect x="35" y="40" width="6" height="120" fill="currentColor" opacity="0.3"/>
+            <path d="M80 90 C 80 80, 68 80, 68 92 C 68 100, 80 110, 80 110 C 80 110, 92 100, 92 92 C 92 80, 80 80, 80 90 Z" fill="currentColor" opacity="0.5"/>
+            <circle cx="62" cy="130" r="3" fill="currentColor" opacity="0.4"/>
+            <circle cx="80" cy="130" r="3" fill="currentColor" opacity="0.5"/>
+            <circle cx="98" cy="130" r="3" fill="currentColor" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="col-card-content">
+          <div class="col-card-num">N° 04 · Baby</div>
+          <h3 class="col-card-title"><em>Baby's</em> First Year</h3>
+          <p class="col-card-sub">Pastel covers · gift box · From $69</p>
+          <span class="col-card-cta">
+            Make a keepsake
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a href="#" class="col-card col-card-third col-c-school">
+        <div class="col-card-illo">
+          <svg viewBox="0 0 160 200" stroke="currentColor" stroke-width="1.2" fill="none">
+            <rect x="35" y="35" width="90" height="130" rx="2" fill="rgba(255,255,255,0.08)"/>
+            <g opacity="0.45" fill="currentColor">
+              <rect x="42" y="48" width="22" height="26"/>
+              <rect x="69" y="48" width="22" height="26"/>
+              <rect x="96" y="48" width="22" height="26"/>
+              <rect x="42" y="79" width="22" height="26"/>
+              <rect x="69" y="79" width="22" height="26"/>
+              <rect x="96" y="79" width="22" height="26"/>
+            </g>
+            <text x="80" y="130" fill="currentColor" font-size="8" text-anchor="middle" font-family="sans-serif" opacity="0.5" letter-spacing="1.5">CLASS · 2024</text>
+          </svg>
+        </div>
+        <div class="col-card-content">
+          <div class="col-card-num">N° 05 · School</div>
+          <h3 class="col-card-title">School <em>Yearbook</em></h3>
+          <p class="col-card-sub">B2B volume · 60–200 pages · From $28/unit</p>
+          <span class="col-card-cta">
+            Request quote
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a href="#" class="col-card col-card-wide col-c-canvas">
+        <div class="col-card-illo">
+          <svg viewBox="0 0 200 140" stroke="currentColor" stroke-width="1.2" fill="none">
+            <rect x="30" y="30" width="140" height="80" fill="rgba(255,255,255,0.1)"/>
+            <path d="M30 30 L20 40 L20 120 L30 110 Z" fill="rgba(255,255,255,0.06)"/>
+            <path d="M30 110 L20 120 L160 120 L170 110 Z" fill="rgba(255,255,255,0.04)"/>
+            <circle cx="65" cy="60" r="8" fill="currentColor" opacity="0.5"/>
+            <path d="M40 95 L70 65 L95 80 L130 55 L160 95 Z" fill="rgba(255,255,255,0.25)"/>
+          </svg>
+        </div>
+        <div class="col-card-content">
+          <div class="col-card-num">N° 06 · Canvas</div>
+          <h3 class="col-card-title">Gallery <em>Canvas</em> Prints</h3>
+          <p class="col-card-sub">Hand-stretched gallery wrap · 1.5" depth · 8×10 to 30×40 · Ready to hang · From $32</p>
+          <span class="col-card-cta">
+            Hang a memory
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <a href="#" class="col-card col-card-tall col-c-photogift">
+        <span class="col-card-badge">Popular</span>
+        <div class="col-card-illo">
+          <svg viewBox="0 0 160 200" stroke="currentColor" stroke-width="1.2" fill="none">
+            <rect x="40" y="65" width="60" height="80" rx="4" fill="rgba(255,255,255,0.12)"/>
+            <path d="M100 85 Q130 85 130 105 Q130 125 100 125" stroke-width="1.6"/>
+            <rect x="48" y="80" width="44" height="40" fill="currentColor" opacity="0.4"/>
+            <circle cx="62" cy="92" r="3" fill="rgba(255,255,255,0.7)"/>
+            <path d="M52 112 L66 100 L78 108 L88 100" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="col-card-content">
+          <div class="col-card-num">N° 07 · Gifts</div>
+          <h3 class="col-card-title">Photo <em>Gifts</em></h3>
+          <p class="col-card-sub">Mugs · phone cases · blankets</p>
+          <span class="col-card-cta">
+            Browse gifts
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== QUOTE ===== -->
+<section class="section section--paper">
+  <div class="container">
+    <div class="quote-block">
+      <div class="quote-mark">"</div>
+      <blockquote class="quote-text">
+        The album arrived in a linen sleeve and looked like a book my grandmother might have made — but better. Three months in and I'm still showing it to people.
+      </blockquote>
+      <div class="quote-author">
+        <span class="quote-author-name">Sarah C.</span>
+        <span class="quote-author-divider"></span>
+        <span>Wedding Album · Verona, July 2024</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== POPULAR ===== -->
+<section class="section" id="popular">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">This season's bestsellers</div>
+        <h2 class="section-title">Made <em>this week</em>.</h2>
+        <p class="section-sub">Four flagships across price tiers — from $14 ceramic mug to $129 layflat wedding album.</p>
+      </div>
+      <a href="#" class="section-link">
+        View all 24
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="product-grid-v2">
+      <a href="#" class="product-card-v2">
+        <div class="product-card-v2-thumb" style="--thumb-bg: linear-gradient(135deg, #F4EDDF, #EDE3CF);">
+          <span class="product-card-v2-badge is-accent">Bestseller</span>
+          <div class="product-book" style="--book-bg: linear-gradient(135deg, #2A3E70, #1A2548);">
+            <div class="product-book-meta">VOL. 08</div>
+            <div class="product-book-photo"></div>
+            <div class="product-book-title">Margaux<br/>&amp; Henry</div>
+          </div>
+        </div>
+        <div class="product-card-v2-cat">N° 01 / Wedding</div>
+        <h3 class="product-card-v2-title">The Verona Wedding Album</h3>
+        <p class="product-card-v2-meta">Linen cover · 40 pages · 11×14" · Mohawk paper</p>
+        <div class="product-card-v2-foot">
+          <span class="product-card-v2-price"><small>From</small>$129</span>
+          <span class="product-card-v2-prod">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            5–7 d
+          </span>
+        </div>
+      </a>
+
+      <a href="#" class="product-card-v2">
+        <div class="product-card-v2-thumb" style="--thumb-bg: linear-gradient(135deg, #FAF6EE, #F4EDDF);">
+          <div class="product-book" style="--book-bg: linear-gradient(135deg, #B8542F, #6B2D14); --book-photo: radial-gradient(circle at 50% 35%, rgba(255,200,120,0.6) 0%, transparent 50%), linear-gradient(135deg, #C46B45, #6B2D14); --book-fg: #FFE0C2;">
+            <div class="product-book-meta">VOL. 12</div>
+            <div class="product-book-photo"></div>
+            <div class="product-book-title">Italy<br/>'24</div>
+          </div>
+        </div>
+        <div class="product-card-v2-cat">N° 02 / Travel</div>
+        <h3 class="product-card-v2-title">Travel Diary Photobook</h3>
+        <p class="product-card-v2-meta">Softcover · 20–80 pages · 8×10" landscape</p>
+        <div class="product-card-v2-foot">
+          <span class="product-card-v2-price"><small>From</small>$59</span>
+          <span class="product-card-v2-prod">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            5–7 d
+          </span>
+        </div>
+      </a>
+
+      <a href="#" class="product-card-v2">
+        <div class="product-card-v2-thumb" style="--thumb-bg: linear-gradient(135deg, #E8F0F4, #D1E3EC);">
+          <span class="product-card-v2-badge">New</span>
+          <div style="position: relative; width: 65%; aspect-ratio: 1;">
+            <div style="position: absolute; inset: 12% 22% 12% 8%; background: linear-gradient(135deg, #2F6660, #14403B); border-radius: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.15);">
+              <div style="position: absolute; top: 18%; left: 12%; right: 12%; bottom: 22%; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 50%), linear-gradient(135deg, #5eead4, #2F6660); border-radius: 2px;"></div>
+            </div>
+            <div style="position: absolute; top: 25%; right: 2%; width: 22%; height: 50%; border: 4px solid #2F6660; border-radius: 50%; border-left-color: transparent;"></div>
+          </div>
+        </div>
+        <div class="product-card-v2-cat">N° 07 / Gifts</div>
+        <h3 class="product-card-v2-title">Photo Mug (11oz)</h3>
+        <p class="product-card-v2-meta">Ceramic · wrap-around print · dishwasher-safe</p>
+        <div class="product-card-v2-foot">
+          <span class="product-card-v2-price"><small>From</small>$14.95</span>
+          <span class="product-card-v2-prod">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            3–5 d
+          </span>
+        </div>
+      </a>
+
+      <a href="#" class="product-card-v2">
+        <div class="product-card-v2-thumb" style="--thumb-bg: linear-gradient(135deg, #EEEAF5, #DCD2EC);">
+          <div style="position: relative; width: 75%; aspect-ratio: 5/4; background: linear-gradient(135deg, #6B47A8, #3D2670); box-shadow: var(--nbd-shadow-lg); transform: rotate(-2deg);">
+            <div style="position: absolute; inset: 8%; background: radial-gradient(circle at 30% 40%, rgba(255,220,200,0.6), transparent 50%), radial-gradient(circle at 70% 70%, rgba(180,140,220,0.6), transparent 50%), linear-gradient(135deg, #8B6FC4 0%, #5B3B96 100%);"></div>
+          </div>
+        </div>
+        <div class="product-card-v2-cat">N° 06 / Canvas</div>
+        <h3 class="product-card-v2-title">Gallery Canvas Print</h3>
+        <p class="product-card-v2-meta">Wrap · 1.5" depth · ready to hang · 8×10 to 30×40</p>
+        <div class="product-card-v2-foot">
+          <span class="product-card-v2-price"><small>From</small>$32</span>
+          <span class="product-card-v2-prod">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            5–7 d
+          </span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="section section--paper" id="how">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Three steps</div>
+        <h2 class="section-title">From phone to <em>printed book</em>.</h2>
+        <p class="section-sub">No software to install. No login required to design. Start in 30 seconds.</p>
+      </div>
+    </div>
+
+    <div class="steps-row">
+      <div class="step-item">
+        <div class="step-num-circle">i</div>
+        <h3 class="step-title">Upload your photos</h3>
+        <p class="step-desc">From computer, phone (QR code), Google Photos, or Dropbox. AI groups them by date and place.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-num-circle">ii</div>
+        <h3 class="step-title">Design or auto-fill</h3>
+        <p class="step-desc">Use the spread editor — or let our AI auto-fill in 8 seconds. Pick cover, paper, foiling.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-num-circle">iii</div>
+        <h3 class="step-title">Printed and delivered</h3>
+        <p class="step-desc">Archival paper, bound in Verona, shipped in a linen sleeve. 5–7 business days standard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== B2B ===== -->
+<section class="section" id="b2b">
+  <div class="container">
+    <div class="b2b-banner">
+      <div class="b2b-content">
+        <div class="b2b-eyebrow">For studios &amp; pros</div>
+        <h3 class="b2b-title">Photographer?<br/>Get <em>studio pricing</em>.</h3>
+        <p class="b2b-desc">Wedding photographers, family studios, school portrait companies — apply for a studio account to unlock 25% off the album catalog, brand-free packaging, custom cover stamping, and 1-click reorder for repeat clients.</p>
+        <div class="b2b-actions">
+          <a href="#" class="btn btn-accent btn-lg">
+            Apply for studio pricing
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#" class="btn btn-ghost-on-dark btn-lg">Learn more</a>
+        </div>
+      </div>
+      <div class="b2b-stats">
+        <div class="b2b-stat">
+          <div class="b2b-stat-num">25%</div>
+          <div class="b2b-stat-label">Off catalog price</div>
+        </div>
+        <div class="b2b-stat">
+          <div class="b2b-stat-num">1,400+</div>
+          <div class="b2b-stat-label">Studio partners</div>
+        </div>
+        <div class="b2b-stat">
+          <div class="b2b-stat-num">320</div>
+          <div class="b2b-stat-label">Wedding studios</div>
+        </div>
+        <div class="b2b-stat">
+          <div class="b2b-stat-num">24</div>
+          <div class="b2b-stat-label">Countries shipped</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== UGC ===== -->
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">#PrintcartStudio</div>
+        <h2 class="section-title">Made by <em>our customers</em>.</h2>
+        <p class="section-sub">Real photobooks and prints, tagged this month on Instagram. Tag us to be featured.</p>
+      </div>
+      <a href="#" class="section-link">
+        See more on Instagram
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="ugc-masonry">
+      <div class="ugc-tile ugc-xl" style="--tile-bg: linear-gradient(135deg, #2A3E70, #1A2548);">
+        <span class="ugc-tile-tag">@sarahchen</span>
+        <span class="ugc-tile-glyph">💍</span>
+        <div class="ugc-tile-overlay">
+          <div class="ugc-tile-author">Sarah &amp; Marcus</div>
+          <div class="ugc-tile-product">Wedding Album · 80 pp</div>
+        </div>
+      </div>
+      <div class="ugc-tile ugc-m" style="--tile-bg: linear-gradient(135deg, #B8542F, #6B2D14);">
+        <span class="ugc-tile-tag">@liguriadiary</span>
+        <span class="ugc-tile-glyph">🌊</span>
+        <div class="ugc-tile-overlay">
+          <div class="ugc-tile-author">Emma R.</div>
+          <div class="ugc-tile-product">Travel · 40 pp</div>
+        </div>
+      </div>
+      <div class="ugc-tile ugc-tall" style="--tile-bg: linear-gradient(135deg, #2D5C3D, #163522);">
+        <span class="ugc-tile-tag">@thecolefamily</span>
+        <span class="ugc-tile-glyph">🏡</span>
+        <div class="ugc-tile-overlay">
+          <div class="ugc-tile-author">The Coles</div>
+          <div class="ugc-tile-product">Family Yearbook · 100 pp</div>
+        </div>
+      </div>
+      <div class="ugc-tile ugc-s" style="--tile-bg: linear-gradient(135deg, #D89BA5, #9A5B66);">
+        <span class="ugc-tile-tag">@hello.little.one</span>
+        <span class="ugc-tile-glyph">👶</span>
+        <div class="ugc-tile-overlay">
+          <div class="ugc-tile-author">Anna L.</div>
+          <div class="ugc-tile-product">Baby's First Year</div>
+        </div>
+      </div>
+      <div class="ugc-tile ugc-wide" style="--tile-bg: linear-gradient(135deg, #6B47A8, #3D2670);">
+        <span class="ugc-tile-tag">@studio.maya</span>
+        <span class="ugc-tile-glyph">🖼️</span>
+        <div class="ugc-tile-overlay">
+          <div class="ugc-tile-author">Maya Studio</div>
+          <div class="ugc-tile-product">Canvas · 16×20</div>
+        </div>
+      </div>
+      <div class="ugc-tile ugc-s" style="--tile-bg: linear-gradient(135deg, #2F6660, #14403B);">
+        <span class="ugc-tile-tag">@danandlena</span>
+        <span class="ugc-tile-glyph">☕</span>
+        <div class="ugc-tile-overlay">
+          <div class="ugc-tile-author">Dan &amp; Lena</div>
+          <div class="ugc-tile-product">Photo Mug · set of 2</div>
+        </div>
+      </div>
+      <div class="ugc-tile ugc-l" style="--tile-bg: linear-gradient(135deg, #1F2937, #0F172A);">
+        <span class="ugc-tile-tag">@lincolnhigh24</span>
+        <span class="ugc-tile-glyph">🎓</span>
+        <div class="ugc-tile-overlay">
+          <div class="ugc-tile-author">Lincoln High</div>
+          <div class="ugc-tile-product">School Yearbook · 180 pp</div>
+        </div>
+      </div>
+      <div class="ugc-tile ugc-m" style="--tile-bg: linear-gradient(135deg, #C28342, #7C4E20);">
+        <span class="ugc-tile-tag">@summerarchive</span>
+        <span class="ugc-tile-glyph">🌅</span>
+        <div class="ugc-tile-overlay">
+          <div class="ugc-tile-author">Jordan T.</div>
+          <div class="ugc-tile-product">Photo Prints · 20-set</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">Printcart Studio</div>
+        <div class="footer-tagline">Photobooks, canvas prints, and photo gifts from the photos you already love. Bound in Verona, shipped worldwide since 2018.</div>
+        <form class="footer-newsletter" onsubmit="event.preventDefault();">
+          <input type="email" placeholder="Get 10% off your first book" aria-label="Email" />
+          <button type="submit">Join →</button>
+        </form>
+      </div>
+      <div>
+        <h4>— Collections</h4>
+        <ul>
+          <li><a href="#">Wedding albums</a></li>
+          <li><a href="#">Travel photobooks</a></li>
+          <li><a href="#">Family yearbooks</a></li>
+          <li><a href="#">Baby's first year</a></li>
+          <li><a href="#">Canvas prints</a></li>
+          <li><a href="#">Photo gifts</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>— For pros</h4>
+        <ul>
+          <li><a href="#">Studio program</a></li>
+          <li><a href="#">School yearbooks (B2B)</a></li>
+          <li><a href="#">Wholesale pricing</a></li>
+          <li><a href="#">API &amp; SDK</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>— Help</h4>
+        <ul>
+          <li><a href="#">Order status</a></li>
+          <li><a href="#">Shipping</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Printcart Studio · Bound in Verona</div>
+      <div><a href="#">Terms</a> · <a href="#">Privacy</a> · <a href="#">Refunds</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id.length > 1 && document.querySelector(id)) {
+        e.preventDefault();
+        document.querySelector(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  document.querySelectorAll('.col-card, .product-card-v2, .ugc-tile').forEach(c => {
+    c.addEventListener('click', e => {
+      if (e.target.closest('button')) return;
+      e.preventDefault();
+    });
+  });
+</script>
+
+</body>
+</html>
