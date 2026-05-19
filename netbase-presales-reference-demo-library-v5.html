@@ -1,0 +1,2286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Netbase — Presales & Reference Demo Library</title>
+<meta name="description" content="Browse Netbase, Printcart and Cmsmart presales demo references by category, product type, workflow and platform.">
+
+<style>
+/* ===========================================================
+   NETBASE DESIGN TOKENS
+   =========================================================== */
+:root{
+  --pc-brand: #2563eb;
+  --pc-brand-hover: #1d4ed8;
+  --pc-brand-soft: #dbeafe;
+  --pc-brand-deep: #1e40af;
+  --pc-brand-gradient: linear-gradient(135deg, #2563eb, #1e40af);
+
+  --pc-accent: #fbbf24;
+  --pc-accent-deep: #f59e0b;
+  --pc-accent-text-on: #78350f;
+
+  --status-success: #16a34a;
+  --status-success-soft: #dcfce7;
+
+  --text: #1d2327;
+  --text-soft: #50575e;
+  --text-mute: #8c8f94;
+
+  --bg: #ffffff;
+  --bg-soft: #f6f7f7;
+  --bg-canvas: #f0f0f1;
+
+  --border: #c3c4c7;
+  --border-light: #dcdcde;
+  --border-subtle: #f0f0f1;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px;
+
+  --radius-sm: 4px; --radius-md: 6px; --radius-lg: 8px;
+  --radius-pill: 9999px;
+
+  --shadow-brand: 0 8px 24px rgba(37, 99, 235, 0.18);
+
+  --sidebar-w: 260px;
+  --topbar-h: 56px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: var(--font-sans);
+  color: var(--text);
+  background: var(--bg-soft);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+/* ===========================================================
+   APP SHELL
+   =========================================================== */
+.app{
+  display:grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  min-height: 100vh;
+}
+@media (max-width: 880px){
+  .app{ grid-template-columns: 1fr; }
+}
+
+/* ===========================================================
+   LEFT SIDEBAR
+   =========================================================== */
+.sidebar{
+  background: var(--bg);
+  border-right: 1px solid var(--border-light);
+  display:flex;
+  flex-direction:column;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:hidden;
+}
+@media (max-width: 880px){
+  .sidebar{
+    position:static;
+    height:auto;
+    border-right:none;
+    border-bottom:1px solid var(--border-light);
+  }
+}
+
+.sidebar-brand{
+  display:flex;
+  align-items:center;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--border-subtle);
+  height: var(--topbar-h);
+  flex-shrink:0;
+}
+.sidebar-brand .logo{
+  width: 28px; height: 28px;
+  border-radius: var(--radius-md);
+  background: var(--pc-brand-gradient);
+  display:flex; align-items:center; justify-content:center;
+  color:white; font-weight:700; font-size:14px;
+  box-shadow: var(--shadow-brand);
+}
+.sidebar-brand .name{
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing:-0.01em;
+}
+.sidebar-brand .name small{
+  display:block;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-mute);
+  margin-top: 1px;
+}
+
+.sidebar-search{
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink:0;
+}
+.sidebar-search label{
+  position:relative;
+  display:block;
+}
+.sidebar-search svg{
+  position:absolute;
+  left: 10px; top: 50%;
+  transform: translateY(-50%);
+  width: 14px; height: 14px;
+  color: var(--text-mute);
+}
+.sidebar-search input{
+  width:100%;
+  padding: 8px 10px 8px 30px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background: var(--bg-soft);
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: all .15s;
+}
+.sidebar-search input:focus{
+  border-color: var(--pc-brand);
+  background: var(--bg);
+  box-shadow: 0 0 0 3px var(--pc-brand-soft);
+}
+
+.sidebar-nav{
+  flex:1;
+  overflow-y: auto;
+  padding: var(--space-3) 0 var(--space-6);
+}
+.sidebar-nav::-webkit-scrollbar{ width: 6px }
+.sidebar-nav::-webkit-scrollbar-thumb{ background: var(--border-light); border-radius: 3px }
+
+.nav-section-label{
+  padding: var(--space-4) var(--space-6) var(--space-2);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  padding: 9px var(--space-6);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  border-left: 3px solid transparent;
+  transition: all .12s;
+  text-align: left;
+  gap: var(--space-2);
+}
+.nav-item:hover{ background: var(--bg-soft); color: var(--pc-brand) }
+.nav-item.active{
+  background: var(--pc-brand-soft);
+  color: var(--pc-brand-deep);
+  border-left-color: var(--pc-brand);
+  font-weight: 600;
+}
+.nav-item .label-row{
+  display:flex; align-items:center; gap: var(--space-2);
+  min-width: 0;
+}
+.nav-item .label-row .ico{
+  width: 16px; flex-shrink: 0;
+  opacity: 0.85;
+  font-size: 14px;
+  text-align: center;
+}
+.nav-item .count{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--bg-canvas);
+  color: var(--text-soft);
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+.nav-item.active .count{ background: var(--pc-brand); color: white }
+
+.sidebar-foot{
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+.sidebar-cta{
+  display:block;
+  width:100%;
+  padding: 10px 14px;
+  background: var(--pc-brand);
+  color: white;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  text-align:center;
+  transition: all .15s;
+  box-shadow: var(--shadow-brand);
+}
+.sidebar-cta:hover{ background: var(--pc-brand-hover); transform: translateY(-1px) }
+.sidebar-foot .sig{
+  margin-top: var(--space-3);
+  font-size: 11px;
+  color: var(--text-mute);
+  text-align:center;
+}
+.sidebar-foot .sig a{ color: var(--pc-brand); font-weight: 500 }
+
+/* ===========================================================
+   MAIN
+   =========================================================== */
+.main{
+  display:flex;
+  flex-direction:column;
+  min-width: 0;
+}
+
+.topbar{
+  height: var(--topbar-h);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border-light);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 0 var(--space-6);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.topbar .crumb{
+  display:flex; align-items:center; gap: var(--space-2);
+  font-size: 13px;
+  color: var(--text-soft);
+  min-width: 0;
+}
+.topbar .crumb strong{ color: var(--text); font-weight: 600 }
+.topbar .crumb .sep{ color: var(--text-mute); }
+.topbar .live-pill{
+  display:flex; align-items:center; gap: 6px;
+  padding: 4px 10px;
+  background: var(--status-success-soft);
+  color: var(--status-success);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.topbar .live-pill .dot{
+  width: 6px; height: 6px;
+  background: var(--status-success);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse{ 0%,100%{opacity:1} 50%{opacity:.4} }
+
+/* ===========================================================
+   HERO
+   =========================================================== */
+.hero{
+  background: var(--pc-brand-gradient);
+  color: white;
+  padding: var(--space-6) var(--space-6);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1), transparent 50%),
+                    radial-gradient(circle at 80% 70%, rgba(251,191,36,0.15), transparent 50%);
+  pointer-events:none;
+}
+.hero-inner{ max-width: 900px; position:relative }
+.hero h1{
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-2);
+}
+.hero p{
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  max-width: 70ch;
+}
+.hero-stats{
+  display:flex; gap: var(--space-6);
+  margin-top: var(--space-4);
+  flex-wrap: wrap;
+}
+.hero-stats .stat{ display:flex; flex-direction:column; gap: 1px }
+.hero-stats .num{ font-size: 20px; font-weight: 700; color: white; line-height: 1 }
+.hero-stats .lbl{
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
+}
+
+/* ===========================================================
+   CONTENT
+   =========================================================== */
+.content{
+  padding: var(--space-6) var(--space-6) var(--space-8);
+  max-width: 1400px;
+}
+
+.section{
+  margin-bottom: var(--space-8);
+  scroll-margin-top: calc(var(--topbar-h) + var(--space-3));
+}
+.section-head{
+  display:flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.section-head h2{
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.section-head .cnt{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-mute);
+  padding: 2px 8px;
+  background: var(--bg-canvas);
+  border-radius: var(--radius-pill);
+}
+
+.section-desc{
+  margin: -4px 0 var(--space-3);
+  max-width: 88ch;
+  color: var(--text-soft);
+  font-size: 13px;
+}
+.btn-disabled{
+  background: var(--bg-soft);
+  color: var(--text-mute);
+  border: 1px solid var(--border-light);
+  cursor: not-allowed;
+}
+
+/* ===========================================================
+   ROW TABLE
+   =========================================================== */
+.tbl{
+  background: var(--bg);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.tbl-head{
+  display:grid;
+  grid-template-columns: 80px 1.6fr 1.4fr 0.9fr 200px;
+  align-items:center;
+  gap: var(--space-3);
+  padding: 10px var(--space-4);
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border-light);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+.row{
+  display:grid;
+  grid-template-columns: 80px 1.6fr 1.4fr 0.9fr 200px;
+  align-items:center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background .12s;
+}
+.row:last-child{ border-bottom: none }
+.row:hover{ background: var(--bg-soft) }
+
+.row-thumb{
+  width: 64px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+}
+.row-thumb img{
+  width:100%; height:100%;
+  object-fit: cover;
+  display:block;
+  transition: transform .3s;
+}
+.row-thumb:hover img{ transform: scale(1.08) }
+.row-thumb.placeholder{
+  background: linear-gradient(135deg, var(--pc-brand-soft), var(--bg-canvas));
+  display:flex; align-items:center; justify-content:center;
+  color: var(--pc-brand-deep);
+}
+.row-thumb.placeholder::before{
+  content: attr(data-icon);
+  position:absolute;
+  left: 7px;
+  top: 4px;
+  font-size: 12px;
+  line-height: 1;
+  opacity: .9;
+}
+.row-thumb.placeholder::after{
+  content: attr(data-initials);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+.row-thumb.thumb-video{
+  background: linear-gradient(135deg, #fee2e2, #fef3c7);
+  color: #991b1b;
+}
+.row-thumb.thumb-workflow{
+  background: linear-gradient(135deg, #e0e7ff, #dbeafe);
+  color: #3730a3;
+}
+.row-thumb.thumb-product{
+  background: linear-gradient(135deg, var(--pc-brand-soft), var(--bg-canvas));
+  color: var(--pc-brand-deep);
+}
+
+.row-product{
+  display:flex; flex-direction: column; gap: 2px;
+  min-width: 0;
+}
+.row-product .name{
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.row-product .name a{ color: inherit; transition: color .12s }
+.row-product .name a:hover{ color: var(--pc-brand) }
+.row-product .url{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-mute);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row-cats{
+  display:flex; flex-wrap: wrap; gap: 4px;
+  min-width: 0;
+}
+.row-cats .tag{
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-soft);
+  background: var(--bg-soft);
+  padding: 3px 7px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+.row-cats .tag.cat{
+  background: var(--pc-brand-soft);
+  color: var(--pc-brand-deep);
+}
+.row-cats .tag{
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.row-cats .tag.more{
+  color: var(--text-mute);
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.row-meta{
+  display:flex; flex-direction: column; gap: 4px;
+  font-size: 11px;
+}
+.row-meta .flag{
+  font-weight: 600;
+  color: var(--text);
+}
+.row-meta .type-tag{
+  display:inline-flex;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+.row-meta .type-tag.client{ background: var(--text); color: white }
+.row-meta .type-tag.demo{ background: var(--pc-accent); color: var(--pc-accent-text-on) }
+.row-meta .type-tag.video{ background: var(--pc-brand); color: white }
+
+.row-actions{
+  display:flex; gap: 6px;
+  justify-content: flex-end;
+}
+.btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all .12s;
+  white-space: nowrap;
+}
+.btn-primary{ background: var(--pc-brand); color: white }
+.btn-primary:hover{ background: var(--pc-brand-hover) }
+.btn-ghost{
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border-light);
+}
+.btn-ghost:hover{ border-color: var(--pc-brand); color: var(--pc-brand) }
+
+/* ===========================================================
+   EMPTY STATE
+   =========================================================== */
+.empty{
+  display:none;
+  padding: 80px var(--space-6);
+  text-align:center;
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+}
+.empty.show{ display:block }
+.empty h3{ font-size: 18px; margin-bottom: 6px }
+.empty p{ color: var(--text-soft); font-size: 13px }
+
+/* ===========================================================
+   RESPONSIVE
+   =========================================================== */
+.menu-toggle{
+  display: none;
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: var(--space-2);
+}
+@media (max-width: 880px){
+  .menu-toggle{ display: inline-flex; align-items: center; gap: 6px }
+  .sidebar-nav,.sidebar-search,.sidebar-foot{ display:none }
+  .sidebar.open .sidebar-nav,
+  .sidebar.open .sidebar-search,
+  .sidebar.open .sidebar-foot{ display:block }
+  .sidebar{ height:auto }
+  .hero h1{ font-size: 20px }
+
+  .tbl-head{ display: none }
+  .row{
+    grid-template-columns: 64px 1fr;
+    grid-template-areas:
+      "thumb product"
+      "thumb meta"
+      "cats cats"
+      "actions actions";
+    row-gap: 6px;
+    padding: var(--space-3);
+  }
+  .row-thumb{ grid-area: thumb; align-self: start }
+  .row-product{ grid-area: product }
+  .row-meta{ grid-area: meta; flex-direction: row; align-items: center; gap: 8px }
+  .row-cats{ grid-area: cats }
+  .row-actions{ grid-area: actions; justify-content: flex-start }
+}
+@media (max-width: 1100px) and (min-width: 881px){
+  .tbl-head,.row{ grid-template-columns: 70px 1.4fr 1fr 130px }
+  .tbl-head .col-meta{ display: none }
+  .row-meta{ display: none }
+}
+
+
+/* ===========================================================
+   CTA MODAL & SHORTCUT HELPERS
+   =========================================================== */
+.row-actions{
+  flex-wrap: wrap;
+}
+.btn-want{
+  background: #f8fafc;
+  color: var(--text-soft);
+  border: 1px solid var(--border-light);
+  font-weight: 500;
+}
+.btn-want:hover{
+  background: var(--pc-brand-soft);
+  border-color: #bfdbfe;
+  color: var(--pc-brand-deep);
+}
+.btn-shortcut{
+  padding: 6px 9px;
+  min-width: 34px;
+  justify-content: center;
+}
+.shortcut-chip{
+  display:inline-flex;
+  align-items:center;
+  gap: 4px;
+  margin-left: var(--space-2);
+  padding: 2px 8px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  color: var(--text-mute);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+}
+.row.highlight{
+  background: var(--pc-brand-soft);
+  outline: 2px solid var(--pc-brand);
+  outline-offset: -2px;
+}
+.cta-modal{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  background: rgba(15, 23, 42, 0.48);
+}
+.cta-modal.show{ display:flex; }
+.cta-card{
+  width: min(560px, 100%);
+  background: var(--bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 24px 80px rgba(0,0,0,.28);
+  overflow: hidden;
+}
+.cta-card-head{
+  padding: var(--space-5) var(--space-6);
+  background: var(--pc-brand-gradient);
+  color: white;
+}
+.cta-card-head h3{
+  font-size: 20px;
+  line-height: 1.25;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.cta-card-head p{
+  color: rgba(255,255,255,.86);
+  font-size: 13px;
+}
+.cta-card-body{
+  padding: var(--space-5) var(--space-6) var(--space-6);
+}
+.cta-note{
+  color: var(--text-soft);
+  margin-bottom: var(--space-4);
+}
+.cta-selected{
+  display:none;
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--bg-soft);
+  border: 1px solid var(--border-light);
+  font-size: 13px;
+}
+.cta-selected.show{ display:block; }
+.cta-selected strong{ display:block; margin-bottom: 2px; }
+.cta-actions{
+  display:flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+.cta-close{
+  margin-left:auto;
+}
+@media (max-width: 1100px) and (min-width: 881px){
+  .tbl-head,.row{ grid-template-columns: 70px 1.25fr .9fr 260px }
+}
+@media (min-width: 1101px){
+  .tbl-head,.row{ grid-template-columns: 80px 1.45fr 1.2fr 0.75fr 280px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===== LEFT SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-brand">
+      <div class="logo">P</div>
+      <div class="name">Netbase
+        <small>Presales & Reference Library</small>
+      </div>
+    </div>
+
+    <div class="sidebar-search">
+      <label>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="search" id="q" placeholder="Search demos & stores…" autocomplete="off">
+      </label>
+    </div>
+
+    <nav class="sidebar-nav" id="nav"></nav>
+
+    <div class="sidebar-foot">
+      <a class="sidebar-cta" href="https://wa.me/84937869689" target="_blank" rel="noopener">Talk to David →</a>
+      <div class="sig">
+        <a href="mailto:sales@printcart.com">sales@printcart.com</a>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <div class="main">
+
+    <header class="topbar">
+      <div class="crumb">
+        <button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <strong>Netbase Demo Library</strong>
+        <span class="sep">/</span>
+        <span id="crumb-cat">All categories</span>
+      </div>
+      <div class="live-pill"><span class="dot"></span>Live · Updated 2026</div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Netbase presales & reference demo library — product details, UX/UI workflows and video previews.</h1>
+        <p>A curated Netbase reference library for Printcart, Cmsmart and custom web-to-print projects. Browse product detail references, custom user-flow UX/UI demos and feature preview videos, or use a #shortcut to open the exact item for your customer.</p>
+        <div class="hero-stats">
+          <div class="stat"><span class="num" id="stat-total">—</span><span class="lbl">References & Demos</span></div>
+          <div class="stat"><span class="num" id="stat-cats">—</span><span class="lbl">Categories</span></div>
+          <div class="stat"><span class="num">2K+</span><span class="lbl">Active Stores</span></div>
+          <div class="stat"><span class="num">3</span><span class="lbl">Products · UX/UI · Videos</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="content" id="content"></div>
+
+  </div>
+
+</div>
+
+
+<!-- ===== CTA / PRESALES NOTE MODAL ===== -->
+<div class="cta-modal" id="ctaModal" aria-hidden="true">
+  <div class="cta-card" role="dialog" aria-modal="true" aria-labelledby="ctaTitle">
+    <div class="cta-card-head">
+      <h3 id="ctaTitle">Netbase Demo & Reference Library</h3>
+      <p>This Netbase page is a curated preview library for presales and reference. It does not represent the full product catalog, all available features, or every custom workflow Netbase can support.</p>
+    </div>
+    <div class="cta-card-body">
+      <p class="cta-note">For the right setup, product configuration, custom development, UX/UI improvement, printing option setup, or full-store implementation, please contact David directly on WhatsApp. We can review your business case and suggest the best path for Printcart, Cmsmart, or a custom Netbase solution.</p>
+      <div class="cta-selected" id="ctaSelected"></div>
+      <div class="cta-actions">
+        <a class="btn btn-primary" id="ctaWhatsapp" href="https://wa.me/84937869689" target="_blank" rel="noopener">Contact David on WhatsApp</a>
+        <a class="btn btn-ghost" href="mailto:sales@printcart.com?subject=Netbase%20Demo%20Reference%20Inquiry">Email Sales</a>
+        <button class="btn btn-ghost cta-close" type="button" onclick="closeCtaModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===========================================================
+   DATA
+   =========================================================== */
+
+const CAT_ICONS = {
+  "T-Shirt & Apparel": "👕",
+  "Transfers & Decoration": "🎨",
+  "Mugs & Drinkware": "☕",
+  "Stickers & Labels": "🏷",
+  "Industrial Labels & Marking": "⚙",
+  "Vehicle Graphics & Decals": "🚗",
+  "Business Cards": "💼",
+  "Office & Stationery": "📄",
+  "Banners & Signage": "🚩",
+  "Foam Board & Display": "🪧",
+  "Wedding & Invitations": "💌",
+  "Photobooks & Photo Products": "📸",
+  "Posters & Canvas": "🖼",
+  "Phone Cases": "📱",
+  "Personalized Gifts": "🎁",
+  "Bags & Totes": "👜",
+  "Calendars & Stationery": "📅",
+  "Caps & Headwear": "🧢",
+  "Packaging": "📦",
+  "Cable Management & Safety": "🔌",
+  "Signs & Engraving": "🔖",
+  "3D & Configurators": "🎲",
+  "Designer Tools & Templates": "🧰",
+  "Catalog & Print Marketing": "📰",
+  "UserFlow UX/UI Demo": "🧭",
+  "Video Preview Library": "▶"
+};
+
+const SECTION_META = {
+  product: {
+    label: "Product Detail Reference",
+    description: "Live store and product-detail references by product type. Use this block when a customer asks for examples such as photobook, stickers, banners, apparel, labels, packaging or other printable products."
+  },
+  workflow: {
+    label: "UserFlow UX/UI Demo",
+    description: "GitHub-hosted live HTML previews for custom user journeys, storefront UX, pricing option templates, customer account/B2B procurement flow and WordPress admin workflow. These are UX/UI and workflow demos, not standard product-detail pages."
+  },
+  video: {
+    label: "Video Preview Library",
+    description: "Feature preview videos for presales conversations. These links are used to show what a workflow can look like, not as full tutorial documentation or a complete implementation guide."
+  }
+};
+
+const GROUP_ORDER = ['video','workflow','product'];
+
+const DATA = [
+  /* T-SHIRT & APPAREL */
+  { cat:"T-Shirt & Apparel", type:"client", country:"Hong Kong",
+    name:"ChillTee", url:"https://chilltee.com/",
+    tags:["WooCommerce","Print-on-Demand"] },
+  { cat:"T-Shirt & Apparel", type:"client", country:"Poland",
+    name:"Koszulkowo", url:"https://koszulkowo.com/",
+    tags:["Apparel","Custom Print"] },
+  { cat:"T-Shirt & Apparel", type:"client", country:"Portugal",
+    name:"CreateFashionBrand", url:"https://createfashionbrand.com/",
+    tags:["Apparel","POD"] },
+  { cat:"T-Shirt & Apparel", type:"demo",
+    name:"3D T-Shirt Demo",
+    url:"https://demo.cmsmart.net/cmsmart-multistore/product/3d-tshirt/",
+    tags:["3D Preview","WooCommerce"] },
+
+  /* MUGS & DRINKWARE */
+  { cat:"Mugs & Drinkware", type:"demo",
+    name:"Ceramic Mug — Customer Product",
+    url:"https://chilltee.com/product/girlbabyshower-white-ceramic-mug/",
+    video:"https://www.loom.com/share/7f3e40143f2846dda787776a9d8e4475",
+    tags:["Live Customer Product","Mug"] },
+  { cat:"Mugs & Drinkware", type:"client", country:"US",
+    name:"Kustom Koozies", url:"https://kustomkoozies.com/",
+    tags:["Drinkware","Personalized"] },
+
+  /* STICKERS & LABELS */
+  { cat:"Stickers & Labels", type:"client", country:"UK",
+    name:"StickyThings", url:"https://www.stickythings.co.uk/",
+    tags:["Labels","Stickers"] },
+  { cat:"Stickers & Labels", type:"client", country:"Netherlands",
+    name:"StickerKoning", url:"https://www.stickerkoning.nl/",
+    tags:["Stickers"] },
+  { cat:"Stickers & Labels", type:"client", country:"Netherlands",
+    name:"MeerStickers", url:"https://meerstickers.nl/",
+    tags:["Stickers"] },
+  { cat:"Stickers & Labels", type:"demo",
+    name:"Frosted Label Designer",
+    url:"https://www.stickythings.co.uk/product/frosted-labels/",
+    video:"https://www.loom.com/share/d90bb5a1148b41a0b3cd758d54462554",
+    tags:["Live Customer Product","Label"] },
+  { cat:"Stickers & Labels", type:"demo",
+    name:"Diecut Sticker Designer",
+    url:"https://demo.cmsmart.net/cmsmart-multistore/product/die-cut-sticker/",
+    video:"https://www.loom.com/share/2817a375588a42dab4c97f405ccd6202",
+    tags:["Die-cut","Custom Shape"] },
+  { cat:"Stickers & Labels", type:"video",
+    name:"Sticker Designer Walkthrough",
+    url:"https://www.loom.com/share/728233d28e0644208311db903f9cde9a",
+    tags:["Video Demo"] },
+
+  /* BUSINESS CARDS */
+  { cat:"Business Cards", type:"client", country:"US",
+    name:"4OVER4 Designer", url:"https://designer.4over4.com/",
+    tags:["Commercial Printer","Business Cards"] },
+  { cat:"Business Cards", type:"demo",
+    name:"Horizontal Business Card Designer",
+    url:"https://mamadesign.co.kr/product/%ea%b0%80%eb%a1%9c%ed%98%95/",
+    video:"https://www.loom.com/share/871946632d7745be85e1c630520f4340",
+    tags:["Live Customer Product"] },
+  { cat:"Business Cards", type:"demo",
+    name:"Chinese Business Card",
+    url:"https://www.charmingprint.com/product-category/all-usage/business/business-card/",
+    video:"https://www.loom.com/share/95c9ce64cd194472b213560a43b2f94b",
+    tags:["Bilingual","CN"] },
+  { cat:"Business Cards", type:"video",
+    name:"Vertical Business Card (2 sides)",
+    url:"https://www.loom.com/share/38c551fb0c0c48dda334c1a98ecbe847",
+    tags:["Video Demo","Two-side"] },
+
+  /* BANNERS & SIGNAGE */
+  { cat:"Banners & Signage", type:"client", country:"Singapore",
+    name:"Botak Sign", url:"https://botaksign.com/",
+    tags:["Signage","Large Format"] },
+  { cat:"Banners & Signage", type:"client", country:"Germany",
+    name:"BannerKönig", url:"https://www.bannerkoenig.de/",
+    tags:["Banners","Large Format"] },
+  { cat:"Banners & Signage", type:"demo",
+    name:"Standee / Roll-Up Banner",
+    url:"https://www.bannerkoenig.de/shop/roll-up-premium/",
+    video:"https://www.loom.com/share/23144032f84c481e86918b4f953448cf",
+    tags:["Live Customer Product","Roll-up"] },
+  { cat:"Banners & Signage", type:"demo",
+    name:"Banner Design Demo",
+    url:"https://demo.cmsmart.net/cmsmart-multistore/product/banner/",
+    tags:["Generic Banner"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Yard Sign — Campaign",
+    url:"https://www.campaigncatalyst.net/product/yard-sign-apple-contour-cut-corrugated-plastic-yard-signs/",
+    tags:["Yard Sign","Political"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Custom Canopy Tents",
+    url:"https://www.billyprint.com/product/custom-canopy-tents-10-x-10-ft/",
+    tags:["Tent","Event Branding"] },
+
+  /* WEDDING & INVITATIONS */
+  { cat:"Wedding & Invitations", type:"client", country:"China",
+    name:"CharmingPrint", url:"https://www.charmingprint.com/",
+    tags:["Wedding","Stationery"] },
+  { cat:"Wedding & Invitations", type:"demo",
+    name:"Wedding Invitation Designer",
+    url:"https://www.charmingprint.com/product-category/all-usage/wedding/wedding-invitations/",
+    video:"https://www.loom.com/share/a85ba3a18ef149989b61107f2cdf5da8",
+    tags:["Live Customer Product","Invitation"] },
+
+  /* PHOTOBOOKS & PHOTO PRODUCTS */
+  { cat:"Photobooks & Photo Products", type:"demo",
+    name:"Photo Book Designer — Search",
+    url:"https://designer.printcart.com/?s=photo&post_type=product",
+    tags:["Photo Book","Multi-page"] },
+  { cat:"Photobooks & Photo Products", type:"demo",
+    name:"Photo Book — Customer Product",
+    url:"https://www.charmingprint.com/product/dct4cb0077/",
+    tags:["Live Customer Product"] },
+  { cat:"Photobooks & Photo Products", type:"demo",
+    name:"Baby Shower Photo Book",
+    url:"https://www.charmingprint.com/product-category/all-usage/personal-family/baby-shower/",
+    tags:["Personal","Family"] },
+
+  /* POSTERS & CANVAS */
+  { cat:"Posters & Canvas", type:"client", country:"France",
+    name:"Avalokita", url:"https://www.avalokita.net/",
+    tags:["Poster","Canvas"] },
+  { cat:"Posters & Canvas", type:"client", country:"Netherlands",
+    name:"Bestelprint.nl", url:"https://bestelprint.nl/",
+    tags:["Interior","Wall Art"] },
+  { cat:"Posters & Canvas", type:"demo",
+    name:"Personalized Poster Designer",
+    url:"https://www.avalokita.net/boutique/tableau-texte/tableau-personnalise-ou-poster-personnalise/",
+    tags:["Live Customer Product","Poster"] },
+  { cat:"Posters & Canvas", type:"demo",
+    name:"Canvas Printing — Category",
+    url:"https://www.charmingprint.com/product-category/all-usage/images/canvas-printing/",
+    tags:["Canvas"] },
+  { cat:"Posters & Canvas", type:"demo",
+    name:"Forex PVC Canvas",
+    url:"https://bestelprint.nl/product/forex-pvc-met-print/",
+    tags:["Live Customer Product","PVC"] },
+
+  /* PHONE CASES */
+  { cat:"Phone Cases", type:"demo",
+    name:"Phone Case Designer",
+    url:"https://designer.printcart.com/product/phonecase/",
+    tags:["Phone Case","POD"] },
+
+  /* PERSONALIZED GIFTS */
+  { cat:"Personalized Gifts", type:"client", country:"Poland",
+    name:"Ale Upominek", url:"https://aleupominek.pl/",
+    tags:["Gifts","Engraving"] },
+  { cat:"Personalized Gifts", type:"client", country:"Canada",
+    name:"Tonatelier", url:"https://tonatelier.ca/",
+    tags:["Personalized","Gifts"] },
+  { cat:"Personalized Gifts", type:"client", country:"France",
+    name:"Discomaton", url:"https://www.discomaton.fr/",
+    tags:["Personalized"] },
+  { cat:"Personalized Gifts", type:"demo",
+    name:"Pen Engraving — Parker Urban",
+    url:"https://aleupominek.pl/pl/products/dlugopis-parker-urban-czarny-gt-prezent-z-grawerem-13242.html",
+    tags:["Live Customer Product","Engraving"] },
+  { cat:"Personalized Gifts", type:"demo",
+    name:"Silver Heart Pendant",
+    url:"https://aleupominek.pl/pl/products/wisiorek-serce-lamane-srebro-925-grawer-310.html",
+    tags:["Live Customer Product","Jewelry"] },
+  { cat:"Personalized Gifts", type:"demo",
+    name:"Personalized Glass Clock",
+    url:"https://aleupominek.pl/pl/products/personalizowany-szklany-zegar-wyjatkowy-prezent-na-kazda-okazje-srednica-31-cm-30174.html",
+    tags:["Live Customer Product","Glass"] },
+  { cat:"Personalized Gifts", type:"demo",
+    name:"Engraved Petrol Lighter",
+    url:"https://aleupominek.pl/pl/products/zapalniczka-benzynowa-tasman-metal-polysk-bardzo-cie-kocham-grawer-benzyna-knot-kamienie-21394.html",
+    tags:["Live Customer Product","Lighter"] },
+  { cat:"Personalized Gifts", type:"demo",
+    name:"Gold Heart Necklace",
+    url:"https://aleupominek.pl/pl/products/zloty-naszyjnik-serce-cyrkonie-585-prezent-grawer-3308.html",
+    tags:["Live Customer Product","Jewelry"] },
+
+  /* BAGS & TOTES */
+  { cat:"Bags & Totes", type:"client", country:"US",
+    name:"GearBags", url:"https://gearbags.com/",
+    tags:["Bags","Custom"] },
+  { cat:"Bags & Totes", type:"client", country:"UK",
+    name:"PBPrint UK", url:"https://pbprint.co.uk/",
+    tags:["Paper Bags","Packaging"] },
+  { cat:"Bags & Totes", type:"demo",
+    name:"Custom Paper Mailing Bag",
+    url:"https://pbprint.co.uk/printed-paper-mailing-bags/extra-large-brown-paper-mailing-bags-with-bottom-gusset/",
+    tags:["Live Customer Product","Mailing Bag"] },
+  { cat:"Bags & Totes", type:"demo", country:"UK",
+    name:"Large Brown Paper Carrier Bag",
+    url:"https://pbprint.co.uk/printed-paper-carrier-bags/large-brown-paper-carrier-bags/",
+    tags:["Live Customer Product","Carrier Bag","Online Designer"] },
+  { cat:"Bags & Totes", type:"demo", country:"UK",
+    name:"Printed Paper Carrier Bags — Category",
+    url:"https://pbprint.co.uk/product-category/printed-paper-carrier-bags/",
+    tags:["Product Category","Paper Bags"] },
+  { cat:"Bags & Totes", type:"demo", country:"UK",
+    name:"Brown Paper Bags — Catalog",
+    url:"https://pbprint.co.uk/?s=brown%20paper%20bags&post_type=product",
+    tags:["Catalog Search","Paper Bags"] },
+  { cat:"Bags & Totes", type:"demo", country:"UK",
+    name:"White Paper Bags — Catalog",
+    url:"https://pbprint.co.uk/?s=white%20paper%20bags&post_type=product",
+    tags:["Catalog Search","Paper Bags"] },
+  { cat:"Bags & Totes", type:"demo", country:"UK",
+    name:"Bottle Bags — Catalog",
+    url:"https://pbprint.co.uk/?s=bottle%20bags&post_type=product",
+    tags:["Catalog Search","Bottle Bags"] },
+  { cat:"Bags & Totes", type:"demo", country:"UK",
+    name:"Pouches with Window — Catalog",
+    url:"https://pbprint.co.uk/?s=pouches%20with%20window&post_type=product",
+    tags:["Catalog Search","Pouches"] },
+  { cat:"Bags & Totes", type:"video",
+    name:"Custom Bag Ecommerce — Walkthrough",
+    url:"https://www.loom.com/share/9e884281a37940a6a62e62efbad6587f",
+    tags:["Video Demo"] },
+
+  /* CALENDARS & STATIONERY */
+  { cat:"Calendars & Stationery", type:"demo",
+    name:"Photo Wall Calendar",
+    url:"https://digitalpres.hu/termek/pasztell-rozsaszin-fenykepes-falinaptar/",
+    tags:["Live Customer Product","Calendar"] },
+
+  /* CAPS & HEADWEAR */
+  { cat:"Caps & Headwear", type:"video",
+    name:"Embroidered Cap — Walkthrough",
+    url:"https://www.loom.com/share/5cf9eef5e77a49718eeeec75b0a7b3df",
+    tags:["Video Demo","Embroidery"] },
+
+  /* PACKAGING */
+  { cat:"Packaging", type:"demo",
+    name:"Button Magnet",
+    url:"https://chilltee.com/product-category/itee/button-magnet/",
+    video:"https://www.loom.com/share/2dd7f29799dc47a9978acb026fe4c74c",
+    tags:["Live Customer Product","Magnet"] },
+  { cat:"Packaging", type:"client", country:"Belgium",
+    name:"Printpress", url:"https://printpress.be/",
+    tags:["Commercial Print"] },
+
+  /* 3D & CONFIGURATORS */
+  { cat:"3D & Configurators", type:"video",
+    name:"Bike Configurator",
+    url:"https://www.loom.com/share/973bf574179740bba6aa7d4e09560dd3",
+    tags:["Video Demo","Configurator"] },
+  { cat:"3D & Configurators", type:"video",
+    name:"3D Car Wrap Preview",
+    url:"https://www.loom.com/share/cf2b13a055f140fd8c801dfa9833c3c0",
+    tags:["Video Demo","3D Preview"] },
+  { cat:"3D & Configurators", type:"demo",
+    name:"3D Box Cover Preview",
+    url:"https://demo.cmsmart.net/cmsmart-multistore/product/3d-preview/",
+    tags:["3D Preview","Box"] },
+
+  /* DESIGNER TOOLS & TEMPLATES */
+  { cat:"Designer Tools & Templates", type:"demo",
+    name:"Designer Gallery — Templates",
+    url:"https://nbdesigner.cmsmart.net/templates/?paged=2",
+    tags:["Templates","Designer Tool"] },
+  { cat:"Designer Tools & Templates", type:"video",
+    name:"Pricing Option Setup",
+    url:"https://www.loom.com/share/cebf970c742c43cf89ba174babc286c4",
+    tags:["Video Demo","Admin Setup"] },
+  { cat:"Designer Tools & Templates", type:"video",
+    name:"AI File Support — Adobe Illustrator",
+    url:"https://www.loom.com/share/e4b534aa45364f759185261e2efeba40",
+    tags:["Video Demo","AI Import"] },
+
+  /* CATALOG & PRINT MARKETING */
+  { cat:"Catalog & Print Marketing", type:"demo",
+    name:"Catalog Cover Designer",
+    url:"https://demo.cmsmart.net/cmsmart-multistore/product/catalog/",
+    tags:["Catalog"] },
+  { cat:"Catalog & Print Marketing", type:"demo",
+    name:"Badge Printing",
+    url:"https://demo.cmsmart.net/cmsmart-multistore/product/badge/",
+    tags:["Badge","Event"] },
+  { cat:"Catalog & Print Marketing", type:"client", country:"Switzerland",
+    name:"NetzTech", url:"https://www.netztech.ch/",
+    tags:["Commercial Printer"] },
+  { cat:"Catalog & Print Marketing", type:"client", country:"Italy",
+    name:"Comunickare", url:"https://www.comunickare.com/",
+    tags:["Print Marketing"] },
+  { cat:"Catalog & Print Marketing", type:"client", country:"Jordan",
+    name:"Doculand", url:"https://doculand.com.jo/",
+    tags:["Commercial Print"] },
+  { cat:"Catalog & Print Marketing", type:"client", country:"US",
+    name:"InMark Media", url:"https://waybetterpostcard.com/",
+    tags:["Postcard","Direct Mail"] },
+  { cat:"Catalog & Print Marketing", type:"client", country:"US",
+    name:"BillyPrint", url:"https://www.billyprint.com/",
+    tags:["Print Shop"] },
+  { cat:"Catalog & Print Marketing", type:"client", country:"Singapore",
+    name:"PrintVolution", url:"https://printvolution.sg/",
+    tags:["Print Shop"] },
+  { cat:"Catalog & Print Marketing", type:"client", country:"Netherlands",
+    name:"Cantique", url:"https://cantique.nl/",
+    tags:["Print Marketing"] },
+  { cat:"Catalog & Print Marketing", type:"client", country:"US",
+    name:"Campaign Catalyst", url:"https://www.campaigncatalyst.net/",
+    tags:["Political Print","Signage"] },
+
+  /* ADDED PRODUCTS — BESTELPRINT.NL PRODUCTS */,
+  { cat:"Posters & Canvas", type:"demo", country:"Netherlands",
+    name:"Foto op canvas", url:"https://bestelprint.nl/product/foto-op-canvas/",
+    tags:["Live Customer Product","Bestelprint.nl","Huis & wonen / Wanddecoratie","Canvas wall print"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Netherlands",
+    name:"Textielposter met print", url:"https://bestelprint.nl/product/textielposter-met-print/",
+    tags:["Live Customer Product","Bestelprint.nl","Huis & wonen / Wanddecoratie","Textile poster"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Netherlands",
+    name:"Akoestisch wandframe met print", url:"https://bestelprint.nl/product/akoestisch-wandframe-met-print/",
+    tags:["Live Customer Product","Bestelprint.nl","Huis & wonen / Wanddecoratie","Acoustic wall frame"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Netherlands",
+    name:"Patroon behang", url:"https://bestelprint.nl/product/patroon-behang/",
+    tags:["Live Customer Product","Bestelprint.nl","Huis & wonen / Behang","Pattern wallpaper"] },
+  { cat:"Personalized Gifts", type:"demo", country:"Netherlands",
+    name:"Kussen met print", url:"https://bestelprint.nl/product/kussen-met-print/",
+    tags:["Live Customer Product","Bestelprint.nl","Huis & wonen / Inrichting","Printed cushion"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Netherlands",
+    name:"Acryl fotoblok met print", url:"https://bestelprint.nl/product/acryl-fotoblok-met-print/",
+    tags:["Live Customer Product","Bestelprint.nl","Huis & wonen / Inrichting","Acrylic photo block"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Netherlands",
+    name:"Tuindoek op canvas", url:"https://bestelprint.nl/product/tuindoek-op-canvas/",
+    tags:["Live Customer Product","Bestelprint.nl","Outdoor","Outdoor garden canvas"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Netherlands",
+    name:"Tuinposter met print", url:"https://bestelprint.nl/product/tuinposter-met-print/",
+    tags:["Live Customer Product","Bestelprint.nl","Outdoor","Garden poster"] },
+  { cat:"Banners & Signage", type:"demo", country:"Netherlands",
+    name:"Gevelvlag met print", url:"https://bestelprint.nl/product/gevelvlag-met-print/",
+    tags:["Live Customer Product","Bestelprint.nl","Vlaggen","Facade flag"] },
+  { cat:"Banners & Signage", type:"demo", country:"Netherlands",
+    name:"Beachflag met print", url:"https://bestelprint.nl/product/beachflag-met-print/",
+    tags:["Live Customer Product","Bestelprint.nl","Vlaggen","Beach flag"] },
+  { cat:"Business Cards", type:"demo", country:"Netherlands",
+    name:"Visitekaartjes", url:"https://bestelprint.nl/product/visitekaartjes-per-bundel/",
+    tags:["Live Customer Product","Bestelprint.nl","Drukwerk & stickers","Business cards"] },
+  { cat:"Stickers & Labels", type:"demo", country:"Netherlands",
+    name:"Enveloppen bedrukken", url:"https://bestelprint.nl/product/enveloppen-met-print/",
+    tags:["Live Customer Product","Bestelprint.nl","Drukwerk & stickers","Printed envelopes"] },
+  { cat:"Stickers & Labels", type:"demo", country:"Netherlands",
+    name:"Standaard posters", url:"https://bestelprint.nl/product/normale-posters/",
+    tags:["Live Customer Product","Bestelprint.nl","Drukwerk & stickers","Standard posters"] },
+  { cat:"Stickers & Labels", type:"demo", country:"Netherlands",
+    name:"Waterafstotende posters", url:"https://bestelprint.nl/product/waterafstotende-posters/",
+    tags:["Live Customer Product","Bestelprint.nl","Drukwerk & stickers","Water-resistant posters"] },
+  { cat:"Banners & Signage", type:"demo", country:"Netherlands",
+    name:"Reclameborden met print", url:"https://bestelprint.nl/product/reclamebord/",
+    tags:["Live Customer Product","Bestelprint.nl","Reclame & promotie","Advertising board / signage"] },
+  { cat:"Banners & Signage", type:"demo", country:"Netherlands",
+    name:"Roll up banner", url:"https://bestelprint.nl/product/roll-up-banner/",
+    tags:["Live Customer Product","Bestelprint.nl","Reclame & promotie","Roll-up display banner"] },
+  { cat:"Banners & Signage", type:"demo", country:"Netherlands",
+    name:"Hangende reclamebanieren", url:"https://bestelprint.nl/product/hangende-reclamebanieren/",
+    tags:["Live Customer Product","Bestelprint.nl","Reclame & promotie","Hanging advertising banner"] },
+  { cat:"Mugs & Drinkware", type:"demo", country:"Netherlands",
+    name:"Mokken met print", url:"https://bestelprint.nl/product/mokken-met-print/",
+    tags:["Live Customer Product","Bestelprint.nl","Fotoproducten","Printed mug"] },
+  { cat:"Personalized Gifts", type:"demo", country:"Netherlands",
+    name:"Puzzels met print", url:"https://bestelprint.nl/product/puzzels-met-print/",
+    tags:["Live Customer Product","Bestelprint.nl","Fotoproducten","Printed puzzle"] },
+  { cat:"Bags & Totes", type:"demo", country:"Netherlands",
+    name:"Draagtas met print", url:"https://bestelprint.nl/product/draagtas-met-print/",
+    tags:["Live Customer Product","Bestelprint.nl","Overige","Printed tote bag"] },
+  /* ADDED PRODUCTS — BILLYPRINT PRODUCTS */,
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Custom Canopy Tents 10x15", url:"https://www.billyprint.com/product/custom-canopy-tents-10-x-15-ft",
+    tags:["Live Customer Product","BillyPrint","Custom Canopy Tents","Event tent / canopy tent"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Custom Canopy Tents 10x20", url:"https://www.billyprint.com/product/custom-canopy-tents-10-x-20-ft",
+    tags:["Live Customer Product","BillyPrint","Custom Canopy Tents","Large event tent"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Vinyl Banners", url:"https://www.billyprint.com/product/vinyl-banners/",
+    tags:["Live Customer Product","BillyPrint","Banners","Large format banner"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Double-Sided Vinyl Banners", url:"https://www.billyprint.com/product/double-sided-vinyl-banners/",
+    tags:["Live Customer Product","BillyPrint","Banners","Double-sided banner"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Mesh Banners", url:"https://www.billyprint.com/product/mesh-banners/",
+    tags:["Live Customer Product","BillyPrint","Banners","Outdoor mesh banner"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Fabric Banners", url:"https://www.billyprint.com/product/fabric-banners/",
+    tags:["Live Customer Product","BillyPrint","Banners","Fabric banner"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Retractable Banners", url:"https://www.billyprint.com/product/retractable-banners/",
+    tags:["Live Customer Product","BillyPrint","Banner Stands","Roll-up / retractable banner stand"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Adjustable X Banner Stands", url:"https://www.billyprint.com/product/adjustable-x-banner-stands/",
+    tags:["Live Customer Product","BillyPrint","Banner Stands","X banner stand"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Mini Table Top Retractable Banners", url:"https://www.billyprint.com/product/mini-table-top-retractable-banners/",
+    tags:["Live Customer Product","BillyPrint","Table Top Banner Stands","Mini tabletop banner"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Feather Flags", url:"https://www.billyprint.com/product/feather-flags/",
+    tags:["Live Customer Product","BillyPrint","Custom Flag Banners","Feather flag"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Teardrop Flags", url:"https://www.billyprint.com/product/teardrop-flags/",
+    tags:["Live Customer Product","BillyPrint","Custom Flag Banners","Teardrop flag"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Rectangular Flags", url:"https://www.billyprint.com/product/rectangular-flags/",
+    tags:["Live Customer Product","BillyPrint","Custom Flag Banners","Rectangular flag"] },
+  { cat:"Vehicle Graphics & Decals", type:"demo", country:"US",
+    name:"Car Decals", url:"https://www.billyprint.com/product/car-decals/",
+    tags:["Live Customer Product","BillyPrint","Car Signs","Vehicle decal"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Custom Car Magnets", url:"https://www.billyprint.com/product/custom-car-magnets/",
+    tags:["Live Customer Product","BillyPrint","Car Signs","Vehicle magnet"] },
+  { cat:"Vehicle Graphics & Decals", type:"demo", country:"US",
+    name:"Bumper Stickers", url:"https://www.billyprint.com/product/bumper-stickers/",
+    tags:["Live Customer Product","BillyPrint","Car Signs","Vehicle sticker"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Custom Fitted Table Covers", url:"https://www.billyprint.com/product/custom-fitted-table-covers/",
+    tags:["Live Customer Product","BillyPrint","Trade Show Displays","Fitted table cover"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Custom Stretch Table Covers", url:"https://www.billyprint.com/product/custom-stretch-table-covers/",
+    tags:["Live Customer Product","BillyPrint","Trade Show Displays","Stretch table cover"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Custom Table Throws", url:"https://www.billyprint.com/product/custom-table-throws/",
+    tags:["Live Customer Product","BillyPrint","Trade Show Displays","Printed table throw"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Custom Table Runners", url:"https://www.billyprint.com/product/custom-table-runners/",
+    tags:["Live Customer Product","BillyPrint","Trade Show Displays","Printed table runner"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Posters", url:"https://www.billyprint.com/product/posters/",
+    tags:["Live Customer Product","BillyPrint","Posters","Standard poster"] },
+  { cat:"Posters & Canvas", type:"demo", country:"US",
+    name:"Photo Matte Posters", url:"https://www.billyprint.com/product/photo-matte-posters/",
+    tags:["Live Customer Product","BillyPrint","Posters","Matte photo poster"] },
+  { cat:"Posters & Canvas", type:"demo", country:"US",
+    name:"Backlit Film Posters", url:"https://www.billyprint.com/product/backlit-film-posters/",
+    tags:["Live Customer Product","BillyPrint","Posters","Backlit poster / lightbox film"] },
+  { cat:"Posters & Canvas", type:"demo", country:"US",
+    name:"Adhesive Vinyl Posters", url:"https://www.billyprint.com/product/adhesive-vinyl-posters/",
+    tags:["Live Customer Product","BillyPrint","Posters","Adhesive poster / vinyl poster"] },
+  { cat:"Banners & Signage", type:"demo", country:"US",
+    name:"Standard Postcards", url:"https://www.billyprint.com/product/standard-postcards/",
+    tags:["Live Customer Product","BillyPrint","Postcards","Postcard printing"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"US",
+    name:"Rounded Corner Postcards", url:"https://www.billyprint.com/product/rounded-corner-postcards/",
+    tags:["Live Customer Product","BillyPrint","Postcards","Rounded postcard"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"US",
+    name:"Premium Postcards", url:"https://www.billyprint.com/product/premium-postcards/",
+    tags:["Live Customer Product","BillyPrint","Postcards","Premium postcard"] },
+  { cat:"Stickers & Labels", type:"demo", country:"US",
+    name:"Wall Decals", url:"https://www.billyprint.com/product/wall-decals/",
+    tags:["Live Customer Product","BillyPrint","Decals","Wall decal"] },
+  { cat:"Stickers & Labels", type:"demo", country:"US",
+    name:"Window Cling White Posters", url:"https://www.billyprint.com/product/window-cling-white-posters/",
+    tags:["Live Customer Product","BillyPrint","Decals","Window cling poster"] },
+  { cat:"Stickers & Labels", type:"demo", country:"US",
+    name:"Die Cut Custom Stickers", url:"https://www.billyprint.com/product/die-cut-custom-stickers/",
+    tags:["Live Customer Product","BillyPrint","Labels & Stickers","Die-cut sticker"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"US",
+    name:"Flyers", url:"https://www.billyprint.com/product/flyers/",
+    tags:["Live Customer Product","BillyPrint","Print Advertising","Flyer printing"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"US",
+    name:"Brochures Bi-fold", url:"https://www.billyprint.com/product/brochures-bi-fold/",
+    tags:["Live Customer Product","BillyPrint","Print Advertising","Bi-fold brochure"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"US",
+    name:"Brochures Tri-fold", url:"https://www.billyprint.com/product/brochures-tri-fold/",
+    tags:["Live Customer Product","BillyPrint","Print Advertising","Tri-fold brochure"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"US",
+    name:"Custom Rack Cards", url:"https://www.billyprint.com/product/custom-rack-cards/",
+    tags:["Live Customer Product","BillyPrint","Print Advertising","Rack card"] },
+  { cat:"Business Cards", type:"demo", country:"US",
+    name:"Standard Business Cards", url:"https://www.billyprint.com/product/standard-business-cards/",
+    tags:["Live Customer Product","BillyPrint","Business Cards","Business card"] },
+  { cat:"Business Cards", type:"demo", country:"US",
+    name:"Glossy Business Cards", url:"https://www.billyprint.com/product/glossy-business-cards/",
+    tags:["Live Customer Product","BillyPrint","Business Cards","Glossy business card"] },
+  { cat:"Business Cards", type:"demo", country:"US",
+    name:"Matte Business Cards", url:"https://www.billyprint.com/product/matte-business-cards/",
+    tags:["Live Customer Product","BillyPrint","Business Cards","Matte business card"] },
+  { cat:"Business Cards", type:"demo", country:"US",
+    name:"Foil Accent Business Cards", url:"https://www.billyprint.com/product/foil-accent-business-cards/",
+    tags:["Live Customer Product","BillyPrint","Business Cards","Foil business card"] },
+  /* ADDED PRODUCTS — BOTAK SIGN PRODUCTS */,
+  { cat:"Stickers & Labels", type:"demo", country:"Singapore",
+    name:"Paper Label Sticker", url:"https://botaksign.com/product/paper-label-sticker/",
+    tags:["Live Customer Product","Botak Sign","Stickers & Labels","Paper label / packaging sticker"] },
+  { cat:"Stickers & Labels", type:"demo", country:"Singapore",
+    name:"Waterproof Label Sticker", url:"https://botaksign.com/product/waterproof-label-sticker/",
+    tags:["Live Customer Product","Botak Sign","Stickers & Labels","Waterproof die-cut label"] },
+  { cat:"Stickers & Labels", type:"demo", country:"Singapore",
+    name:"White Stickers", url:"https://botaksign.com/product/white-stickers/",
+    tags:["Live Customer Product","Botak Sign","Stickers & Labels","Sticker print & die-cut"] },
+  { cat:"Stickers & Labels", type:"demo", country:"Singapore",
+    name:"Vinyl Sticker Cutting", url:"https://botaksign.com/product/vinyl-stickers-cutting/",
+    tags:["Live Customer Product","Botak Sign","Stickers & Labels","Vinyl cutting / transfer sticker"] },
+  { cat:"Stickers & Labels", type:"demo", country:"Singapore",
+    name:"Flyers Stickers", url:"https://botaksign.com/product/flyers-stickers/",
+    tags:["Live Customer Product","Botak Sign","Stickers & Labels","Flyer sticker / label sticker"] },
+  { cat:"Banners & Signage", type:"demo", country:"Singapore",
+    name:"Premium Blockout Banner", url:"https://botaksign.com/product/premium-blockout-banner/",
+    tags:["Live Customer Product","Botak Sign","Banners & Signs","Blockout banner"] },
+  { cat:"Banners & Signage", type:"demo", country:"Singapore",
+    name:"Standard Banner", url:"https://botaksign.com/product/standard-banner/",
+    tags:["Live Customer Product","Botak Sign","Banners & Signs","Standard PVC banner"] },
+  { cat:"Banners & Signage", type:"demo", country:"Singapore",
+    name:"Backlit Banner", url:"https://botaksign.com/product/backlit-banner/",
+    tags:["Live Customer Product","Botak Sign","Banners & Signs","Backlit banner"] },
+  { cat:"Banners & Signage", type:"demo", country:"Singapore",
+    name:"Barrier Banners", url:"https://botaksign.com/product/barrier-banners/",
+    tags:["Live Customer Product","Botak Sign","Banners & Signs","Barrier banner / outdoor event banner"] },
+  { cat:"Banners & Signage", type:"demo", country:"Singapore",
+    name:"Express Banner", url:"https://botaksign.com/product/express-banner/",
+    tags:["Live Customer Product","Botak Sign","Banners & Signs","Fast-turnaround banner"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Singapore",
+    name:"Art Card Posters", url:"https://botaksign.com/product/art-card-posters/",
+    tags:["Live Customer Product","Botak Sign","Posters & Cards","Greeting card / invitation / postcard print"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Singapore",
+    name:"Large Format Poster", url:"https://botaksign.com/product/large-format-poster/",
+    tags:["Live Customer Product","Botak Sign","Posters & Cards","Large format poster"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Singapore",
+    name:"Hard Laminated Posters", url:"https://botaksign.com/product/hard-laminated-posters/",
+    tags:["Live Customer Product","Botak Sign","Posters & Cards","Laminated poster"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Singapore",
+    name:"Waterproof Poster", url:"https://botaksign.com/product/waterproof-poster/",
+    tags:["Live Customer Product","Botak Sign","Posters & Cards","Waterproof poster"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Singapore",
+    name:"Invitation Cards", url:"https://botaksign.com/product/invitation-cards/",
+    tags:["Live Customer Product","Botak Sign","Posters & Cards","Invitation card printing"] },
+  { cat:"Banners & Signage", type:"demo", country:"Singapore",
+    name:"Life Size Standee", url:"https://botaksign.com/product/life-size-standee/",
+    tags:["Live Customer Product","Botak Sign","Foam Board Products","Life-size standee"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Singapore",
+    name:"Large Format Foam Board Poster", url:"https://botaksign.com/product/large-format-foam-board-poster/",
+    tags:["Live Customer Product","Botak Sign","Foam Board Products","Foam board poster"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Singapore",
+    name:"Custom Shape Foam Board Poster", url:"https://botaksign.com/product/custom-shape-foam-board-poster/",
+    tags:["Live Customer Product","Botak Sign","Foam Board Products","Custom cut foam board poster"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Singapore",
+    name:"Foam Board Poster with Frame", url:"https://botaksign.com/product/foam-board-poster-with-frame/",
+    tags:["Live Customer Product","Botak Sign","Foam Board Products","Framed foam board poster"] },
+  { cat:"Stickers & Labels", type:"demo", country:"Singapore",
+    name:"Sticker Foam Wrap", url:"https://botaksign.com/product/sticker-foam-wrap/",
+    tags:["Live Customer Product","Botak Sign","Foam Board Products","Foam board wrap / display wrap"] },
+  { cat:"Business Cards", type:"demo", country:"Singapore",
+    name:"Budget Name Cards", url:"https://botaksign.com/product/budget-name-cards/",
+    tags:["Live Customer Product","Botak Sign","Marketing Materials","Business card / name card"] },
+  { cat:"Business Cards", type:"demo", country:"Singapore",
+    name:"Express Name Cards", url:"https://botaksign.com/product/express-name-cards/",
+    tags:["Live Customer Product","Botak Sign","Marketing Materials","Fast-turnaround name card"] },
+  { cat:"Business Cards", type:"demo", country:"Singapore",
+    name:"Folded Name Cards", url:"https://botaksign.com/product/folded-name-cards/",
+    tags:["Live Customer Product","Botak Sign","Marketing Materials","Folded business card"] },
+  { cat:"Business Cards", type:"demo", country:"Singapore",
+    name:"Sandwich Name Cards", url:"https://botaksign.com/product/sandwich-name-cards/",
+    tags:["Live Customer Product","Botak Sign","Marketing Materials","Premium layered business card"] },
+  { cat:"Business Cards", type:"demo", country:"Singapore",
+    name:"Magnetic Name Cards", url:"https://botaksign.com/product/magnetic-name-cards/",
+    tags:["Live Customer Product","Botak Sign","Marketing Materials","Magnetic business card"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"Singapore",
+    name:"Card Boards", url:"https://botaksign.com/product/card-board/",
+    tags:["Live Customer Product","Botak Sign","Card Board / Board Cutting","Board printing / board cutting"] },
+  { cat:"Banners & Signage", type:"demo", country:"Singapore",
+    name:"PVC Board", url:"https://botaksign.com/product/pvc-board/",
+    tags:["Live Customer Product","Botak Sign","PVC / PC Products","PVC board printing / signage board"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Singapore",
+    name:"PVC or PC Sheet", url:"https://botaksign.com/product/pvc-or-pc-sheet/",
+    tags:["Live Customer Product","Botak Sign","PVC / PC Products","PVC / polycarbonate sheet print or cut"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Singapore",
+    name:"Artist Canvas With Frame", url:"https://botaksign.com/product/artist-canvas-with-frame/",
+    tags:["Live Customer Product","Botak Sign","Gifts & Décor","Framed artist canvas"] },
+  { cat:"Personalized Gifts", type:"demo", country:"Singapore",
+    name:"Custom Shape Mousepads", url:"https://botaksign.com/product/custom-shape-mousepads/",
+    tags:["Live Customer Product","Botak Sign","Gifts & Décor","Custom mousepad"] },
+  { cat:"Bags & Totes", type:"demo", country:"Singapore",
+    name:"Tote Bags", url:"https://botaksign.com/product/tote-bags/",
+    tags:["Live Customer Product","Botak Sign","Gifts & Décor","Printed tote bag"] },
+  { cat:"Personalized Gifts", type:"demo", country:"Singapore",
+    name:"Round Keychains", url:"https://botaksign.com/product/round-keychains/",
+    tags:["Live Customer Product","Botak Sign","Gifts & Décor","Printed keychain"] },
+  { cat:"Personalized Gifts", type:"demo", country:"Singapore",
+    name:"Photos", url:"https://botaksign.com/product/photos/",
+    tags:["Live Customer Product","Botak Sign","Gifts & Décor","Photo printing"] },
+  { cat:"Banners & Signage", type:"demo", country:"Singapore",
+    name:"Roll Up Banner", url:"https://botaksign.com/product-category/display-products/display-system-with-print/roll-up-banner/",
+    tags:["Live Customer Product","Botak Sign","Display Products","Roll-up display system"] },
+  { cat:"Banners & Signage", type:"demo", country:"Singapore",
+    name:"Lightbox Frame", url:"https://botaksign.com/product-category/display-products/display-system-with-print/lightbox-frame/",
+    tags:["Live Customer Product","Botak Sign","Display Products","Lightbox display frame"] },
+  { cat:"Banners & Signage", type:"demo", country:"Singapore",
+    name:"Promotion Counter", url:"https://botaksign.com/product-category/display-products/display-system-with-print/promotion-counter/",
+    tags:["Live Customer Product","Botak Sign","Display Products","Promotion counter display"] },
+  { cat:"Banners & Signage", type:"demo", country:"Singapore",
+    name:"X-stand – 60cm x 160cm", url:"https://botaksign.com/product-category/display-products/display-system-with-print/x-stand-60cm-x-160cm/",
+    tags:["Live Customer Product","Botak Sign","Display Products","X-banner stand display"] },
+  { cat:"Banners & Signage", type:"demo", country:"Singapore",
+    name:"Brochure Stand", url:"https://botaksign.com/product-category/display-products/display-stand/brochure-stand/",
+    tags:["Live Customer Product","Botak Sign","Display Products","Brochure display stand"] },
+  /* ADDED PRODUCTS — CANTIQUE PRODUCTS */,
+  { cat:"Business Cards", type:"demo", country:"Netherlands",
+    name:"Visitekaartjes", url:"https://zakelijk.cantique.nl/producten/huisstijl/visitekaartjes/",
+    tags:["Live Customer Product","Cantique","Huisstijl","Business cards"] },
+  { cat:"Office & Stationery", type:"demo", country:"Netherlands",
+    name:"Briefpapier", url:"https://zakelijk.cantique.nl/product/briefpapier/",
+    tags:["Live Customer Product","Cantique","Huisstijl","Letterhead / branded stationery"] },
+  { cat:"Office & Stationery", type:"demo", country:"Netherlands",
+    name:"Enveloppen", url:"https://zakelijk.cantique.nl/producten/huisstijl/enveloppen/",
+    tags:["Live Customer Product","Cantique","Huisstijl","Printed envelopes"] },
+  { cat:"Office & Stationery", type:"demo", country:"Netherlands",
+    name:"Kantoorartikelen", url:"https://zakelijk.cantique.nl/producten/huisstijl/kantoorartikelen/",
+    tags:["Live Customer Product","Cantique","Huisstijl","Office stationery"] },
+  { cat:"Office & Stationery", type:"demo", country:"Netherlands",
+    name:"Wobblers", url:"https://zakelijk.cantique.nl/product/wobblers/",
+    tags:["Live Customer Product","Cantique","Huisstijl","Shelf wobblers / POS display cards"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"Netherlands",
+    name:"Flyers en Folders", url:"https://zakelijk.cantique.nl/producten/promotie/flyers-en-folders/",
+    tags:["Live Customer Product","Cantique","Promotie","Flyers, folded leaflets"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"Netherlands",
+    name:"Brochures/magazines met oog-nieten", url:"https://zakelijk.cantique.nl/product/brochures-magazines-met-oog-nieten/",
+    tags:["Live Customer Product","Cantique","Promotie","Saddle-stitched brochures / magazines"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Netherlands",
+    name:"Posters", url:"https://zakelijk.cantique.nl/producten/promotie/posters/",
+    tags:["Live Customer Product","Cantique","Promotie","Posters"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"Netherlands",
+    name:"Kaarten", url:"https://zakelijk.cantique.nl/producten/promotie/kaarten/",
+    tags:["Live Customer Product","Cantique","Promotie","Cards / promotional cards"] },
+  { cat:"Stickers & Labels", type:"demo", country:"Netherlands",
+    name:"Stickers", url:"https://zakelijk.cantique.nl/producten/promotie/stickers/",
+    tags:["Live Customer Product","Cantique","Promotie","Stickers / labels"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"Netherlands",
+    name:"Spaarproducten", url:"https://zakelijk.cantique.nl/producten/promotie/spaarproducten/",
+    tags:["Live Customer Product","Cantique","Promotie","Loyalty / savings stamp products"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"Netherlands",
+    name:"Promotiematerialen", url:"https://zakelijk.cantique.nl/producten/promotie/promotiematerialen/",
+    tags:["Live Customer Product","Cantique","Promotie","General promotional materials"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"Netherlands",
+    name:"Boeken", url:"https://zakelijk.cantique.nl/producten/boeken/",
+    tags:["Live Customer Product","Cantique","Boeken","Books / printed book products"] },
+  { cat:"Photobooks & Photo Products", type:"demo", country:"Netherlands",
+    name:"Fotoproducten", url:"https://zakelijk.cantique.nl/producten/fotoproducten/",
+    tags:["Live Customer Product","Cantique","Fotoproducten","Photo products"] },
+  { cat:"Banners & Signage", type:"demo", country:"Netherlands",
+    name:"Banners en spandoeken", url:"https://zakelijk.cantique.nl/producten/buitenreclame/banners-en-spandoeken/",
+    tags:["Live Customer Product","Cantique","Buitenreclame","Banners / outdoor banners"] },
+  { cat:"Banners & Signage", type:"demo", country:"Netherlands",
+    name:"Presentatieborden", url:"https://zakelijk.cantique.nl/producten/buitenreclame/presentatieborden/",
+    tags:["Live Customer Product","Cantique","Buitenreclame","Presentation boards / display boards"] },
+  { cat:"Banners & Signage", type:"demo", country:"Netherlands",
+    name:"Vlaggen", url:"https://zakelijk.cantique.nl/producten/buitenreclame/vlaggen/",
+    tags:["Live Customer Product","Cantique","Buitenreclame","Flags"] },
+  { cat:"Banners & Signage", type:"demo", country:"Netherlands",
+    name:"Accessoires", url:"https://zakelijk.cantique.nl/producten/buitenreclame/accessoires/",
+    tags:["Live Customer Product","Cantique","Buitenreclame","Outdoor advertising accessories"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"Netherlands",
+    name:"Horecadrukwerk", url:"https://zakelijk.cantique.nl/producten/horeca/horecadrukwerk/",
+    tags:["Live Customer Product","Cantique","Horeca","Restaurant / hospitality print"] },
+  { cat:"Personalized Gifts", type:"demo", country:"Netherlands",
+    name:"Servies", url:"https://zakelijk.cantique.nl/producten/horeca/servies/",
+    tags:["Live Customer Product","Cantique","Horeca","Printed tableware / serving items"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"Netherlands",
+    name:"Evenementen", url:"https://zakelijk.cantique.nl/producten/horeca/evenementen/",
+    tags:["Live Customer Product","Cantique","Horeca","Event print materials"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"Netherlands",
+    name:"Textiel", url:"https://zakelijk.cantique.nl/producten/horeca/textiel/",
+    tags:["Live Customer Product","Cantique","Horeca","Printed textile for hospitality"] },
+  { cat:"Banners & Signage", type:"demo", country:"Netherlands",
+    name:"Winkelpresentatie", url:"https://zakelijk.cantique.nl/producten/presentatie/winkelpresentatie/",
+    tags:["Live Customer Product","Cantique","Presentatie","Retail presentation / shop display"] },
+  { cat:"Banners & Signage", type:"demo", country:"Netherlands",
+    name:"Beurspresentatie", url:"https://zakelijk.cantique.nl/producten/presentatie/beurspresentatie/",
+    tags:["Live Customer Product","Cantique","Presentatie","Trade show presentation"] },
+  { cat:"Posters & Canvas", type:"demo", country:"Netherlands",
+    name:"Wanddecoratie", url:"https://zakelijk.cantique.nl/producten/presentatie/wanddecoratie/",
+    tags:["Live Customer Product","Cantique","Presentatie","Wall decoration"] },
+  { cat:"Banners & Signage", type:"demo", country:"Netherlands",
+    name:"Banners", url:"https://zakelijk.cantique.nl/producten/presentatie/banners/",
+    tags:["Live Customer Product","Cantique","Presentatie","Presentation banners"] },
+  { cat:"Personalized Gifts", type:"demo", country:"Netherlands",
+    name:"Pennen", url:"https://zakelijk.cantique.nl/product/pennen/",
+    tags:["Live Customer Product","Cantique","Relatiegeschenken","Printed pens"] },
+  { cat:"Personalized Gifts", type:"demo", country:"Netherlands",
+    name:"Etens- en drinkwaren", url:"https://zakelijk.cantique.nl/producten/relatiegeschenken/etens-en-drinkwaren/",
+    tags:["Live Customer Product","Cantique","Relatiegeschenken","Food and drink gifts"] },
+  { cat:"Personalized Gifts", type:"demo", country:"Netherlands",
+    name:"Goodies", url:"https://zakelijk.cantique.nl/producten/relatiegeschenken/goodies/",
+    tags:["Live Customer Product","Cantique","Relatiegeschenken","Promotional goodies"] },
+  { cat:"Personalized Gifts", type:"demo", country:"Netherlands",
+    name:"Cadeaubonnen en cheques", url:"https://zakelijk.cantique.nl/producten/relatiegeschenken/cadeaubonnen-en-cheques/",
+    tags:["Live Customer Product","Cantique","Relatiegeschenken","Gift cards / vouchers"] },
+  { cat:"Bags & Totes", type:"demo", country:"Netherlands",
+    name:"Tassen", url:"https://zakelijk.cantique.nl/producten/tassen/",
+    tags:["Live Customer Product","Cantique","Tassen","Printed bags"] },
+  { cat:"Packaging", type:"demo", country:"Netherlands",
+    name:"Verzendverpakkingen", url:"https://zakelijk.cantique.nl/producten/verpakkingen/verzendverpakkingen/",
+    tags:["Live Customer Product","Cantique","Verpakkingen","Shipping packaging"] },
+  { cat:"Packaging", type:"demo", country:"Netherlands",
+    name:"Productverpakkingen", url:"https://zakelijk.cantique.nl/producten/verpakkingen/productverpakkingen/",
+    tags:["Live Customer Product","Cantique","Verpakkingen","Product packaging"] },
+  { cat:"Packaging", type:"demo", country:"Netherlands",
+    name:"Geschenkverpakkingen", url:"https://zakelijk.cantique.nl/producten/verpakkingen/geschenkverpakkingen/",
+    tags:["Live Customer Product","Cantique","Verpakkingen","Gift packaging"] },
+  { cat:"Packaging", type:"demo", country:"Netherlands",
+    name:"Tape", url:"https://zakelijk.cantique.nl/producten/verpakkingen/tape/",
+    tags:["Live Customer Product","Cantique","Verpakkingen","Printed tape / packaging tape"] },
+  { cat:"Catalog & Print Marketing", type:"demo", country:"Netherlands",
+    name:"Traktaties", url:"https://repro.cantique.nl/",
+    tags:["Live Customer Product","Cantique","Familiedrukwerk","Kids treats / party print products"] },
+  { cat:"Wedding & Invitations", type:"demo", country:"Netherlands",
+    name:"Geboortekaartjes", url:"https://repro.cantique.nl/",
+    tags:["Live Customer Product","Cantique","Familiedrukwerk","Birth announcement cards"] },
+  { cat:"Photobooks & Photo Products", type:"demo", country:"Netherlands",
+    name:"Fotoproducten", url:"https://repro.cantique.nl/",
+    tags:["Live Customer Product","Cantique","Familiedrukwerk","Family photo products"] },
+  { cat:"Wedding & Invitations", type:"demo", country:"Netherlands",
+    name:"Trouw-, jubilea- en rouwdrukwerk", url:"https://repro.cantique.nl/",
+    tags:["Live Customer Product","Cantique","Familiedrukwerk","Wedding, anniversary and funeral print"] },
+  /* ADDED PRODUCTS — MEERSTICKERS PRODUCTS */,
+  { cat:"Vehicle Graphics & Decals", type:"demo", country:"Netherlands",
+    name:"Kentekenplaathouder stickers", url:"https://meerstickers.nl/product/kentekenplaathouder-stickers/",
+    tags:["Live Customer Product","MeerStickers","Automotive","License plate holder stickers"] },
+  { cat:"Vehicle Graphics & Decals", type:"demo", country:"Netherlands",
+    name:"Showroom platen", url:"https://meerstickers.nl/product/showroomplaten/",
+    tags:["Live Customer Product","MeerStickers","Automotive","Showroom plate sticker, PVC plate option"] },
+  { cat:"Vehicle Graphics & Decals", type:"demo", country:"Netherlands",
+    name:"Smeerkaartjes onderhoud", url:"https://meerstickers.nl/product/smeerkaartjes-onderhoud/",
+    tags:["Live Customer Product","MeerStickers","Automotive","Maintenance service cards/stickers"] },
+  { cat:"Vehicle Graphics & Decals", type:"demo", country:"Netherlands",
+    name:"Autoraam stickers Aanbieding", url:"https://meerstickers.nl/product/autoraam-stickers-aanbieding/",
+    tags:["Live Customer Product","MeerStickers","Automotive","Car window sale sticker"] },
+  { cat:"Vehicle Graphics & Decals", type:"demo", country:"Netherlands",
+    name:"Wielnaaf stickers eigen ontwerp", url:"https://meerstickers.nl/product/wielnaaf-stickers-eigen-ontwerp/",
+    tags:["Live Customer Product","MeerStickers","Automotive","Custom wheel hub stickers"] },
+  { cat:"Vehicle Graphics & Decals", type:"demo", country:"Netherlands",
+    name:"Onderhoud stickers remvloeistof vervangen", url:"https://meerstickers.nl/product/onderhoud-stickers-remvloeistof-vervangen-op/",
+    tags:["Live Customer Product","MeerStickers","Automotive","Automotive maintenance stickers"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Netherlands",
+    name:"Pijl stickers Leidingen", url:"https://meerstickers.nl/product/pijl-stickers-leidingen/",
+    tags:["Live Customer Product","MeerStickers","Leiding stickers / Markeringen","Pipe direction arrow stickers"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Netherlands",
+    name:"Leidingmarkering Retour Gekoeld Water", url:"https://meerstickers.nl/product/leidingstickers-leidingmarkering-retour-gekoeld-water-water-kopie/",
+    tags:["Live Customer Product","MeerStickers","Leiding stickers / Markeringen","Pipe marking sticker, water"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Netherlands",
+    name:"Leidingmarkering Zwavelzuur 78%", url:"https://meerstickers.nl/product/leidingstickers-leidingmarkering-zwavelzuur-78-basen/",
+    tags:["Live Customer Product","MeerStickers","Leiding stickers / Markeringen","Pipe marking sticker, basen"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Netherlands",
+    name:"Leidingmarkering Zwavelwaterstof", url:"https://meerstickers.nl/product/leidingstickers-leidingmarkering-zwavelwaterstof-gassen/",
+    tags:["Live Customer Product","MeerStickers","Leiding stickers / Markeringen","Pipe marking sticker, gas"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Netherlands",
+    name:"Keuringsstickers slang beproefd", url:"https://meerstickers.nl/product/keuringsstickers-slang-beproefd/",
+    tags:["Live Customer Product","MeerStickers","Keuringsstickers","Inspection sticker, hose tested"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Netherlands",
+    name:"Keuringsstickers nieuw geleverd", url:"https://meerstickers.nl/product/keuringsstickers-nieuw-geleverd/",
+    tags:["Live Customer Product","MeerStickers","Keuringsstickers","Inspection sticker, newly delivered"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Netherlands",
+    name:"Keuringssticker volgende keuringsdatum", url:"https://meerstickers.nl/product/keuringssticker-volgende-keuringsdatum/",
+    tags:["Live Customer Product","MeerStickers","Keuringsstickers","Next inspection date sticker"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Netherlands",
+    name:"Keuringssticker NEN 3140 volgende keuringsdatum", url:"https://meerstickers.nl/product/keuringssticker-nen-3140-volgende-keuringsdatum/",
+    tags:["Live Customer Product","MeerStickers","Keuringsstickers","NEN 3140 inspection sticker"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Netherlands",
+    name:"Pictogram Verboden voor Scootmobielen", url:"https://meerstickers.nl/product/pictogram-verboden-voor-scootmobielen/",
+    tags:["Live Customer Product","MeerStickers","Pictogram stickers","Prohibition pictogram sticker"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Netherlands",
+    name:"Pictogram geen drinkwater rechthoekig sticker", url:"https://meerstickers.nl/product/pictogram-geen-drinkwater-rechthoekig-sticker/",
+    tags:["Live Customer Product","MeerStickers","Pictogram stickers","Safety pictogram sticker"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Netherlands",
+    name:"Pictogram Alcohol verboden sticker", url:"https://meerstickers.nl/product/pictogram-alcohol-verboden-sticker/",
+    tags:["Live Customer Product","MeerStickers","Pictogram stickers","Alcohol prohibited sticker"] },
+  { cat:"Vehicle Graphics & Decals", type:"demo", country:"Netherlands",
+    name:"Honda MB5 Gold metallic stickerset", url:"https://meerstickers.nl/product/honda-mb5-gold-metallic-stickerset/",
+    tags:["Live Customer Product","MeerStickers","Motor / Brommer stickers","Honda motor/brommer sticker set"] },
+  { cat:"Vehicle Graphics & Decals", type:"demo", country:"Netherlands",
+    name:"Honda MB5 Koffer stickerset", url:"https://meerstickers.nl/product/honda-mb5-koffer-stickerset/",
+    tags:["Live Customer Product","MeerStickers","Motor / Brommer stickers","Honda luggage/case sticker set"] },
+  { cat:"Vehicle Graphics & Decals", type:"demo", country:"Netherlands",
+    name:"Honda MBX Rothmans stickerset", url:"https://meerstickers.nl/product/honda-mbx-rothmans-stickerset/",
+    tags:["Live Customer Product","MeerStickers","Motor / Brommer stickers","Honda MBX decal/sticker set"] },
+  { cat:"Vehicle Graphics & Decals", type:"demo", country:"Netherlands",
+    name:"Camper CI Magis 83 XT logostickers", url:"https://meerstickers.nl/product/camper-ci-magis-83-xt-logostickers/",
+    tags:["Live Customer Product","MeerStickers","Camper stickers","Camper logo stickers"] },
+  { cat:"Personalized Gifts", type:"demo", country:"Netherlands",
+    name:"Baron balpen – kunststof", url:"https://meerstickers.nl/product/baron-balpen-kunststof/",
+    tags:["Live Customer Product","MeerStickers","Pennen","Printed plastic ballpoint pen"] },
+  { cat:"Personalized Gifts", type:"demo", country:"Netherlands",
+    name:"Bamboe pen – zwart schrijvend", url:"https://meerstickers.nl/product/bamboe-pen-zwart-schrijvend/",
+    tags:["Live Customer Product","MeerStickers","Pennen","Printed bamboo pen"] },
+  /* ADDED PRODUCTS — TON ATELIER PRODUCTS */,
+  { cat:"T-Shirt & Apparel", type:"demo", country:"Canada",
+    name:"T-Shirts", url:"https://tonatelier.ca/t-shirts/",
+    tags:["Live Customer Product","Ton Atelier","Custom Apparel","Custom printed apparel / T-shirt"] },
+  { cat:"T-Shirt & Apparel", type:"demo", country:"Canada",
+    name:"Crewnecks", url:"https://tonatelier.ca/crewnecks/",
+    tags:["Live Customer Product","Ton Atelier","Custom Apparel","Custom crewneck sweatshirt"] },
+  { cat:"T-Shirt & Apparel", type:"demo", country:"Canada",
+    name:"Hoodies", url:"https://tonatelier.ca/hoodies/",
+    tags:["Live Customer Product","Ton Atelier","Custom Apparel","Custom hoodie printing"] },
+  { cat:"T-Shirt & Apparel", type:"demo", country:"Canada",
+    name:"Long Sleeves", url:"https://tonatelier.ca/long-sleeves/",
+    tags:["Live Customer Product","Ton Atelier","Custom Apparel","Custom long sleeve apparel"] },
+  { cat:"T-Shirt & Apparel", type:"demo", country:"Canada",
+    name:"Polos", url:"https://tonatelier.ca/polos/",
+    tags:["Live Customer Product","Ton Atelier","Custom Apparel","Custom polo shirt"] },
+  { cat:"Caps & Headwear", type:"demo", country:"Canada",
+    name:"Headwear", url:"https://tonatelier.ca/headwear/",
+    tags:["Live Customer Product","Ton Atelier","Custom Apparel","Custom cap / hat decoration"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"Ultra Soft Transfers", url:"https://tonatelier.ca/product/ultra-soft-transfer/",
+    tags:["Live Customer Product","Ton Atelier","Screen Printed Transfers","Screen printed plastisol transfer"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"Ultra Stretchable Transfers / Performance Transfer", url:"https://tonatelier.ca/product/performance-transfer/",
+    tags:["Live Customer Product","Ton Atelier","Screen Printed Transfers","Stretchable heat transfer for activewear"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"Reflective Transfers", url:"https://tonatelier.ca/product/reflective-transfers/",
+    tags:["Live Customer Product","Ton Atelier","Screen Printed Transfers","Reflective screen printed transfer"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"Puff Transfers", url:"https://tonatelier.ca/product/puff-transfers/",
+    tags:["Live Customer Product","Ton Atelier","Screen Printed Transfers","Puff effect screen printed transfer"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"Metallic Transfers", url:"https://tonatelier.ca/product/metallic-heat-transfers/",
+    tags:["Live Customer Product","Ton Atelier","Screen Printed Transfers","Metallic plastisol transfer"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"Glow in the Dark Transfer", url:"https://tonatelier.ca/product/glow-in-the-dark-transfer/",
+    tags:["Live Customer Product","Ton Atelier","Screen Printed Transfers","Glow effect heat transfer"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"DTF Full Color Transfers", url:"https://tonatelier.ca/product/dtf-by-sq-inch/",
+    tags:["Live Customer Product","Ton Atelier","DTF Transfers","Custom DTF transfer by size / square inch"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"DTF EVO Transfers", url:"https://tonatelier.ca/product/dtf-evo-transfers/",
+    tags:["Live Customer Product","Ton Atelier","DTF Transfers","Premium 9-color DTF transfer"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"DTF Gang Sheet 22″ x 39″", url:"https://tonatelier.ca/product/dtf-gang-sheet-transfer/",
+    tags:["Live Customer Product","Ton Atelier","DTF Transfers","DTF gang sheet transfer"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"DTF Color Chart V3", url:"https://tonatelier.ca/product/dtf-color-chart/",
+    tags:["Live Customer Product","Ton Atelier","DTF Transfers","DTF color chart sample"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"DTF Color Chart EVO V1", url:"https://tonatelier.ca/product/dtf-color-chart-evo-v1/",
+    tags:["Live Customer Product","Ton Atelier","DTF Transfers","DTF EVO color chart sample"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"EasyPeel – UV DTF Stickers", url:"https://tonatelier.ca/product/easy-peel-uv-dtf-stickers/",
+    tags:["Live Customer Product","Ton Atelier","UV DTF Stickers","UV DTF sticker with easy peel film"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"UV DTF Stickers", url:"https://tonatelier.ca/product/uv-dtf-sticker-by-size/",
+    tags:["Live Customer Product","Ton Atelier","UV DTF Stickers","Standard UV DTF sticker"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"Premade Stickers", url:"https://tonatelier.ca/product-category/premade-ready-design-transfers/uv-stickers-premade/",
+    tags:["Live Customer Product","Ton Atelier","UV DTF Stickers","Ready-made UV sticker designs"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"Embroidered Patches", url:"https://tonatelier.ca/product/embroidered-heat-patches/",
+    tags:["Live Customer Product","Ton Atelier","Patches","Embroidered iron-on patch"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"Full Color Patches", url:"https://tonatelier.ca/product/sublimation-iron-on-patches/",
+    tags:["Live Customer Product","Ton Atelier","Patches","Sublimation / full-color iron-on patch"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"Leatherette Patches", url:"https://tonatelier.ca/product/faux-leather-patches/",
+    tags:["Live Customer Product","Ton Atelier","Patches","Faux leather patch / engraved patch"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"3D Embroidered Patches", url:"https://tonatelier.ca/product/3d-embroidered-iron-on-patches/",
+    tags:["Live Customer Product","Ton Atelier","Patches","3D embroidered iron-on patch"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"Sublimation Transfers", url:"https://tonatelier.ca/product/sublimation-transfers/",
+    tags:["Live Customer Product","Ton Atelier","Sublimation","Custom sublimation transfer"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"Sublimation Socks", url:"https://tonatelier.ca/product/sublimation-socks/",
+    tags:["Live Customer Product","Ton Atelier","Sublimation","Custom sublimation socks"] },
+  { cat:"Designer Tools & Templates", type:"demo", country:"Canada",
+    name:"Art Services", url:"https://tonatelier.ca/product/art-services/",
+    tags:["Live Customer Product","Ton Atelier","Services","Artwork preparation / design support service"] },
+  { cat:"T-Shirt & Apparel", type:"demo", country:"Canada",
+    name:"Contract Printing", url:"https://tonatelier.ca/contract-printing/",
+    tags:["Live Customer Product","Ton Atelier","Services","Apparel contract printing service"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"Transfers Dropshipping", url:"https://tonatelier.ca/transfers-dropshipping/",
+    tags:["Live Customer Product","Ton Atelier","Services","Transfer fulfillment / dropshipping service"] },
+  { cat:"T-Shirt & Apparel", type:"demo", country:"Canada",
+    name:"Custom Apparel Dropshipping", url:"https://tonatelier.ca/custom-apparel-dropshipping/",
+    tags:["Live Customer Product","Ton Atelier","Services","Apparel decoration fulfillment / dropshipping"] },
+  { cat:"Transfers & Decoration", type:"demo", country:"Canada",
+    name:"Sample Pack", url:"https://tonatelier.ca/product/sample-pack/",
+    tags:["Live Customer Product","Ton Atelier","Sample","Transfer sample pack"] },
+  /* ADDED PRODUCTS — NETZTECH PRODUCTS */,
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Switzerland",
+    name:"Etikettendrucker Brother QL-800", url:"https://www.netztech.ch/etikettendrucker-brother-ql-800.html",
+    tags:["Live Customer Product","NetzTech","Beschriftungstechnik","Label printer / Etikettendrucker"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Switzerland",
+    name:"Standard TZe Schriftbänder laminiert", url:"https://www.netztech.ch/beschriftungstechnik/schriftbaender",
+    tags:["Live Customer Product","NetzTech","Beschriftungstechnik","Laminated label tape / Schriftband"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Switzerland",
+    name:"TZe Textil-Aufbügelband", url:"https://www.netztech.ch/beschriftungstechnik/schriftbaender",
+    tags:["Live Customer Product","NetzTech","Beschriftungstechnik","Textile iron-on label tape"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Switzerland",
+    name:"Edding 3000 Permanentmarker", url:"https://www.netztech.ch/beschriftungstechnik",
+    tags:["Live Customer Product","NetzTech","Beschriftungstechnik","Permanent marker / Markierstift"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Switzerland",
+    name:"Prüfkleber", url:"https://www.netztech.ch/beschriftungstechnik/apparate-und-leiterkennzeichnung/prufkleber.html",
+    tags:["Live Customer Product","NetzTech","Beschriftungstechnik","Inspection sticker / Prüfkleber"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Switzerland",
+    name:"Rohrmarkierungen Aufkleber, zum Beschriften", url:"https://www.netztech.ch/beschriftungstechnik/apparate-und-leiterkennzeichnung/rohrmarkierer-pfeil-selbsklebend.html",
+    tags:["Live Customer Product","NetzTech","Beschriftungstechnik","Pipe marking sticker / Rohrmarkierung"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Switzerland",
+    name:"Notausgangsschild, Fluchtrichtung geradeaus", url:"https://www.netztech.ch/beschriftungstechnik/apparate-und-leiterkennzeichnung",
+    tags:["Live Customer Product","NetzTech","Beschriftungstechnik","Emergency exit sign sticker"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Switzerland",
+    name:"Vorsicht Hochspannung, Warnschild Aufkleber", url:"https://www.netztech.ch/beschriftungstechnik/apparate-und-leiterkennzeichnung",
+    tags:["Live Customer Product","NetzTech","Beschriftungstechnik","Warning label / safety sticker"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Leiterkennzeichnung", url:"https://www.netztech.ch/beschriftungstechnik/kabelmarkierungen-und-leiterkennzeichnung",
+    tags:["Live Customer Product","NetzTech","Kabel- und Leiterkennzeichnung","Conductor marking"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Kabelkennzeichnung", url:"https://www.netztech.ch/beschriftungstechnik/kabelmarkierungen-und-leiterkennzeichnung",
+    tags:["Live Customer Product","NetzTech","Kabel- und Leiterkennzeichnung","Cable marking"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Preisgünstiger Universal-Kabelbinder, natur", url:"https://www.netztech.ch/befestigungstechnik",
+    tags:["Live Customer Product","NetzTech","Befestigungstechnik","Universal cable tie"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Kabelbinder mit angesetzter Beschriftungsfahne", url:"https://www.netztech.ch/befestigungstechnik/kabelbinder-mit-beschriftungsfahne/kabelbinder-mit-angesetzter-beschriftungsfahne.html",
+    tags:["Live Customer Product","NetzTech","Befestigungstechnik","Cable tie with labeling flag"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Kabelbinder mit integrierter Beschriftungsfahne", url:"https://www.netztech.ch/befestigungstechnik/kabelbinder-mit-beschriftungsfahne",
+    tags:["Live Customer Product","NetzTech","Befestigungstechnik","Cable tie with integrated label field"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Kabelbinder Sets", url:"https://www.netztech.ch/befestigungstechnik",
+    tags:["Live Customer Product","NetzTech","Befestigungstechnik","Cable tie set"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Kabelbinderzange", url:"https://www.netztech.ch/befestigungstechnik",
+    tags:["Live Customer Product","NetzTech","Befestigungstechnik","Cable tie tool"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Klettbandrolle Industrie farbig", url:"https://www.netztech.ch/befestigungstechnik/klettbaender/klettbandrolle/klettbandrolle-industrie-farbig.html",
+    tags:["Live Customer Product","NetzTech","Befestigungstechnik","Industrial hook-and-loop roll"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Standard Klettbandrolle schwarz", url:"https://www.netztech.ch/befestigungstechnik/klettbaender/klettbandrolle",
+    tags:["Live Customer Product","NetzTech","Befestigungstechnik","Velcro roll / cable management tape"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Plomben", url:"https://www.netztech.ch/befestigungstechnik",
+    tags:["Live Customer Product","NetzTech","Befestigungstechnik","Security seals"] },
+  { cat:"Signs & Engraving", type:"demo", country:"Switzerland",
+    name:"Lasergravur Kunststoffschilder", url:"https://www.netztech.ch/beschriftungsshop",
+    tags:["Live Customer Product","NetzTech","Beschriftungsshop","Laser engraved plastic signs"] },
+  { cat:"Signs & Engraving", type:"demo", country:"Switzerland",
+    name:"Lasergravur Aluminium eloxiert", url:"https://www.netztech.ch/beschriftungsshop",
+    tags:["Live Customer Product","NetzTech","Beschriftungsshop","Engraved anodized aluminium signs"] },
+  { cat:"Signs & Engraving", type:"demo", country:"Switzerland",
+    name:"Schilder Edelstahl lasergraviert", url:"https://www.netztech.ch/beschriftungsshop",
+    tags:["Live Customer Product","NetzTech","Beschriftungsshop","Laser engraved stainless steel signs"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Kabelbinder beschriftet", url:"https://www.netztech.ch/beschriftungsshop",
+    tags:["Live Customer Product","NetzTech","Beschriftungsshop","Custom printed cable ties"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Switzerland",
+    name:"Rohrkennzeichnungen", url:"https://www.netztech.ch/beschriftungsshop",
+    tags:["Live Customer Product","NetzTech","Beschriftungsshop","Custom pipe labels"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Switzerland",
+    name:"Folienschrift / Einzelbuchstaben", url:"https://www.netztech.ch/beschriftungsshop",
+    tags:["Live Customer Product","NetzTech","Beschriftungsshop","Vinyl lettering / individual letters"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Switzerland",
+    name:"Direktdruck mit UV-Tinte", url:"https://www.netztech.ch/beschriftungsshop",
+    tags:["Live Customer Product","NetzTech","Beschriftungsshop","UV direct print"] },
+  { cat:"Industrial Labels & Marking", type:"demo", country:"Switzerland",
+    name:"Folien Digitaldruck", url:"https://www.netztech.ch/beschriftungsshop",
+    tags:["Live Customer Product","NetzTech","Beschriftungsshop","Digital printed vinyl"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Preisgünstiger Schrumpfschlauch 2:1", url:"https://www.netztech.ch/schrumpftechnik/schrumpfschlauch/schrumpfschlauch-ntt-100.html",
+    tags:["Live Customer Product","NetzTech","Schrumpftechnik","Heat shrink tube 2:1"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Industrie Schrumpfschlauch 2:1", url:"https://www.netztech.ch/schrumpftechnik/schrumpfschlauch",
+    tags:["Live Customer Product","NetzTech","Schrumpftechnik","Industrial heat shrink tube"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Industrie Schrumpfschlauch 3:1", url:"https://www.netztech.ch/schrumpftechnik/schrumpfschlauch",
+    tags:["Live Customer Product","NetzTech","Schrumpftechnik","Industrial heat shrink tube 3:1"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Industrie Schrumpfschlauch mit Klebmittel 3:1", url:"https://www.netztech.ch/schrumpftechnik/schrumpfschlauch",
+    tags:["Live Customer Product","NetzTech","Schrumpftechnik","Adhesive-lined heat shrink tube"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Schrumpfschlauch-Set Mini/Maxi", url:"https://www.netztech.ch/schrumpftechnik/schrumpfschlauch-set/schrumpfschlauch-set.html",
+    tags:["Live Customer Product","NetzTech","Schrumpftechnik","Heat shrink tube set"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Lötverbinder mit Lötzinn", url:"https://www.netztech.ch/schrumpftechnik/lotverbinder/loetverbinder.html",
+    tags:["Live Customer Product","NetzTech","Schrumpftechnik","Solder sleeve connector"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Kantenschutz, nicht klebend", url:"https://www.netztech.ch/diverse-produkte/kantenschutz/kantenschutz-nicht-klebend.html",
+    tags:["Live Customer Product","NetzTech","Diverse Produkte","Non-adhesive edge protection"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Kantenschutz, selbstklebend", url:"https://www.netztech.ch/diverse-produkte/kantenschutz",
+    tags:["Live Customer Product","NetzTech","Diverse Produkte","Self-adhesive edge protection"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Wärmeschrumpfender Kantenschutz", url:"https://www.netztech.ch/diverse-produkte/kantenschutz",
+    tags:["Live Customer Product","NetzTech","Diverse Produkte","Heat-shrink edge protection"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Gewebeschlauch", url:"https://www.netztech.ch/diverse-produkte",
+    tags:["Live Customer Product","NetzTech","Diverse Produkte","Braided sleeve / textile cable sleeve"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Spiralschlauch", url:"https://www.netztech.ch/diverse-produkte",
+    tags:["Live Customer Product","NetzTech","Diverse Produkte","Spiral cable sleeve"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Isolierbänder", url:"https://www.netztech.ch/diverse-produkte",
+    tags:["Live Customer Product","NetzTech","Diverse Produkte","Insulation tape"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Aderendhülsen für einen Leiter", url:"https://www.netztech.ch/diverse-produkte/aderendhuelsen/aderendhulsen-fur-einen-leiter",
+    tags:["Live Customer Product","NetzTech","Diverse Produkte","Wire ferrules"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Zwillings-Aderendhülsen für 2 Leiter", url:"https://www.netztech.ch/diverse-produkte/aderendhuelsen",
+    tags:["Live Customer Product","NetzTech","Diverse Produkte","Twin wire ferrules"] },
+  { cat:"Cable Management & Safety", type:"demo", country:"Switzerland",
+    name:"Kabel-Pressverbinder", url:"https://www.netztech.ch/diverse-produkte",
+    tags:["Live Customer Product","NetzTech","Diverse Produkte","Cable crimp connector"] },
+
+  /* NETBASE PLATFORM DEMOS */
+  { cat:"UserFlow UX/UI Demo", type:"demo", country:"Netbase",
+    name:"Canva-Style Design Workflow Demo", url:"https://netbasecorp.github.io/demos/printcart-canva-v2.0.html",
+    tags:["GitHub Live Demo","Design Canvas","Custom Workflow","Presales"] },
+  { cat:"UserFlow UX/UI Demo", type:"demo", country:"Netbase",
+    name:"Printing Option & Pricing Templates", url:"https://netbasecorp.github.io/demos/printcart-pricingoption-templates.html",
+    tags:["GitHub Live Demo","Printing Options","Pricing Matrix","Admin Setup"] },
+  { cat:"UserFlow UX/UI Demo", type:"demo", country:"Netbase",
+    name:"Storefront Home UX Demo", url:"https://netbasecorp.github.io/demos/printcart-storefront-home-v1.0.html",
+    tags:["GitHub Live Demo","Storefront UX","Full Store Setup","Presales"] },
+  { cat:"UserFlow UX/UI Demo", type:"demo", country:"Netbase",
+    name:"Store User Account & B2B UX Demo", url:"https://netbasecorp.github.io/demos/printcart-store-user-account-v2.5.1.html",
+    tags:["GitHub Live Demo","User Account","B2B","Reorder","Procurement"] },
+  { cat:"UserFlow UX/UI Demo", type:"demo", country:"Netbase",
+    name:"WordPress Admin Workflow Demo", url:"https://netbasecorp.github.io/demos/printcart-store-wp-admin-v3.0.1.html",
+    tags:["GitHub Live Demo","WP Admin","Workflow","Store Management"] }
+  ,
+  /* VIDEO PREVIEW LIBRARY */
+  { cat:"Video Preview Library", type:"video", country:"YouTube",
+    name:"Printcart WordPress Key Feature Preview", url:"https://youtu.be/5gKHPFM_aVk?si=xO7avXamH5F53aoz",
+    shortcut:"printcart-wordpress-key-feature-preview",
+    tags:["Feature Preview","WordPress Solution","Online Designer","Presales"],
+    note:"Use this video to preview the key Printcart Solution for WordPress features during a presales conversation." },
+  { cat:"Video Preview Library", type:"video", country:"YouTube",
+    name:"Custom Product Designer Setup Preview", url:"https://youtu.be/SzbUuRwQR5Y?si=pOzh7Evd0ybTuqDE",
+    shortcut:"custom-product-designer-setup-preview",
+    tags:["Feature Preview","Custom Product Designer","Setup Flow","Presales"],
+    note:"Use this video to preview the custom product designer setup flow and explain how a merchant can prepare the designer experience." },
+  { cat:"Video Preview Library", type:"video", country:"YouTube",
+    name:"Pricing Options: Quantity, Materials & Product Shapes Preview", url:"https://www.youtube.com/watch?v=q6QqkVfJ28s",
+    shortcut:"pricing-options-quantity-materials-product-shapes-preview",
+    tags:["Feature Preview","Pricing Options","Quantity Pricing","Materials","Product Shapes"],
+    note:"Use this video when customers ask how pricing can change by quantity, material selection, product shape or production configuration." },
+  { cat:"Video Preview Library", type:"video", country:"YouTube",
+    name:"Product Color Swatches, Custom Sides & Size Options Preview", url:"https://www.youtube.com/watch?v=7FFugoyx4Zs",
+    shortcut:"product-color-swatches-custom-sides-size-options-preview",
+    tags:["Feature Preview","Color Swatches","Custom Sides","Size Options"],
+    note:"Use this video to preview product color swatches, custom product sides and size options in a Web2Print configuration discussion." },
+  { cat:"Video Preview Library", type:"video", country:"YouTube",
+    name:"Custom Product Templates for WooCommerce Printing Product Preview", url:"https://youtu.be/sMVjUrrcZkw?si=G5diSmtA0cAa96id",
+    shortcut:"custom-product-templates-woocommerce-printing-product-preview",
+    tags:["Feature Preview","Product Templates","WooCommerce","Printing Product"],
+    note:"Use this video to preview how custom product templates can be created and connected to WooCommerce printing products for presales discussions." }
+
+];
+
+/* ===========================================================
+   RENDER
+   =========================================================== */
+
+function slugify(value){
+  return String(value || '')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'demo';
+}
+function categorySlug(cat){ return slugify(cat); }
+function itemSlug(d){ return d.shortcut || slugify(d.name); }
+function escapeHTML(value){
+  return String(value || '').replace(/[&<>"']/g, function(ch){
+    return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[ch];
+  });
+}
+function getShareUrl(hash){
+  return window.location.href.replace(/#.*$/, '') + '#' + hash;
+}
+function copyShortcut(hash){
+  const url = getShareUrl(hash);
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(()=> alert('Shortcut copied: ' + url));
+  }else{
+    window.prompt('Copy shortcut URL:', url);
+  }
+}
+function openCtaModalBySlug(slug){
+  const item = DATA.find(d => itemSlug(d) === slug);
+  openCtaModal(item || null);
+}
+function openCtaModal(item){
+  const modal = document.getElementById('ctaModal');
+  const selected = document.getElementById('ctaSelected');
+  const whatsapp = document.getElementById('ctaWhatsapp');
+  let msg = 'Hi David, I am reviewing the Netbase demo library and would like your advice for my project.';
+  if(item){
+    selected.classList.add('show');
+    const itemUrl = item.url && item.url.trim() ? item.url : 'URL pending';
+    selected.innerHTML = '<strong>Selected reference:</strong>' + escapeHTML(item.name) + '<br><span>' + escapeHTML(itemUrl) + '</span>';
+    msg += '\n\nI am interested in this reference: ' + item.name + '\n' + itemUrl;
+  }else{
+    selected.classList.remove('show');
+    selected.innerHTML = '';
+  }
+  msg += '\n\nPlease help me review if this workflow fits my store, and advise on setup or custom development.';
+  whatsapp.href = 'https://wa.me/84937869689?text=' + encodeURIComponent(msg);
+  modal.classList.add('show');
+  modal.setAttribute('aria-hidden','false');
+}
+function closeCtaModal(){
+  const modal = document.getElementById('ctaModal');
+  modal.classList.remove('show');
+  modal.setAttribute('aria-hidden','true');
+}
+function applyHashShortcut(){
+  const hash = decodeURIComponent(window.location.hash.replace('#','')).trim();
+  if(!hash) return false;
+  const cat = getCategories().map(([c])=>c).find(c => categorySlug(c) === hash);
+  const item = DATA.find(d => itemSlug(d) === hash);
+  if(cat){ activeCat = cat; buildSidebar(); render(); }
+  if(item){ activeCat = item.cat; buildSidebar(); render(); }
+  setTimeout(()=>{
+    const target = document.getElementById(hash);
+    if(target){
+      target.scrollIntoView({behavior:'smooth', block:'center'});
+      target.classList.add('highlight');
+      setTimeout(()=> target.classList.remove('highlight'), 2200);
+    }
+  }, 80);
+  return true;
+}
+
+const nav = document.getElementById('nav');
+const content = document.getElementById('content');
+const qInput = document.getElementById('q');
+const crumbCat = document.getElementById('crumb-cat');
+
+let activeCat = "all";
+let q = "";
+
+function getCategories(){
+  const map = new Map();
+  DATA.forEach(d => map.set(d.cat, (map.get(d.cat) || 0) + 1));
+  return Object.keys(CAT_ICONS).filter(k => map.has(k)).map(k => [k, map.get(k)]);
+}
+
+
+function getCategoryGroup(cat){
+  if(cat === 'UserFlow UX/UI Demo') return 'workflow';
+  if(cat === 'Video Preview Library') return 'video';
+  return 'product';
+}
+function getCategoryDescription(cat){
+  const group = getCategoryGroup(cat);
+  if(group === 'product') return '';
+  return SECTION_META[group] ? SECTION_META[group].description : '';
+}
+function getOrderedCategoryGroups(cats){
+  const grouped = { video: [], workflow: [], product: [] };
+  cats.forEach(item => {
+    const group = getCategoryGroup(item[0]);
+    (grouped[group] || grouped.product).push(item);
+  });
+  return grouped;
+}
+function getOrderedCategoryNames(names){
+  const orderMap = new Map(Object.keys(CAT_ICONS).map((cat, index) => [cat, index]));
+  return Array.from(names).sort((a,b) => {
+    const ga = GROUP_ORDER.indexOf(getCategoryGroup(a));
+    const gb = GROUP_ORDER.indexOf(getCategoryGroup(b));
+    if(ga !== gb) return ga - gb;
+    return (orderMap.get(a) ?? 9999) - (orderMap.get(b) ?? 9999);
+  });
+}
+
+function buildSidebar(){
+  const cats = getCategories();
+  const groupedCats = getOrderedCategoryGroups(cats);
+  const html = [];
+  html.push('<div class="nav-section-label">Browse</div>');
+  html.push(`
+    <button class="nav-item ${activeCat==='all'?'active':''}" data-cat="all">
+      <span class="label-row"><span class="ico">▤</span><span>All references</span></span>
+      <span class="count">${DATA.length}</span>
+    </button>
+  `);
+
+  GROUP_ORDER.forEach(group => {
+    const items = groupedCats[group] || [];
+    if(!items.length) return;
+    html.push(`<div class="nav-section-label">${SECTION_META[group].label}</div>`);
+    items.forEach(([cat,n])=>{
+      html.push(`
+        <button class="nav-item ${activeCat===cat?'active':''}" data-cat="${cat}">
+          <span class="label-row"><span class="ico">${CAT_ICONS[cat]||'•'}</span><span>${cat}</span></span>
+          <span class="count">${n}</span>
+        </button>
+      `);
+    });
+  });
+
+  nav.innerHTML = html.join('');
+  nav.querySelectorAll('.nav-item').forEach(el => {
+    el.addEventListener('click', () => {
+      activeCat = el.dataset.cat;
+      buildSidebar();
+      render();
+      if(activeCat === 'all'){
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }else{
+        history.replaceState(null, '', '#' + categorySlug(activeCat));
+      }
+      if(window.innerWidth <= 880) document.getElementById('sidebar').classList.remove('open');
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+}
+function getThumbInitials(name){
+  const words = String(name || '').replace(/[^a-zA-Z0-9À-ỹ\s]/g, ' ').trim().split(/\s+/).filter(Boolean);
+  let initials = words.slice(0,3).map(w => w.charAt(0)).join('');
+  if(initials.length < 2){
+    initials = String(name || 'NET').replace(/[^a-zA-Z0-9À-ỹ]/g, '').slice(0,3);
+  }
+  return (initials || 'NET').toUpperCase().slice(0,3);
+}
+function getThumbKind(d){
+  const group = getCategoryGroup(d.cat);
+  if(group === 'video') return 'video';
+  if(group === 'workflow') return 'workflow';
+  return 'product';
+}
+function getThumbIcon(d){
+  const group = getCategoryGroup(d.cat);
+  if(group === 'video') return '▶';
+  if(group === 'workflow') return 'UX';
+  return CAT_ICONS[d.cat] || 'P';
+}
+
+function getYouTubeThumb(url){
+  const value = String(url || '');
+  const match = value.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{6,})/);
+  return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : '';
+}
+function thumbHTML(d){
+  const hasUrl = !!(d.url && d.url.trim());
+  const initials = escapeHTML(getThumbInitials(d.name));
+  const icon = escapeHTML(getThumbIcon(d));
+  const kind = getThumbKind(d);
+  const placeholderAttrs = `data-initials="${initials}" data-icon="${icon}"`;
+  if(!hasUrl){
+    return `<div class="row-thumb placeholder thumb-${kind}" ${placeholderAttrs} title="URL pending"></div>`;
+  }
+  const youtubeThumb = getYouTubeThumb(d.url);
+  const screenshotUrl = youtubeThumb || `https://api.microlink.io/?url=${encodeURIComponent(d.url)}&screenshot=true&meta=false&embed=screenshot.url&viewport.width=1280&viewport.height=800`;
+  return `
+    <a class="row-thumb thumb-${kind}" href="${d.url}" target="_blank" rel="noopener" title="Open ${escapeHTML(d.name)}" ${placeholderAttrs}>
+      <img src="${screenshotUrl}" alt="${escapeHTML(d.name)}" loading="lazy"
+           onerror="this.parentElement.classList.add('placeholder');this.style.display='none';">
+    </a>`;
+}
+function getCompactTags(d){
+  const hiddenGenericTags = new Set([
+    'Live Customer Product', 'Feature Preview', 'GitHub Live Demo', 'Presales',
+    'Demo Page', 'Video Demo', 'Product Category', 'Catalog Search'
+  ]);
+  const tags = (d.tags || []).filter(t => !hiddenGenericTags.has(t));
+  if(d.cat === 'Video Preview Library'){
+    if(d.name.includes('Pricing Options')) return ['Pricing logic'];
+    if(d.name.includes('Product Color')) return ['Swatches & sides'];
+    if(d.name.includes('Designer Setup')) return ['Designer setup'];
+    if(d.name.includes('Product Templates')) return ['Template setup'];
+    return ['WordPress features'];
+  }
+  if(d.cat === 'UserFlow UX/UI Demo'){
+    if(d.name.includes('Pricing')) return ['Pricing UX'];
+    if(d.name.includes('User Account')) return ['B2B account'];
+    if(d.name.includes('Admin')) return ['Admin workflow'];
+    if(d.name.includes('Storefront')) return ['Storefront UX'];
+    return ['Custom UX flow'];
+  }
+  return tags.slice(0, 1);
+}
+function compactTagsHTML(d){
+  const shortCat = d.cat === 'UserFlow UX/UI Demo' ? 'UX/UI Demo'
+                 : d.cat === 'Video Preview Library' ? 'Video Preview'
+                 : d.cat;
+  const catTag = `<span class="tag cat" title="${escapeHTML(d.cat)}">${CAT_ICONS[d.cat]||''} ${escapeHTML(shortCat)}</span>`;
+  const tags = getCompactTags(d);
+  const tagsHtml = tags.map(t => `<span class="tag" title="${escapeHTML(d.note || t)}">${escapeHTML(t)}</span>`).join('');
+  return catTag + tagsHtml;
+}
+function rowHTML(d){
+  const hasUrl = !!(d.url && d.url.trim());
+  const cleanUrl = hasUrl ? d.url.replace(/^https?:\/\//,'').replace(/\/$/,'') : 'URL pending — add YouTube link';
+  const compactMetaHtml = compactTagsHTML(d);
+  const slug = itemSlug(d);
+
+  const typeLabel = d.cat === 'Video Preview Library' ? 'Feature Preview'
+                  : d.cat === 'UserFlow UX/UI Demo' ? 'UX/UI Demo'
+                  : d.type === 'client' ? 'Live Store'
+                  : d.type === 'video'  ? 'Video Demo'
+                  : 'Demo Page';
+  const typeCls = d.type === 'client' ? 'client'
+                : d.type === 'video'  ? 'video'
+                : 'demo';
+
+  const videoBtn = d.video && d.type !== 'video'
+    ? `<a class="btn btn-ghost" href="${d.video}" target="_blank" rel="noopener">Video</a>`
+    : '';
+  const visitBtn = hasUrl
+    ? `<a class="btn btn-primary" href="${d.url}" target="_blank" rel="noopener">VIEW</a>`
+    : `<span class="btn btn-disabled">URL Needed</span>`;
+
+  return `
+    <div class="row" id="${slug}">
+      ${thumbHTML(d)}
+      <div class="row-product">
+        <div class="name">${hasUrl ? `<a href="${d.url}" target="_blank" rel="noopener">${escapeHTML(d.name)}</a>` : escapeHTML(d.name)}</div>
+        <div class="url">${escapeHTML(cleanUrl)}</div>
+      </div>
+      <div class="row-cats">
+        ${compactMetaHtml}
+      </div>
+      <div class="row-meta">
+        <span class="type-tag ${typeCls}">${typeLabel}</span>
+        ${d.country ? `<span class="flag">${escapeHTML(d.country)}</span>` : ''}
+      </div>
+      <div class="row-actions">
+        ${videoBtn}
+        <button class="btn btn-ghost btn-shortcut" type="button" title="Copy shortcut" onclick="copyShortcut('${slug}')">#</button>
+        ${visitBtn}
+        <button class="btn btn-want" type="button" data-question-slug="${escapeHTML(slug)}">Question?</button>
+      </div>
+    </div>`;
+}
+function render(){
+  const ql = q.trim().toLowerCase();
+  crumbCat.textContent = activeCat === 'all' ? 'All categories' : activeCat;
+
+  const filtered = DATA.filter(d => {
+    const matchCat = activeCat === 'all' || d.cat === activeCat;
+    if(!matchCat) return false;
+    if(!ql) return true;
+    return d.name.toLowerCase().includes(ql)
+        || d.cat.toLowerCase().includes(ql)
+        || (d.tags||[]).join(' ').toLowerCase().includes(ql)
+        || (d.country||'').toLowerCase().includes(ql)
+        || (d.note||'').toLowerCase().includes(ql)
+        || (d.url||'').toLowerCase().includes(ql);
+  });
+
+  const groups = new Map();
+  filtered.forEach(d => {
+    if(!groups.has(d.cat)) groups.set(d.cat, []);
+    groups.get(d.cat).push(d);
+  });
+
+  if(filtered.length === 0){
+    content.innerHTML = `
+      <div class="empty show">
+        <h3>No demos match your search.</h3>
+        <p>Try a different keyword or pick another category from the sidebar.</p>
+      </div>`;
+    return;
+  }
+
+  const orderedCats = getOrderedCategoryNames(groups.keys());
+  content.innerHTML = orderedCats.map(cat => {
+    const items = groups.get(cat);
+    return `
+      <section class="section" id="${categorySlug(cat)}">
+        <div class="section-head">
+          <h2>${CAT_ICONS[cat]||''} ${cat}<button class="shortcut-chip" type="button" onclick="copyShortcut('${categorySlug(cat)}')">#${categorySlug(cat)}</button></h2>
+          <span class="cnt">${items.length} ${items.length===1?'item':'items'}</span>
+        </div>
+        ${getCategoryDescription(cat) ? `<p class="section-desc">${escapeHTML(getCategoryDescription(cat))}</p>` : ''}
+        <div class="tbl">
+          <div class="tbl-head">
+            <div class="col-thumb">Preview</div>
+            <div class="col-product">Product / Store</div>
+            <div class="col-cats">Category & Tags</div>
+            <div class="col-meta">Type</div>
+            <div class="col-actions" style="text-align:right">Actions</div>
+          </div>
+          ${items.map(rowHTML).join('')}
+        </div>
+      </section>`;
+  }).join('');
+}
+
+qInput.addEventListener('input', e => { q = e.target.value; render(); });
+
+content.addEventListener('click', function(e){
+  const questionBtn = e.target.closest('[data-question-slug]');
+  if(questionBtn){
+    e.preventDefault();
+    e.stopPropagation();
+    openCtaModalBySlug(questionBtn.dataset.questionSlug);
+  }
+});
+
+document.getElementById('stat-total').textContent = DATA.length;
+document.getElementById('stat-cats').textContent = getCategories().length;
+buildSidebar();
+render();
+applyHashShortcut();
+window.addEventListener('hashchange', applyHashShortcut);
+window.addEventListener('DOMContentLoaded', () => setTimeout(() => openCtaModal(null), 350));
+document.getElementById('ctaModal').addEventListener('click', function(e){
+  if(e.target === this) closeCtaModal();
+});
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closeCtaModal();
+});
+</script>
+
+</body>
+</html>
