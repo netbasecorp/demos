@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Above Aerosol · Hairspray Finishing Spray — Customization & Pricing Preview</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  /* ── Above Aerosol brand palette (sampled from store) ── */
+  --teal:        #00BCBD;
+  --teal-deep:   #009A9B;
+  --teal-ink:    #0B3C3D;
+  --gold:        #FFCF51;
+  --gold-deep:   #F2BC2E;
+  --mint:        #E1F5F4;
+  --mint-deep:   #C7ECEA;
+  --cream:       #FEF6DF;
+  --cream-deep:  #FBEFC9;
+
+  --canvas:      #F7FCFC;
+  --surface:     #ffffff;
+  --surface-2:   #F2FAFA;
+  --ink:         #15302F;
+  --ink-2:       #4A6463;
+  --ink-3:       #88A3A2;
+  --line:        rgba(11,60,61,0.10);
+  --line-soft:   rgba(11,60,61,0.06);
+  --line-strong: rgba(11,60,61,0.18);
+  --on-teal:     #ffffff;
+
+  --ok:          #0E9F6E;
+  --ok-soft:     #D7F5E8;
+  --rush:        #E07A1B;
+  --rush-soft:   #FCEBD6;
+
+  --r-sm: 8px; --r: 14px; --r-lg: 20px; --r-xl: 28px; --r-pill: 999px;
+  --sh-sm: 0 1px 2px rgba(11,60,61,.05);
+  --sh:    0 4px 14px rgba(11,60,61,.07), 0 1px 3px rgba(11,60,61,.05);
+  --sh-lg: 0 18px 40px rgba(11,60,61,.12), 0 6px 14px rgba(11,60,61,.06);
+  --sh-teal: 0 10px 26px rgba(0,154,155,.28);
+  --ease: cubic-bezier(.16,1,.3,1);
+  --bounce: cubic-bezier(.34,1.56,.64,1);
+
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --body: "Hanken Grotesk", system-ui, sans-serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  color:var(--ink);
+  background:var(--canvas);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+button:focus-visible{outline:3px solid rgba(0,188,189,.4);outline-offset:2px;border-radius:6px}
+.mono{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+img{display:block;max-width:100%}
+
+/* ════════ Preview ribbon ════════ */
+.ribbon{
+  background:var(--teal-ink);
+  color:#CFEDED;
+  text-align:center;
+  font-size:12.5px;
+  letter-spacing:.02em;
+  padding:8px 16px;
+  font-weight:500;
+}
+.ribbon strong{color:#fff;font-weight:700}
+.ribbon .dot{opacity:.5;margin:0 8px}
+
+/* ════════ Header ════════ */
+.header{
+  background:var(--surface);
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:40;
+}
+.header__inner{
+  max-width:1240px;margin:0 auto;
+  display:flex;align-items:center;gap:18px;
+  padding:14px 24px;
+}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none}
+.logo__mark{
+  display:grid;place-items:center;
+  width:42px;height:42px;border-radius:11px;
+  background:var(--teal);color:#fff;
+  font-family:var(--display);font-weight:800;font-size:20px;
+  box-shadow:var(--sh-teal);
+}
+.logo__txt{line-height:1.05}
+.logo__name{
+  font-family:var(--display);font-weight:800;letter-spacing:.16em;
+  font-size:13.5px;color:var(--teal-ink);
+}
+.logo__sub{
+  font-size:9.5px;letter-spacing:.42em;color:var(--teal);font-weight:700;
+}
+.nav{display:flex;gap:26px;margin-left:14px}
+.nav a{
+  text-decoration:none;color:var(--ink-2);font-weight:600;font-size:13.5px;
+  letter-spacing:.02em;position:relative;padding:4px 0;
+}
+.nav a:hover{color:var(--teal-ink)}
+.nav a.is-on{color:var(--teal-ink)}
+.nav a.is-on::after{
+  content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;
+  background:var(--teal);border-radius:2px;
+}
+.header__spacer{flex:1}
+.header__quote{
+  display:flex;align-items:center;gap:9px;
+  background:var(--gold);color:var(--teal-ink);
+  font-weight:800;font-size:13.5px;letter-spacing:.02em;
+  padding:11px 18px;border-radius:var(--r-pill);
+  box-shadow:0 6px 16px rgba(242,188,46,.35);
+  transition:transform .25s var(--bounce), box-shadow .25s var(--ease);
+}
+.header__quote:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(242,188,46,.45)}
+.header__quote .cnt{
+  background:var(--teal-ink);color:#fff;border-radius:var(--r-pill);
+  min-width:20px;height:20px;display:grid;place-items:center;
+  font-size:11px;padding:0 5px;
+}
+
+/* ════════ Hero band ════════ */
+.hero{
+  background:linear-gradient(180deg,var(--gold) 0%, var(--gold) 62%, #FFD96E 100%);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(420px 280px at 88% -10%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(360px 240px at 6% 120%, rgba(255,255,255,.35), transparent 60%);
+  pointer-events:none;
+}
+.hero__inner{
+  max-width:1240px;margin:0 auto;padding:30px 24px 34px;
+  position:relative;
+}
+.hero__eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.55);color:var(--teal-ink);
+  font-weight:700;font-size:12px;letter-spacing:.05em;
+  padding:6px 13px;border-radius:var(--r-pill);
+  border:1px solid rgba(255,255,255,.7);
+}
+.hero h1{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(28px,4vw,42px);line-height:1.04;
+  color:var(--teal-ink);margin-top:14px;letter-spacing:-.01em;
+  max-width:620px;
+}
+.hero p{
+  color:#5A4A14;font-weight:600;margin-top:10px;max-width:560px;font-size:15px;
+}
+
+/* ════════ Stage ════════ */
+.wrap{max-width:1240px;margin:0 auto;padding:28px 24px 80px}
+.bento{
+  display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr);
+  gap:30px;align-items:start;
+}
+@media(max-width:980px){ .bento{grid-template-columns:1fr;gap:24px} }
+
+/* ── Left : visual column ── */
+.viz{position:sticky;top:96px}
+@media(max-width:980px){ .viz{position:static} }
+
+.stage{
+  background:
+    radial-gradient(120% 90% at 50% 8%, #fff 0%, var(--cream) 60%, var(--cream-deep) 100%);
+  border:1px solid var(--line-soft);
+  border-radius:var(--r-xl);
+  padding:34px 24px 28px;
+  position:relative;overflow:hidden;
+  box-shadow:var(--sh);
+}
+.stage__badge{
+  position:absolute;top:18px;left:18px;z-index:3;
+  background:var(--teal-ink);color:#fff;font-weight:700;font-size:11.5px;
+  padding:6px 12px;border-radius:var(--r-pill);letter-spacing:.03em;
+}
+.stage__finishtag{
+  position:absolute;top:18px;right:18px;z-index:3;
+  background:#fff;color:var(--teal-ink);font-weight:700;font-size:11.5px;
+  padding:6px 12px;border-radius:var(--r-pill);box-shadow:var(--sh-sm);
+  border:1px solid var(--line-soft);
+}
+
+/* ── CSS aerosol can ── */
+.can-scene{height:380px;display:grid;place-items:center;position:relative}
+.can-scene::after{ /* shadow */
+  content:"";position:absolute;bottom:30px;width:160px;height:24px;
+  background:radial-gradient(closest-side, rgba(11,60,61,.22), transparent 75%);
+  filter:blur(2px);
+}
+.can{
+  position:relative;width:128px;height:320px;
+  transition:transform .5s var(--ease);
+}
+.can:hover{transform:translateY(-6px)}
+.can__cap{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:62px;height:58px;border-radius:14px 14px 8px 8px;
+  background:linear-gradient(100deg,#3a4a4a,#1d2727 60%,#0d1414);
+  box-shadow:inset 0 -6px 10px rgba(0,0,0,.4), inset 0 3px 4px rgba(255,255,255,.18);
+  z-index:3;
+}
+.can__cap::before{
+  content:"";position:absolute;top:-7px;left:50%;transform:translateX(-50%);
+  width:14px;height:12px;border-radius:4px 4px 2px 2px;
+  background:linear-gradient(#566,#233);
+}
+.can__neck{
+  position:absolute;top:50px;left:50%;transform:translateX(-50%);
+  width:74px;height:22px;border-radius:6px 6px 0 0;
+  background:linear-gradient(90deg,#c4c9c9,#eef2f2 40%,#fff 50%,#dfe5e5 62%,#aeb6b6);
+  z-index:2;
+}
+.can__body{
+  position:absolute;top:66px;left:50%;transform:translateX(-50%);
+  width:120px;height:248px;border-radius:14px;
+  background:linear-gradient(90deg,#bfc6c6 0%,#eef3f3 26%,#ffffff 50%,#e4eaea 70%,#aab2b2 100%);
+  box-shadow:inset 0 -10px 18px rgba(0,0,0,.10), inset 0 6px 10px rgba(255,255,255,.5);
+  overflow:hidden;
+}
+.can__body::after{ /* bottom curve */
+  content:"";position:absolute;bottom:0;left:0;right:0;height:14px;
+  background:linear-gradient(#0000, rgba(11,60,61,.10));
+}
+/* The label band = customer's design zone */
+.can__label{
+  position:absolute;top:46px;left:8px;right:8px;height:150px;border-radius:8px;
+  display:grid;place-items:center;text-align:center;
+  background:var(--teal);
+  color:#fff;
+  transition:background .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+  border:2px dashed rgba(255,255,255,.55);
+  overflow:hidden;
+}
+.can__label-inner{padding:6px}
+.can__label-eyebrow{font-size:8px;letter-spacing:.22em;opacity:.85;font-weight:700}
+.can__label-main{
+  font-family:var(--display);font-weight:800;font-size:14px;line-height:1.05;
+  margin-top:4px;text-transform:uppercase;letter-spacing:.04em;
+}
+.can__label-sub{font-size:8.5px;opacity:.85;margin-top:5px;font-weight:600}
+/* finish variants applied to label */
+.can__label[data-finish="matte"]{background:var(--teal);}
+.can__label[data-finish="gloss"]{
+  background:linear-gradient(135deg,var(--teal) 0%, #2bd4d5 45%, var(--teal) 70%);
+  box-shadow:inset 0 0 30px rgba(255,255,255,.25);
+}
+.can__label[data-finish="clear"]{
+  background:linear-gradient(135deg, rgba(0,188,189,.18), rgba(0,188,189,.30));
+  border-color:rgba(0,154,155,.5);
+  color:var(--teal-ink);
+}
+.can__label[data-finish="clear"] .can__label-eyebrow,
+.can__label[data-finish="clear"] .can__label-sub{opacity:.7}
+.can__label[data-finish="metallic"]{
+  background:linear-gradient(120deg,#0B3C3D, var(--teal) 38%, #E9FBFB 52%, var(--teal) 66%, #0B3C3D);
+  background-size:200% 100%;
+  animation:shimmer 4s linear infinite;
+  border-color:rgba(255,255,255,.7);
+}
+@keyframes shimmer{to{background-position:200% 0}}
+
+.viz-foot{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px;
+}
+.viz-foot__item{
+  background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--r);
+  padding:13px 12px;text-align:center;box-shadow:var(--sh-sm);
+}
+.viz-foot__ic{
+  width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+  background:var(--mint);color:var(--teal-deep);margin:0 auto 7px;font-size:15px;
+}
+.viz-foot__t{font-weight:700;font-size:12px;color:var(--teal-ink);line-height:1.2}
+.viz-foot__d{font-size:10.5px;color:var(--ink-3);margin-top:3px}
+
+/* ── Right : config column ── */
+.cfg{display:flex;flex-direction:column;gap:18px}
+.phead__eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font-weight:800;font-size:12px;letter-spacing:.04em;color:var(--teal-deep);
+  text-transform:uppercase;
+}
+.phead__eyebrow .pill{
+  background:var(--mint);color:var(--teal-deep);
+  padding:3px 9px;border-radius:var(--r-pill);font-size:10.5px;letter-spacing:.05em;
+}
+.phead h2{
+  font-family:var(--display);font-weight:800;font-size:27px;line-height:1.08;
+  color:var(--teal-ink);margin-top:8px;letter-spacing:-.01em;
+}
+.phead__meta{
+  display:flex;align-items:center;gap:9px;margin-top:9px;
+  color:var(--ink-2);font-size:13px;font-weight:600;
+}
+.phead__stars{color:var(--gold-deep);letter-spacing:1px}
+.phead__sep{color:var(--ink-3)}
+
+/* Quote showcase */
+.quote-show{
+  background:linear-gradient(135deg,var(--teal) 0%, var(--teal-deep) 100%);
+  color:#fff;border-radius:var(--r-lg);padding:20px 22px;
+  box-shadow:var(--sh-teal);position:relative;overflow:hidden;
+}
+.quote-show::after{
+  content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;
+  border-radius:50%;background:rgba(255,255,255,.10);
+}
+.quote-show__label{
+  font-size:11px;font-weight:700;letter-spacing:.16em;opacity:.85;text-transform:uppercase;
+}
+.quote-show__row{display:flex;align-items:flex-end;gap:12px;margin-top:6px}
+.quote-show__total{font-family:var(--display);font-weight:800;font-size:38px;line-height:1}
+.quote-show__tick{
+  background:var(--gold);color:var(--teal-ink);font-weight:800;font-size:12px;
+  padding:4px 10px;border-radius:var(--r-pill);margin-bottom:5px;
+}
+.quote-show__sub{
+  display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:13px;
+  font-size:13px;font-weight:600;
+}
+.quote-show__sub span{opacity:.92}
+.quote-show__sub .save{color:var(--gold)}
+.quote-show__note{
+  margin-top:13px;font-size:11.5px;opacity:.8;display:flex;gap:7px;align-items:center;
+  border-top:1px solid rgba(255,255,255,.2);padding-top:11px;
+}
+
+/* progress */
+.progress{display:flex;align-items:center;gap:12px}
+.progress__bar{flex:1;height:6px;border-radius:99px;background:var(--mint-deep);overflow:hidden}
+.progress__fill{height:100%;background:var(--teal);border-radius:99px;width:62%;transition:width .4s var(--ease)}
+.progress__txt{font-size:12px;font-weight:700;color:var(--ink-2)}
+.progress__txt strong{color:var(--teal-ink)}
+
+/* smart recommend */
+.smart{
+  display:flex;align-items:center;gap:13px;
+  background:var(--cream);border:1px solid var(--cream-deep);border-radius:var(--r);
+  padding:13px 15px;
+}
+.smart__ic{font-size:20px}
+.smart__body{flex:1}
+.smart__t{font-weight:800;font-size:13px;color:var(--teal-ink)}
+.smart__d{font-size:12px;color:var(--ink-2);margin-top:2px}
+.smart__btn{
+  background:var(--teal-ink);color:#fff;font-weight:700;font-size:12.5px;
+  padding:9px 15px;border-radius:var(--r-pill);white-space:nowrap;
+  transition:transform .2s var(--bounce)}
+.smart__btn:hover{transform:translateY(-1px)}
+
+/* fields */
+.field{
+  background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--r-lg);
+  padding:17px 18px;box-shadow:var(--sh-sm);
+}
+.field__head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}
+.field__label{font-family:var(--display);font-weight:700;font-size:15px;color:var(--teal-ink);display:flex;align-items:center;gap:8px}
+.field__count{
+  font-family:var(--body);font-weight:700;font-size:10.5px;color:var(--teal-deep);
+  background:var(--mint);padding:2px 8px;border-radius:var(--r-pill);letter-spacing:.02em;
+}
+.field__chosen{font-size:13px;font-weight:700;color:var(--ink-2);text-align:right}
+.field__chosen .cost{color:var(--teal-deep);margin-left:6px}
+.field__chosen .free{color:var(--ok);margin-left:6px}
+
+/* size cards */
+.sizes{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+@media(max-width:520px){ .sizes{grid-template-columns:repeat(2,1fr)} }
+.size{
+  position:relative;border:2px solid var(--line);border-radius:var(--r);
+  padding:12px 10px 11px;text-align:center;background:var(--surface);
+  transition:all .2s var(--ease);
+}
+.size:hover{border-color:var(--teal);transform:translateY(-2px)}
+.size--active{border-color:var(--teal);background:var(--mint);box-shadow:0 0 0 3px rgba(0,188,189,.16)}
+.size__oz{font-family:var(--display);font-weight:800;font-size:19px;color:var(--teal-ink);line-height:1}
+.size__ml{font-size:10px;color:var(--ink-3);margin-top:3px;font-weight:600}
+.size__per{font-size:11px;color:var(--ink-2);font-weight:700;margin-top:7px}
+.size__pop{
+  position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+  background:var(--gold);color:var(--teal-ink);font-weight:800;font-size:9px;
+  padding:2px 8px;border-radius:var(--r-pill);white-space:nowrap;letter-spacing:.02em;
+}
+.size__check{
+  position:absolute;top:7px;right:7px;width:17px;height:17px;border-radius:50%;
+  background:var(--teal);color:#fff;display:grid;place-items:center;font-size:10px;
+  opacity:0;transform:scale(.4);transition:all .2s var(--bounce)}
+.size--active .size__check{opacity:1;transform:scale(1)}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{
+  display:inline-flex;align-items:center;gap:8px;
+  border:2px solid var(--line);border-radius:var(--r-pill);
+  padding:9px 15px;font-weight:700;font-size:13px;color:var(--ink);
+  background:var(--surface);transition:all .18s var(--ease);
+}
+.chip:hover{border-color:var(--teal)}
+.chip--active{border-color:var(--teal);background:var(--mint);color:var(--teal-ink)}
+.chip .ic{font-size:14px}
+.chip .px{font-size:11px;font-weight:700;color:var(--teal-deep)}
+.chip .px--free{color:var(--ok)}
+
+/* swatch finish */
+.swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+@media(max-width:520px){ .swatches{grid-template-columns:repeat(2,1fr)} }
+.sw{
+  position:relative;border:2px solid var(--line);border-radius:var(--r);
+  padding:9px;text-align:center;background:var(--surface);transition:all .2s var(--ease);
+}
+.sw:hover{border-color:var(--teal);transform:translateY(-2px)}
+.sw--active{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,188,189,.16)}
+.sw__chip{height:38px;border-radius:9px;margin-bottom:8px;border:1px solid var(--line-soft)}
+.sw__chip--matte{background:var(--teal)}
+.sw__chip--gloss{background:linear-gradient(135deg,var(--teal),#46dede 50%,var(--teal))}
+.sw__chip--clear{background:linear-gradient(135deg,rgba(0,188,189,.2),rgba(0,188,189,.4));}
+.sw__chip--metallic{background:linear-gradient(120deg,#0B3C3D,var(--teal) 40%,#E9FBFB 55%,var(--teal) 70%,#0B3C3D)}
+.sw__name{font-weight:700;font-size:12px;color:var(--teal-ink)}
+.sw__px{font-size:10.5px;font-weight:700;color:var(--teal-deep);margin-top:2px}
+.sw__px--free{color:var(--ok)}
+
+/* design-method radios */
+.dmethods{display:flex;flex-direction:column;gap:9px}
+.dm{
+  display:flex;align-items:center;gap:13px;
+  border:2px solid var(--line);border-radius:var(--r);padding:12px 14px;
+  background:var(--surface);transition:all .18s var(--ease);text-align:left;width:100%;
+}
+.dm:hover{border-color:var(--teal)}
+.dm--active{border-color:var(--teal);background:var(--mint)}
+.dm__radio{
+  width:19px;height:19px;border-radius:50%;border:2px solid var(--line-strong);
+  flex:none;display:grid;place-items:center;transition:all .18s var(--ease)}
+.dm--active .dm__radio{border-color:var(--teal)}
+.dm--active .dm__radio::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--teal)}
+.dm__ic{font-size:18px}
+.dm__body{flex:1}
+.dm__t{font-weight:700;font-size:13.5px;color:var(--teal-ink)}
+.dm__d{font-size:11.5px;color:var(--ink-2);margin-top:1px}
+.dm__px{font-weight:800;font-size:12px;color:var(--ok)}
+
+/* quantity grid */
+.qtys{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+@media(max-width:640px){ .qtys{grid-template-columns:repeat(3,1fr)} }
+.qty{
+  position:relative;border:2px solid var(--line);border-radius:var(--r);
+  padding:13px 6px 11px;text-align:center;background:var(--surface);
+  transition:all .2s var(--ease);
+}
+.qty:hover{border-color:var(--teal);transform:translateY(-2px)}
+.qty--active{border-color:var(--teal);background:var(--mint);box-shadow:0 0 0 3px rgba(0,188,189,.16)}
+.qty__count{font-family:var(--display);font-weight:800;font-size:17px;color:var(--teal-ink);line-height:1}
+.qty__unit{font-size:9.5px;color:var(--ink-3);font-weight:600;margin-top:2px}
+.qty__per{font-size:10.5px;color:var(--ink-2);font-weight:700;margin-top:6px}
+.qty__save{
+  position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+  background:var(--ok);color:#fff;font-weight:800;font-size:8.5px;
+  padding:2px 7px;border-radius:var(--r-pill);white-space:nowrap}
+.qty--popular .qty__save{background:var(--gold);color:var(--teal-ink)}
+.moq-note{
+  font-size:11px;color:var(--ink-2);margin-top:11px;display:flex;gap:7px;align-items:center;
+  background:var(--surface-2);padding:8px 11px;border-radius:var(--r-sm);
+}
+.moq-note b{color:var(--teal-ink)}
+
+/* production speed */
+.speeds{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.speed{
+  border:2px solid var(--line);border-radius:var(--r);padding:12px 14px;
+  background:var(--surface);text-align:left;transition:all .18s var(--ease);
+}
+.speed:hover{border-color:var(--teal)}
+.speed--active{border-color:var(--teal);background:var(--mint)}
+.speed--rush.speed--active{border-color:var(--rush);background:var(--rush-soft)}
+.speed__t{font-weight:800;font-size:13.5px;color:var(--teal-ink);display:flex;align-items:center;gap:6px}
+.speed--rush .speed__t{color:var(--rush)}
+.speed__d{font-size:11.5px;color:var(--ink-2);margin-top:2px}
+.speed__px{font-size:11.5px;font-weight:800;margin-top:5px;color:var(--teal-deep)}
+.speed--rush .speed__px{color:var(--rush)}
+.speed__px--free{color:var(--ok)}
+
+/* add-ons */
+.addons{display:flex;flex-direction:column;gap:9px}
+.addon{
+  display:flex;align-items:center;gap:13px;
+  border:2px solid var(--line);border-radius:var(--r);padding:12px 14px;
+  background:var(--surface);transition:all .18s var(--ease);width:100%;text-align:left;
+}
+.addon:hover{border-color:var(--teal)}
+.addon--active{border-color:var(--teal);background:var(--mint)}
+.addon__box{
+  width:20px;height:20px;border-radius:6px;border:2px solid var(--line-strong);
+  flex:none;display:grid;place-items:center;color:#fff;font-size:12px;transition:all .18s var(--ease)}
+.addon--active .addon__box{background:var(--teal);border-color:var(--teal)}
+.addon__body{flex:1}
+.addon__t{font-weight:700;font-size:13.5px;color:var(--teal-ink)}
+.addon__d{font-size:11.5px;color:var(--ink-2);margin-top:1px}
+.addon__px{font-weight:800;font-size:12.5px;color:var(--teal-deep)}
+
+/* sticky CTA */
+.cta-bar{
+  position:sticky;bottom:0;z-index:30;
+  background:var(--surface);border:1px solid var(--line);border-bottom:none;
+  border-radius:var(--r-lg) var(--r-lg) 0 0;
+  padding:15px 18px;margin-top:6px;
+  box-shadow:0 -8px 24px rgba(11,60,61,.08);
+  display:flex;align-items:center;gap:15px;flex-wrap:wrap;
+}
+.cta-bar__price{flex:1;min-width:140px}
+.cta-bar__plabel{font-size:10.5px;font-weight:700;letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase}
+.cta-bar__pval{font-family:var(--display);font-weight:800;font-size:26px;color:var(--teal-ink);line-height:1}
+.cta-bar__pval small{font-family:var(--body);font-size:12.5px;color:var(--ink-2);font-weight:700}
+.cta-bar__btns{display:flex;gap:10px}
+.btn-ghost{
+  background:var(--surface);border:2px solid var(--teal);color:var(--teal-deep);
+  font-weight:800;font-size:13.5px;padding:12px 18px;border-radius:var(--r-pill);
+  transition:all .2s var(--ease)}
+.btn-ghost:hover{background:var(--mint)}
+.btn-quote{
+  display:flex;align-items:center;gap:9px;
+  background:var(--gold);color:var(--teal-ink);font-weight:800;font-size:14.5px;
+  padding:13px 24px;border-radius:var(--r-pill);
+  box-shadow:0 8px 20px rgba(242,188,46,.4);
+  transition:transform .2s var(--bounce), box-shadow .2s var(--ease)}
+.btn-quote:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(242,188,46,.5)}
+@media(max-width:520px){
+  .cta-bar__btns{width:100%}
+  .btn-ghost,.btn-quote{flex:1;justify-content:center;padding:13px 12px}
+}
+
+/* footer */
+.foot{background:var(--teal);color:#E6FBFB;padding:26px 24px;text-align:center}
+.foot__inner{max-width:1240px;margin:0 auto}
+.foot__brand{font-family:var(--display);font-weight:800;letter-spacing:.16em;color:#fff;font-size:14px}
+.foot__note{font-size:12.5px;opacity:.9;margin-top:8px;max-width:680px;margin-left:auto;margin-right:auto;line-height:1.55}
+.foot__by{font-size:11.5px;opacity:.7;margin-top:13px}
+.foot__by a{color:#fff;font-weight:700;text-decoration:none}
+
+/* toast */
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(140%);
+  background:var(--teal-ink);color:#fff;font-weight:700;font-size:13.5px;
+  padding:13px 22px;border-radius:var(--r-pill);box-shadow:var(--sh-lg);z-index:60;
+  display:flex;align-items:center;gap:10px;transition:transform .4s var(--bounce)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast .ic{background:var(--gold);color:var(--teal-ink);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px}
+</style>
+</head>
+<body>
+
+<div class="ribbon">
+  <strong>Interactive pricing preview</strong> · prepared for Above Aerosol Labs by Printcart
+  <span class="dot">●</span> All figures are illustrative estimates for review — not final pricing
+</div>
+
+<header class="header">
+  <div class="header__inner">
+    <a class="logo" href="#">
+      <div class="logo__mark">A</div>
+      <div class="logo__txt">
+        <div class="logo__name">ABOVE&nbsp;AEROSOL</div>
+        <div class="logo__sub">LABS</div>
+      </div>
+    </a>
+    <nav class="nav">
+      <a href="#" class="is-on">Private Label</a>
+      <a href="#">Contract Manufacturing</a>
+      <a href="#">Blog</a>
+      <a href="#">About</a>
+    </nav>
+    <div class="header__spacer"></div>
+    <button class="header__quote">🛒 View Quote <span class="cnt" id="cartCnt">0</span></button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__inner">
+    <span class="hero__eyebrow">✦ Private Label · Build &amp; Customize Online</span>
+    <h1>Hairspray Finishing Spray</h1>
+    <p>Aerosol Hairspray · VOC&nbsp;Compliant · all-day humidity-resistant hold. Configure your can size, label and finish — get an instant quote estimate.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="bento">
+
+    <!-- ════ LEFT: visual ════ -->
+    <div class="viz">
+      <div class="stage">
+        <div class="stage__badge">★ Best for salons &amp; private brands</div>
+        <div class="stage__finishtag" id="finishTag">Matte label</div>
+
+        <div class="can-scene">
+          <div class="can">
+            <div class="can__cap"></div>
+            <div class="can__neck"></div>
+            <div class="can__body">
+              <div class="can__label" data-finish="matte" id="canLabel">
+                <div class="can__label-inner">
+                  <div class="can__label-eyebrow">YOUR BRAND</div>
+                  <div class="can__label-main">YOUR DESIGN<br>HERE</div>
+                  <div class="can__label-sub" id="canLabelSub">8.0 oz · Finishing Spray</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="viz-foot">
+        <div class="viz-foot__item">
+          <div class="viz-foot__ic">📐</div>
+          <div class="viz-foot__t">Flexible sizing</div>
+          <div class="viz-foot__d">2.0–14.0 oz</div>
+        </div>
+        <div class="viz-foot__item">
+          <div class="viz-foot__ic">🧪</div>
+          <div class="viz-foot__t">Salon quality</div>
+          <div class="viz-foot__d">Ayurvedic blend</div>
+        </div>
+        <div class="viz-foot__item">
+          <div class="viz-foot__ic">📦</div>
+          <div class="viz-foot__t">Print-ready</div>
+          <div class="viz-foot__d">Vector PDF out</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ RIGHT: config ════ -->
+    <div class="cfg">
+
+      <div class="phead">
+        <div class="phead__eyebrow">Private Label Aerosol <span class="pill">CUSTOMIZABLE</span></div>
+        <h2>Build Your Hairspray Finishing Spray</h2>
+        <div class="phead__meta">
+          <span class="phead__stars">★★★★★</span>
+          <span>4.9</span><span class="phead__sep">·</span>
+          <span>Trusted by 60+ private-label brands</span>
+        </div>
+      </div>
+
+      <div class="quote-show">
+        <div class="quote-show__label">Estimated Quote</div>
+        <div class="quote-show__row">
+          <span class="quote-show__total mono" id="qTotal">$3,060</span>
+          <span class="quote-show__tick" id="qTick">−15% vs MOQ</span>
+        </div>
+        <div class="quote-show__sub">
+          <span><span class="mono" id="qPer">$3.06</span> per can</span>
+          <span>× <span class="mono" id="qQty">1,000</span> cans</span>
+          <span class="save" id="qSave">↓ Saved $540 vs 250-unit MOQ</span>
+        </div>
+        <div class="quote-show__note">
+          ⓘ Estimate only · final quote confirmed after design &amp; fragrance review
+        </div>
+      </div>
+
+      <div class="progress">
+        <div class="progress__bar"><div class="progress__fill" id="progFill"></div></div>
+        <div class="progress__txt"><strong id="progDone">4</strong> of 6 steps</div>
+      </div>
+
+      <div class="smart">
+        <div class="smart__ic">💡</div>
+        <div class="smart__body">
+          <div class="smart__t">Most-ordered configuration</div>
+          <div class="smart__d">8.0 oz · Matte label · Stock scent · 1,000 cans</div>
+        </div>
+        <button class="smart__btn" id="applyCombo">Apply</button>
+      </div>
+
+      <!-- 1. Fill size -->
+      <div class="field">
+        <div class="field__head">
+          <div class="field__label">① Fill Size <span class="field__count">6 options</span></div>
+          <div class="field__chosen"><strong id="szChosen">8.0 oz</strong></div>
+        </div>
+        <div class="sizes" id="sizeGrid">
+          <button class="size" data-oz="2.0" data-ml="60ml" data-base="2.10">
+            <div class="size__check">✓</div><div class="size__oz">2.0<small style="font-size:11px"> oz</small></div>
+            <div class="size__ml">60 ml · travel</div><div class="size__per">$2.10/can</div>
+          </button>
+          <button class="size" data-oz="4.0" data-ml="118ml" data-base="2.60">
+            <div class="size__check">✓</div><div class="size__oz">4.0<small style="font-size:11px"> oz</small></div>
+            <div class="size__ml">118 ml</div><div class="size__per">$2.60/can</div>
+          </button>
+          <button class="size" data-oz="6.0" data-ml="177ml" data-base="3.10">
+            <div class="size__check">✓</div><div class="size__oz">6.0<small style="font-size:11px"> oz</small></div>
+            <div class="size__ml">177 ml</div><div class="size__per">$3.10/can</div>
+          </button>
+          <button class="size size--active" data-oz="8.0" data-ml="237ml" data-base="3.60">
+            <span class="size__pop">★ Popular</span>
+            <div class="size__check">✓</div><div class="size__oz">8.0<small style="font-size:11px"> oz</small></div>
+            <div class="size__ml">237 ml</div><div class="size__per">$3.60/can</div>
+          </button>
+          <button class="size" data-oz="10.0" data-ml="296ml" data-base="4.10">
+            <div class="size__check">✓</div><div class="size__oz">10.0<small style="font-size:11px"> oz</small></div>
+            <div class="size__ml">296 ml</div><div class="size__per">$4.10/can</div>
+          </button>
+          <button class="size" data-oz="14.0" data-ml="414ml" data-base="4.90">
+            <div class="size__check">✓</div><div class="size__oz">14.0<small style="font-size:11px"> oz</small></div>
+            <div class="size__ml">414 ml · pro</div><div class="size__per">$4.90/can</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Label design method -->
+      <div class="field">
+        <div class="field__head">
+          <div class="field__label">② Label Design <span class="field__count">3 ways</span></div>
+          <div class="field__chosen"><strong id="dmChosen">Upload artwork</strong><span class="free">Free</span></div>
+        </div>
+        <div class="dmethods" id="dmGrid">
+          <button class="dm" data-dm="template">
+            <span class="dm__radio"></span><span class="dm__ic">🎨</span>
+            <div class="dm__body"><div class="dm__t">Start from a template</div><div class="dm__d">Pick a ready-made label, swap text &amp; colors</div></div>
+            <span class="dm__px">Free</span>
+          </button>
+          <button class="dm dm--active" data-dm="upload">
+            <span class="dm__radio"></span><span class="dm__ic">⬆️</span>
+            <div class="dm__body"><div class="dm__t">Upload your own artwork</div><div class="dm__d">Print-ready PDF / AI / PNG accepted</div></div>
+            <span class="dm__px">Free</span>
+          </button>
+          <button class="dm" data-dm="scratch">
+            <span class="dm__radio"></span><span class="dm__ic">✏️</span>
+            <div class="dm__body"><div class="dm__t">Design from scratch</div><div class="dm__d">Build it live in the online designer</div></div>
+            <span class="dm__px">Free</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Label finish -->
+      <div class="field">
+        <div class="field__head">
+          <div class="field__label">③ Label Finish <span class="field__count">4 options</span></div>
+          <div class="field__chosen"><strong id="fnChosen">Matte</strong><span class="free" id="fnCost">Standard</span></div>
+        </div>
+        <div class="swatches" id="finishGrid">
+          <button class="sw sw--active" data-fn="matte" data-add="0" data-label="Matte">
+            <div class="sw__chip sw__chip--matte"></div><div class="sw__name">Matte</div><div class="sw__px sw__px--free">Standard</div>
+          </button>
+          <button class="sw" data-fn="gloss" data-add="0.08" data-label="Gloss">
+            <div class="sw__chip sw__chip--gloss"></div><div class="sw__name">Gloss</div><div class="sw__px">+$0.08</div>
+          </button>
+          <button class="sw" data-fn="clear" data-add="0.15" data-label="Clear">
+            <div class="sw__chip sw__chip--clear"></div><div class="sw__name">Clear</div><div class="sw__px">+$0.15</div>
+          </button>
+          <button class="sw" data-fn="metallic" data-add="0.22" data-label="Metallic">
+            <div class="sw__chip sw__chip--metallic"></div><div class="sw__name">Metallic</div><div class="sw__px">+$0.22</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4. Fragrance -->
+      <div class="field">
+        <div class="field__head">
+          <div class="field__label">④ Fragrance</div>
+          <div class="field__chosen"><strong id="frChosen">Stock scent</strong><span class="free" id="frCost">Free</span></div>
+        </div>
+        <div class="chips" id="fragGrid">
+          <button class="chip chip--active" data-fr="stock" data-fee="0"><span class="ic">🌿</span>Stock scent<span class="px px--free">Free</span></button>
+          <button class="chip" data-fr="custom" data-fee="350"><span class="ic">⚗️</span>Custom blend<span class="px">+$350</span></button>
+        </div>
+        <div class="moq-note" id="fragNote" style="display:none">
+          ⚠️ <span><b>Custom fragrance</b> adds a one-time development fee, extra lead time, and may require a higher minimum order. Our team confirms details on the call.</span>
+        </div>
+      </div>
+
+      <!-- 5. Packaging -->
+      <div class="field">
+        <div class="field__head">
+          <div class="field__label">⑤ Packaging</div>
+          <div class="field__chosen"><strong id="pkChosen">Standard</strong><span class="free" id="pkCost">Free</span></div>
+        </div>
+        <div class="chips" id="packGrid">
+          <button class="chip chip--active" data-pk="standard" data-add="0"><span class="ic">📦</span>Standard<span class="px px--free">Free</span></button>
+          <button class="chip" data-pk="luxury" data-add="0.65"><span class="ic">🎁</span>Luxury box<span class="px">+$0.65/can</span></button>
+          <button class="chip" data-pk="custom" data-add="1.20"><span class="ic">✨</span>Custom<span class="px">+$1.20/can</span></button>
+        </div>
+      </div>
+
+      <!-- 6. Quantity -->
+      <div class="field">
+        <div class="field__head">
+          <div class="field__label">⑥ Quantity <span class="field__count">Volume discount</span></div>
+          <div class="field__chosen"><strong id="qtyChosen">1,000 cans</strong><span class="cost" id="qtyDisc">−15%</span></div>
+        </div>
+        <div class="qtys" id="qtyGrid">
+          <button class="qty" data-qty="250"  data-mult="1.00"><div class="qty__count">250</div><div class="qty__unit">cans</div><div class="qty__per">MOQ</div></button>
+          <button class="qty" data-qty="500"  data-mult="0.92"><div class="qty__count">500</div><div class="qty__unit">cans</div><div class="qty__per">−8%</div><span class="qty__save">−8%</span></button>
+          <button class="qty qty--active qty--popular" data-qty="1000" data-mult="0.85"><div class="qty__count">1,000</div><div class="qty__unit">cans</div><div class="qty__per">−15%</div><span class="qty__save">Popular</span></button>
+          <button class="qty" data-qty="5000" data-mult="0.74"><div class="qty__count">5,000</div><div class="qty__unit">cans</div><div class="qty__per">−26%</div><span class="qty__save">−26%</span></button>
+          <button class="qty" data-qty="10000" data-mult="0.66"><div class="qty__count">10k</div><div class="qty__unit">cans</div><div class="qty__per">−34%</div><span class="qty__save">Best</span></button>
+        </div>
+        <div class="moq-note">📋 <span>Minimum order quantity is <b>250 cans</b>. Per-unit price drops as volume increases.</span></div>
+      </div>
+
+      <!-- 7. Production speed -->
+      <div class="field">
+        <div class="field__head">
+          <div class="field__label">⑦ Production Speed</div>
+          <div class="field__chosen"><strong id="spChosen">Standard</strong><span class="free" id="spCost">Included</span></div>
+        </div>
+        <div class="speeds" id="speedGrid">
+          <button class="speed speed--active" data-sp="standard" data-mult="1.00">
+            <div class="speed__t">🕒 Standard</div><div class="speed__d">2–4 weeks production</div><div class="speed__px speed__px--free">Included</div>
+          </button>
+          <button class="speed speed--rush" data-sp="rush" data-mult="1.15">
+            <div class="speed__t">⚡ Rush</div><div class="speed__d">~10 business days</div><div class="speed__px">+15% on production</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 8. Add-ons -->
+      <div class="field">
+        <div class="field__head">
+          <div class="field__label">⑧ Optional Add-ons</div>
+        </div>
+        <div class="addons" id="addonGrid">
+          <button class="addon" data-fee="45">
+            <span class="addon__box">✓</span>
+            <div class="addon__body"><div class="addon__t">Physical pre-production proof</div><div class="addon__d">Approve a real sample can before the full run</div></div>
+            <span class="addon__px">+$45</span>
+          </button>
+          <button class="addon" data-fee="120">
+            <span class="addon__box">✓</span>
+            <div class="addon__body"><div class="addon__t">Professional label design service</div><div class="addon__d">Our designers create your label, print-ready</div></div>
+            <span class="addon__px">+$120</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- sticky CTA -->
+      <div class="cta-bar">
+        <div class="cta-bar__price">
+          <div class="cta-bar__plabel">Estimated total</div>
+          <div class="cta-bar__pval mono" id="ctaTotal">$3,060 <small id="ctaLead">· 2–4 wk lead</small></div>
+        </div>
+        <div class="cta-bar__btns">
+          <button class="btn-ghost" id="saveBtn">Save config</button>
+          <button class="btn-quote" id="quoteBtn">Add to Quote →</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer class="foot">
+  <div class="foot__inner">
+    <div class="foot__brand">ABOVE AEROSOL LABS</div>
+    <div class="foot__note">
+      This is an interactive design &amp; pricing preview built to show how the online label customizer and quote flow would look on aboveaerosol.com. Prices are illustrative estimates for review purposes only.
+    </div>
+    <div class="foot__by">Powered by <a href="https://solution.printcart.com" target="_blank" rel="noopener">Printcart · Netbase JSC</a></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"><span class="ic">✓</span><span id="toastMsg">Configuration added to quote</span></div>
+
+<script>
+(function(){
+  "use strict";
+  // ── State ──
+  const S = {
+    base: 3.60, oz: "8.0", ml: "237ml",
+    dm: "upload",
+    finishAdd: 0, finishLabel: "Matte", finishKey: "matte",
+    fragFee: 0, fragKey: "stock",
+    packAdd: 0, packKey: "standard",
+    qty: 1000, qtyMult: 0.85,
+    spMult: 1.00, spKey: "standard",
+    addons: 0
+  };
+  const $ = s => document.querySelector(s);
+  const fmt = n => "$" + Math.round(n).toLocaleString("en-US");
+  const fmt2 = n => "$" + n.toFixed(2);
+
+  function activate(group, el, cls){
+    group.querySelectorAll("."+cls).forEach(b=>b.classList.remove(cls+"--active"));
+    el.classList.add(cls+"--active");
+  }
+
+  function recalc(){
+    const perUnitBase = (S.base * S.qtyMult) + S.finishAdd + S.packAdd;
+    const production   = perUnitBase * S.qty;
+    const productionRush = production * S.spMult;
+    const oneTime      = S.fragFee + S.addons;
+    const total        = productionRush + oneTime;
+    const perCan       = total / S.qty;
+
+    // MOQ comparison (same config, 250 qty, no rush, no one-time)
+    const moqPerUnit = (S.base * 1.00) + S.finishAdd + S.packAdd;
+    const moqTotalEquiv = moqPerUnit * S.qty;             // what qty cans would cost at MOQ unit price
+    const saved = Math.max(0, moqTotalEquiv - production);
+    const discPct = Math.round((1 - S.qtyMult) * 100);
+
+    // Quote showcase
+    $("#qTotal").textContent = fmt(total);
+    $("#qPer").textContent   = fmt2(perCan);
+    $("#qQty").textContent   = S.qty.toLocaleString("en-US");
+    $("#qTick").textContent  = discPct>0 ? ("−"+discPct+"% vs MOQ") : "MOQ price";
+    $("#qTick").style.display = discPct>0 ? "" : "none";
+    $("#qSave").textContent  = saved>0 ? ("↓ Saved "+fmt(saved)+" vs 250-unit MOQ") : "Minimum order quantity";
+
+    // CTA bar
+    $("#ctaTotal").firstChild.textContent = fmt(total)+" ";
+    $("#ctaLead").textContent = "· " + (S.spKey==="rush" ? "~10-day rush" : "2–4 wk lead");
+
+    // chosen labels
+    $("#szChosen").textContent  = S.oz + " oz";
+    $("#qtyChosen").textContent = S.qty.toLocaleString("en-US") + " cans";
+    $("#qtyDisc").textContent   = discPct>0 ? ("−"+discPct+"%") : "MOQ";
+    $("#canLabelSub").textContent = S.oz + " oz · Finishing Spray";
+
+    // progress (count "non-default decisions" loosely → always show 4–6)
+    let done = 4;
+    if(S.fragKey==="custom") done++;
+    if(S.packKey!=="standard") done++;
+    done = Math.min(6, done);
+    $("#progDone").textContent = done;
+    $("#progFill").style.width = (done/6*100) + "%";
+  }
+
+  // ── Fill size ──
+  $("#sizeGrid").addEventListener("click", e=>{
+    const b = e.target.closest(".size"); if(!b) return;
+    activate($("#sizeGrid"), b, "size");
+    S.base = parseFloat(b.dataset.base); S.oz = b.dataset.oz; S.ml = b.dataset.ml;
+    recalc();
+  });
+
+  // ── Design method ──
+  $("#dmGrid").addEventListener("click", e=>{
+    const b = e.target.closest(".dm"); if(!b) return;
+    activate($("#dmGrid"), b, "dm");
+    S.dm = b.dataset.dm;
+    $("#dmChosen").textContent = b.querySelector(".dm__t").textContent;
+    recalc();
+  });
+
+  // ── Finish ──
+  $("#finishGrid").addEventListener("click", e=>{
+    const b = e.target.closest(".sw"); if(!b) return;
+    activate($("#finishGrid"), b, "sw");
+    S.finishAdd = parseFloat(b.dataset.add); S.finishKey = b.dataset.fn; S.finishLabel = b.dataset.label;
+    $("#fnChosen").textContent = b.dataset.label;
+    const c = $("#fnCost");
+    if(S.finishAdd===0){ c.textContent="Standard"; c.className="free"; }
+    else { c.textContent="+"+fmt2(S.finishAdd)+"/can"; c.className="cost"; }
+    // update can mockup
+    $("#canLabel").dataset.finish = b.dataset.fn;
+    $("#finishTag").textContent = b.dataset.label + " label";
+    recalc();
+  });
+
+  // ── Fragrance ──
+  $("#fragGrid").addEventListener("click", e=>{
+    const b = e.target.closest(".chip"); if(!b) return;
+    activate($("#fragGrid"), b, "chip");
+    S.fragFee = parseFloat(b.dataset.fee); S.fragKey = b.dataset.fr;
+    $("#frChosen").textContent = b.textContent.replace(/Free|\+\$\d+/g,"").trim();
+    const c = $("#frCost");
+    if(S.fragFee===0){ c.textContent="Free"; c.className="free"; }
+    else { c.textContent="+"+fmt(S.fragFee)+" one-time"; c.className="cost"; }
+    $("#fragNote").style.display = S.fragKey==="custom" ? "flex" : "none";
+    recalc();
+  });
+
+  // ── Packaging ──
+  $("#packGrid").addEventListener("click", e=>{
+    const b = e.target.closest(".chip"); if(!b) return;
+    activate($("#packGrid"), b, "chip");
+    S.packAdd = parseFloat(b.dataset.add); S.packKey = b.dataset.pk;
+    $("#pkChosen").textContent = b.textContent.replace(/Free|\+\$[\d.]+\/can/g,"").trim();
+    const c = $("#pkCost");
+    if(S.packAdd===0){ c.textContent="Free"; c.className="free"; }
+    else { c.textContent="+"+fmt2(S.packAdd)+"/can"; c.className="cost"; }
+    recalc();
+  });
+
+  // ── Quantity ──
+  $("#qtyGrid").addEventListener("click", e=>{
+    const b = e.target.closest(".qty"); if(!b) return;
+    activate($("#qtyGrid"), b, "qty");
+    S.qty = parseInt(b.dataset.qty); S.qtyMult = parseFloat(b.dataset.mult);
+    recalc();
+  });
+
+  // ── Production speed ──
+  $("#speedGrid").addEventListener("click", e=>{
+    const b = e.target.closest(".speed"); if(!b) return;
+    activate($("#speedGrid"), b, "speed");
+    S.spMult = parseFloat(b.dataset.mult); S.spKey = b.dataset.sp;
+    $("#spChosen").textContent = S.spKey==="rush" ? "Rush" : "Standard";
+    const c = $("#spCost");
+    if(S.spKey==="rush"){ c.textContent="+15%"; c.className="cost"; }
+    else { c.textContent="Included"; c.className="free"; }
+    recalc();
+  });
+
+  // ── Add-ons (toggle) ──
+  $("#addonGrid").addEventListener("click", e=>{
+    const b = e.target.closest(".addon"); if(!b) return;
+    b.classList.toggle("addon--active");
+    let sum = 0;
+    $("#addonGrid").querySelectorAll(".addon--active").forEach(a=> sum += parseFloat(a.dataset.fee));
+    S.addons = sum;
+    recalc();
+  });
+
+  // ── Smart combo apply ──
+  $("#applyCombo").addEventListener("click", ()=>{
+    $("#sizeGrid").querySelector('[data-oz="8.0"]').click();
+    $("#finishGrid").querySelector('[data-fn="matte"]').click();
+    $("#fragGrid").querySelector('[data-fr="stock"]').click();
+    $("#qtyGrid").querySelector('[data-qty="1000"]').click();
+    toast("Most-ordered combo applied");
+  });
+
+  // ── Quote / save ──
+  let cart = 0;
+  $("#quoteBtn").addEventListener("click", ()=>{
+    cart++; $("#cartCnt").textContent = cart;
+    toast("Added to quote — "+ $("#qTotal").textContent +" est.");
+  });
+  $("#saveBtn").addEventListener("click", ()=> toast("Configuration saved"));
+
+  let tT;
+  function toast(msg){
+    $("#toastMsg").textContent = msg;
+    const t = $("#toast"); t.classList.add("show");
+    clearTimeout(tT); tT = setTimeout(()=>t.classList.remove("show"), 2400);
+  }
+
+  recalc();
+})();
+</script>
+</body>
+</html>
