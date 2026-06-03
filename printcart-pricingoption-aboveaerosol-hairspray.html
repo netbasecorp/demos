@@ -562,6 +562,103 @@ img{display:block;max-width:100%}
   display:flex;align-items:center;gap:10px;transition:transform .4s var(--bounce)}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .toast .ic{background:var(--gold);color:var(--teal-ink);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px}
+
+/* ── fixed spec rows ── */
+.specrow{display:flex;flex-wrap:wrap;gap:8px}
+.spec{
+  flex:1;min-width:120px;background:var(--surface-2);border:1px solid var(--line-soft);
+  border-radius:var(--r);padding:11px 13px;
+}
+.spec__k{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.spec__v{font-family:var(--display);font-weight:700;font-size:15px;color:var(--teal-ink);margin-top:3px}
+.spec__v small{font-family:var(--body);font-weight:600;font-size:11.5px;color:var(--ink-2)}
+.fixed-pill{
+  display:inline-flex;align-items:center;gap:6px;background:var(--mint);color:var(--teal-deep);
+  font-weight:700;font-size:11px;padding:3px 10px;border-radius:var(--r-pill)}
+
+/* ── can-finish swatch (base can color) ── */
+.sw__chip--cwhite{background:linear-gradient(90deg,#d7dcdc,#fff 50%,#e6ebeb)}
+.sw__chip--csilver{background:linear-gradient(90deg,#9aa3a3,#eef3f3 48%,#c4cccc 70%,#8b9494)}
+
+/* ── case stepper + tier table ── */
+.stepper{display:flex;align-items:stretch;gap:10px}
+.stepper__btn{
+  width:48px;border:2px solid var(--teal);color:var(--teal-deep);border-radius:var(--r);
+  font-family:var(--display);font-weight:800;font-size:22px;background:var(--surface);
+  transition:all .15s var(--ease);display:grid;place-items:center}
+.stepper__btn:hover:not(:disabled){background:var(--mint)}
+.stepper__btn:disabled{opacity:.35;cursor:not-allowed}
+.stepper__mid{
+  flex:1;border:2px solid var(--line);border-radius:var(--r);background:var(--surface);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px}
+.stepper__cases{font-family:var(--display);font-weight:800;font-size:26px;color:var(--teal-ink);line-height:1}
+.stepper__sub{font-size:11px;color:var(--ink-2);font-weight:600;margin-top:3px}
+.tier-table{margin-top:13px;border:1px solid var(--line-soft);border-radius:var(--r);overflow:hidden}
+.tier-row{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:6px;align-items:center;
+  padding:9px 13px;font-size:12.5px;font-weight:600;color:var(--ink-2);
+  border-bottom:1px solid var(--line-soft)}
+.tier-row:last-child{border-bottom:none}
+.tier-row--head{background:var(--surface-2);color:var(--ink-3);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+.tier-row--active{background:var(--mint);color:var(--teal-ink)}
+.tier-row--active .tier-row__case{font-weight:800}
+.tier-row--locked{opacity:.5}
+.tier-row__case{color:var(--teal-ink);font-weight:700}
+.tier-row .lockwarn{font-size:10px;color:var(--rush);font-weight:700}
+.moq-warn{
+  display:none;margin-top:11px;font-size:11.5px;color:var(--rush);font-weight:700;
+  background:var(--rush-soft);padding:9px 12px;border-radius:var(--r-sm);align-items:center;gap:7px}
+.moq-warn.show{display:flex}
+
+/* ── online designer CTA ── */
+.designer-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
+  margin-top:11px;padding:14px 18px;border-radius:var(--r);
+  background:linear-gradient(135deg,var(--teal),var(--teal-deep));color:#fff;
+  font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.01em;
+  box-shadow:var(--sh-teal);transition:transform .2s var(--bounce),box-shadow .2s var(--ease)}
+.designer-btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,154,155,.36)}
+.designer-btn .arw{transition:transform .2s var(--ease)}
+.designer-btn:hover .arw{transform:translateX(4px)}
+.designer-hint{font-size:11.5px;color:var(--ink-3);text-align:center;margin-top:7px}
+
+/* customize button floating on the can stage */
+.stage__design{
+  position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:4;
+  display:flex;align-items:center;gap:8px;
+  background:#fff;color:var(--teal-ink);font-weight:800;font-size:12.5px;
+  padding:10px 16px;border-radius:var(--r-pill);box-shadow:var(--sh-lg);
+  border:1px solid var(--line-soft);transition:transform .2s var(--bounce)}
+.stage__design:hover{transform:translateX(-50%) translateY(-2px)}
+.stage__design .pulse{width:8px;height:8px;border-radius:50%;background:var(--teal);
+  box-shadow:0 0 0 0 rgba(0,188,189,.6);animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(0,188,189,0)}100%{box-shadow:0 0 0 0 rgba(0,188,189,0)}}
+
+/* designer modal (placeholder) */
+.dmodal{
+  position:fixed;inset:0;z-index:80;display:none;place-items:center;padding:20px;
+  background:rgba(11,60,61,.55);backdrop-filter:blur(4px)}
+.dmodal.show{display:grid}
+.dmodal__card{
+  width:min(560px,100%);background:var(--surface);border-radius:var(--r-xl);
+  box-shadow:var(--sh-lg);overflow:hidden;animation:pop .3s var(--bounce)}
+@keyframes pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.dmodal__top{
+  background:linear-gradient(135deg,var(--teal),var(--teal-deep));color:#fff;
+  padding:16px 20px;display:flex;align-items:center;justify-content:space-between}
+.dmodal__title{font-family:var(--display);font-weight:800;font-size:16px;display:flex;align-items:center;gap:9px}
+.dmodal__x{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.18);color:#fff;font-size:16px}
+.dmodal__body{padding:22px 22px 8px}
+.dmodal__canvas{
+  border:2px dashed var(--mint-deep);border-radius:var(--r);background:var(--cream);
+  height:190px;display:grid;place-items:center;text-align:center;position:relative;overflow:hidden}
+.dmodal__canvas .lbl{font-family:var(--display);font-weight:800;color:var(--teal-ink);font-size:18px}
+.dmodal__canvas .sub{font-size:12px;color:var(--ink-2);margin-top:6px;max-width:300px}
+.dmodal__tools{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.dmodal__tool{background:var(--surface-2);border:1px solid var(--line-soft);border-radius:var(--r-pill);
+  padding:7px 13px;font-size:12px;font-weight:700;color:var(--ink-2)}
+.dmodal__foot{padding:14px 22px 22px;display:flex;gap:10px;justify-content:flex-end}
+.dmodal__note{font-size:11.5px;color:var(--ink-3);padding:0 22px 6px;text-align:center}
 </style>
 </head>
 <body>
@@ -593,9 +690,9 @@ img{display:block;max-width:100%}
 
 <section class="hero">
   <div class="hero__inner">
-    <span class="hero__eyebrow">✦ Private Label · Build &amp; Customize Online</span>
-    <h1>Hairspray Finishing Spray</h1>
-    <p>Aerosol Hairspray · VOC&nbsp;Compliant · all-day humidity-resistant hold. Configure your can size, label and finish — get an instant quote estimate.</p>
+    <span class="hero__eyebrow">✦ Private Label · Test SKU · Build &amp; Customize Online</span>
+    <h1>Extra Hold Hairspray — 10&nbsp;oz</h1>
+    <p>Aerosol Hairspray · VOC&nbsp;Compliant · all-day humidity-resistant hold. Sold by the case (12 units) · MOQ 4 cases. Configure your can, label and finish — get an instant quote estimate.</p>
   </div>
 </section>
 
@@ -605,40 +702,41 @@ img{display:block;max-width:100%}
     <!-- ════ LEFT: visual ════ -->
     <div class="viz">
       <div class="stage">
-        <div class="stage__badge">★ Best for salons &amp; private brands</div>
-        <div class="stage__finishtag" id="finishTag">Matte label</div>
+        <div class="stage__badge">★ Test SKU · Extra Hold 10 oz</div>
+        <div class="stage__finishtag" id="finishTag">Gloss label · Glossy White can</div>
 
         <div class="can-scene">
           <div class="can">
-            <div class="can__cap"></div>
+            <div class="can__cap" id="canCap"></div>
             <div class="can__neck"></div>
-            <div class="can__body">
-              <div class="can__label" data-finish="matte" id="canLabel">
+            <div class="can__body" id="canBody">
+              <div class="can__label" data-finish="gloss" id="canLabel">
                 <div class="can__label-inner">
                   <div class="can__label-eyebrow">YOUR BRAND</div>
                   <div class="can__label-main">YOUR DESIGN<br>HERE</div>
-                  <div class="can__label-sub" id="canLabelSub">8.0 oz · Finishing Spray</div>
+                  <div class="can__label-sub" id="canLabelSub">10 oz · Extra Hold Hairspray</div>
                 </div>
               </div>
             </div>
           </div>
+          <button class="stage__design" data-open-designer><span class="pulse"></span> Customize this label</button>
         </div>
       </div>
 
       <div class="viz-foot">
         <div class="viz-foot__item">
-          <div class="viz-foot__ic">📐</div>
-          <div class="viz-foot__t">Flexible sizing</div>
-          <div class="viz-foot__d">2.0–14.0 oz</div>
-        </div>
-        <div class="viz-foot__item">
-          <div class="viz-foot__ic">🧪</div>
-          <div class="viz-foot__t">Salon quality</div>
-          <div class="viz-foot__d">Ayurvedic blend</div>
+          <div class="viz-foot__ic">🥫</div>
+          <div class="viz-foot__t">10 oz / 282 g</div>
+          <div class="viz-foot__d">53 × 235 mm can</div>
         </div>
         <div class="viz-foot__item">
           <div class="viz-foot__ic">📦</div>
-          <div class="viz-foot__t">Print-ready</div>
+          <div class="viz-foot__t">Sold by case</div>
+          <div class="viz-foot__d">12 units · MOQ 4</div>
+        </div>
+        <div class="viz-foot__item">
+          <div class="viz-foot__ic">🎨</div>
+          <div class="viz-foot__t">Template label</div>
           <div class="viz-foot__d">Vector PDF out</div>
         </div>
       </div>
@@ -648,203 +746,183 @@ img{display:block;max-width:100%}
     <div class="cfg">
 
       <div class="phead">
-        <div class="phead__eyebrow">Private Label Aerosol <span class="pill">CUSTOMIZABLE</span></div>
-        <h2>Build Your Hairspray Finishing Spray</h2>
+        <div class="phead__eyebrow">Private Label Aerosol <span class="pill">TEST SKU</span></div>
+        <h2>Extra Hold Hairspray 10 oz</h2>
         <div class="phead__meta">
           <span class="phead__stars">★★★★★</span>
           <span>4.9</span><span class="phead__sep">·</span>
-          <span>Trusted by 60+ private-label brands</span>
+          <span>Sold by the case · 12 units / case</span>
         </div>
       </div>
 
       <div class="quote-show">
         <div class="quote-show__label">Estimated Quote</div>
         <div class="quote-show__row">
-          <span class="quote-show__total mono" id="qTotal">$3,060</span>
-          <span class="quote-show__tick" id="qTick">−15% vs MOQ</span>
+          <span class="quote-show__total mono" id="qTotal">$432</span>
+          <span class="quote-show__tick" id="qTick">10% off list</span>
         </div>
         <div class="quote-show__sub">
-          <span><span class="mono" id="qPer">$3.06</span> per can</span>
-          <span>× <span class="mono" id="qQty">1,000</span> cans</span>
-          <span class="save" id="qSave">↓ Saved $540 vs 250-unit MOQ</span>
+          <span><span class="mono" id="qCasePrice">$108</span>/case</span>
+          <span>× <span class="mono" id="qCases">4</span> cases</span>
+          <span><span class="mono" id="qUnits">48</span> units · <span class="mono" id="qPer">$9.00</span>/unit</span>
+          <span class="save" id="qSave">Meets 4-case minimum</span>
         </div>
         <div class="quote-show__note">
-          ⓘ Estimate only · final quote confirmed after design &amp; fragrance review
+          ⓘ Estimate only · final quote confirmed after design &amp; spec review
         </div>
       </div>
 
       <div class="progress">
-        <div class="progress__bar"><div class="progress__fill" id="progFill"></div></div>
-        <div class="progress__txt"><strong id="progDone">4</strong> of 6 steps</div>
+        <div class="progress__bar"><div class="progress__fill" id="progFill" style="width:100%"></div></div>
+        <div class="progress__txt"><strong id="progDone">Ready</strong> to quote</div>
       </div>
 
       <div class="smart">
         <div class="smart__ic">💡</div>
         <div class="smart__body">
-          <div class="smart__t">Most-ordered configuration</div>
-          <div class="smart__d">8.0 oz · Matte label · Stock scent · 1,000 cans</div>
+          <div class="smart__t">Hit the next price break</div>
+          <div class="smart__d">Order 12+ cases → $102/case ($8.50/unit)</div>
         </div>
-        <button class="smart__btn" id="applyCombo">Apply</button>
+        <button class="smart__btn" id="applyCombo">Set 12</button>
       </div>
 
-      <!-- 1. Fill size -->
+      <!-- 1. Product spec (fixed) -->
       <div class="field">
         <div class="field__head">
-          <div class="field__label">① Fill Size <span class="field__count">6 options</span></div>
-          <div class="field__chosen"><strong id="szChosen">8.0 oz</strong></div>
+          <div class="field__label">① Product <span class="field__count">fixed for this SKU</span></div>
+          <div class="field__chosen"><span class="fixed-pill">Single size</span></div>
         </div>
-        <div class="sizes" id="sizeGrid">
-          <button class="size" data-oz="2.0" data-ml="60ml" data-base="2.10">
-            <div class="size__check">✓</div><div class="size__oz">2.0<small style="font-size:11px"> oz</small></div>
-            <div class="size__ml">60 ml · travel</div><div class="size__per">$2.10/can</div>
+        <div class="specrow">
+          <div class="spec"><div class="spec__k">Fill size</div><div class="spec__v">10 oz <small>/ 282 g</small></div></div>
+          <div class="spec"><div class="spec__k">Can size</div><div class="spec__v">53 × 235 <small>mm (Ø × H)</small></div></div>
+        </div>
+      </div>
+
+      <!-- 2. Can finish -->
+      <div class="field">
+        <div class="field__head">
+          <div class="field__label">② Can Finish <span class="field__count">2 options</span></div>
+          <div class="field__chosen"><strong id="cfChosen">Glossy White</strong><span class="free">Included</span></div>
+        </div>
+        <div class="swatches" id="canFinishGrid" style="grid-template-columns:repeat(2,1fr)">
+          <button class="sw sw--active" data-cf="white" data-label="Glossy White">
+            <div class="sw__chip sw__chip--cwhite"></div><div class="sw__name">Glossy White</div><div class="sw__px sw__px--free">Included</div>
           </button>
-          <button class="size" data-oz="4.0" data-ml="118ml" data-base="2.60">
-            <div class="size__check">✓</div><div class="size__oz">4.0<small style="font-size:11px"> oz</small></div>
-            <div class="size__ml">118 ml</div><div class="size__per">$2.60/can</div>
-          </button>
-          <button class="size" data-oz="6.0" data-ml="177ml" data-base="3.10">
-            <div class="size__check">✓</div><div class="size__oz">6.0<small style="font-size:11px"> oz</small></div>
-            <div class="size__ml">177 ml</div><div class="size__per">$3.10/can</div>
-          </button>
-          <button class="size size--active" data-oz="8.0" data-ml="237ml" data-base="3.60">
-            <span class="size__pop">★ Popular</span>
-            <div class="size__check">✓</div><div class="size__oz">8.0<small style="font-size:11px"> oz</small></div>
-            <div class="size__ml">237 ml</div><div class="size__per">$3.60/can</div>
-          </button>
-          <button class="size" data-oz="10.0" data-ml="296ml" data-base="4.10">
-            <div class="size__check">✓</div><div class="size__oz">10.0<small style="font-size:11px"> oz</small></div>
-            <div class="size__ml">296 ml</div><div class="size__per">$4.10/can</div>
-          </button>
-          <button class="size" data-oz="14.0" data-ml="414ml" data-base="4.90">
-            <div class="size__check">✓</div><div class="size__oz">14.0<small style="font-size:11px"> oz</small></div>
-            <div class="size__ml">414 ml · pro</div><div class="size__per">$4.90/can</div>
+          <button class="sw" data-cf="silver" data-label="Silver">
+            <div class="sw__chip sw__chip--csilver"></div><div class="sw__name">Silver</div><div class="sw__px sw__px--free">Included</div>
           </button>
         </div>
       </div>
 
-      <!-- 2. Label design method -->
+      <!-- 3. Label design -->
       <div class="field">
         <div class="field__head">
-          <div class="field__label">② Label Design <span class="field__count">3 ways</span></div>
-          <div class="field__chosen"><strong id="dmChosen">Upload artwork</strong><span class="free">Free</span></div>
+          <div class="field__label">③ Label Design <span class="field__count">template only</span></div>
+          <div class="field__chosen"><strong>From template</strong><span class="free">Free</span></div>
         </div>
-        <div class="dmethods" id="dmGrid">
-          <button class="dm" data-dm="template">
+        <div class="dmethods">
+          <div class="dm dm--active">
             <span class="dm__radio"></span><span class="dm__ic">🎨</span>
-            <div class="dm__body"><div class="dm__t">Start from a template</div><div class="dm__d">Pick a ready-made label, swap text &amp; colors</div></div>
+            <div class="dm__body"><div class="dm__t">Start from the supplied template</div><div class="dm__d">Customer edits text &amp; colors on your template — upload &amp; free-design are off for this SKU</div></div>
             <span class="dm__px">Free</span>
+          </div>
+        </div>
+        <button class="designer-btn" data-open-designer>🎨 Open Online Designer <span class="arw">→</span></button>
+        <div class="designer-hint">Launch the label editor, pick the template and customize text &amp; colors</div>
+      </div>
+
+      <!-- 4. Label finish -->
+      <div class="field">
+        <div class="field__head">
+          <div class="field__label">④ Label Finish <span class="field__count">2 options</span></div>
+          <div class="field__chosen"><strong id="fnChosen">Gloss</strong><span class="free" id="fnCost">Included</span></div>
+        </div>
+        <div class="swatches" id="finishGrid" style="grid-template-columns:repeat(2,1fr)">
+          <button class="sw sw--active" data-fn="gloss" data-label="Gloss">
+            <div class="sw__chip sw__chip--gloss"></div><div class="sw__name">Gloss</div><div class="sw__px sw__px--free">Included</div>
           </button>
-          <button class="dm dm--active" data-dm="upload">
-            <span class="dm__radio"></span><span class="dm__ic">⬆️</span>
-            <div class="dm__body"><div class="dm__t">Upload your own artwork</div><div class="dm__d">Print-ready PDF / AI / PNG accepted</div></div>
-            <span class="dm__px">Free</span>
-          </button>
-          <button class="dm" data-dm="scratch">
-            <span class="dm__radio"></span><span class="dm__ic">✏️</span>
-            <div class="dm__body"><div class="dm__t">Design from scratch</div><div class="dm__d">Build it live in the online designer</div></div>
-            <span class="dm__px">Free</span>
+          <button class="sw" data-fn="matte" data-label="Matte">
+            <div class="sw__chip sw__chip--matte"></div><div class="sw__name">Matte</div><div class="sw__px sw__px--free">Included</div>
           </button>
         </div>
       </div>
 
-      <!-- 3. Label finish -->
+      <!-- 5. Fragrance -->
       <div class="field">
         <div class="field__head">
-          <div class="field__label">③ Label Finish <span class="field__count">4 options</span></div>
-          <div class="field__chosen"><strong id="fnChosen">Matte</strong><span class="free" id="fnCost">Standard</span></div>
-        </div>
-        <div class="swatches" id="finishGrid">
-          <button class="sw sw--active" data-fn="matte" data-add="0" data-label="Matte">
-            <div class="sw__chip sw__chip--matte"></div><div class="sw__name">Matte</div><div class="sw__px sw__px--free">Standard</div>
-          </button>
-          <button class="sw" data-fn="gloss" data-add="0.08" data-label="Gloss">
-            <div class="sw__chip sw__chip--gloss"></div><div class="sw__name">Gloss</div><div class="sw__px">+$0.08</div>
-          </button>
-          <button class="sw" data-fn="clear" data-add="0.15" data-label="Clear">
-            <div class="sw__chip sw__chip--clear"></div><div class="sw__name">Clear</div><div class="sw__px">+$0.15</div>
-          </button>
-          <button class="sw" data-fn="metallic" data-add="0.22" data-label="Metallic">
-            <div class="sw__chip sw__chip--metallic"></div><div class="sw__name">Metallic</div><div class="sw__px">+$0.22</div>
-          </button>
-        </div>
-      </div>
-
-      <!-- 4. Fragrance -->
-      <div class="field">
-        <div class="field__head">
-          <div class="field__label">④ Fragrance</div>
-          <div class="field__chosen"><strong id="frChosen">Stock scent</strong><span class="free" id="frCost">Free</span></div>
+          <div class="field__label">⑤ Fragrance <span class="field__count">stock only</span></div>
+          <div class="field__chosen"><strong id="frChosen">Green Tea Floral</strong><span class="free">Included</span></div>
         </div>
         <div class="chips" id="fragGrid">
-          <button class="chip chip--active" data-fr="stock" data-fee="0"><span class="ic">🌿</span>Stock scent<span class="px px--free">Free</span></button>
-          <button class="chip" data-fr="custom" data-fee="350"><span class="ic">⚗️</span>Custom blend<span class="px">+$350</span></button>
-        </div>
-        <div class="moq-note" id="fragNote" style="display:none">
-          ⚠️ <span><b>Custom fragrance</b> adds a one-time development fee, extra lead time, and may require a higher minimum order. Our team confirms details on the call.</span>
+          <button class="chip chip--active" data-fr="Green Tea Floral"><span class="ic">🌿</span>Green Tea Floral<span class="px px--free">Free</span></button>
+          <button class="chip" data-fr="Bergamot &amp; White Tea"><span class="ic">🍵</span>Bergamot &amp; White Tea<span class="px px--free">Free</span></button>
         </div>
       </div>
 
-      <!-- 5. Packaging -->
+      <!-- 6. Cap & actuator -->
       <div class="field">
         <div class="field__head">
-          <div class="field__label">⑤ Packaging</div>
-          <div class="field__chosen"><strong id="pkChosen">Standard</strong><span class="free" id="pkCost">Free</span></div>
+          <div class="field__label">⑥ Cap &amp; Actuator</div>
+          <div class="field__chosen"><strong id="capChosen">White / Frosted White</strong></div>
         </div>
-        <div class="chips" id="packGrid">
-          <button class="chip chip--active" data-pk="standard" data-add="0"><span class="ic">📦</span>Standard<span class="px px--free">Free</span></button>
-          <button class="chip" data-pk="luxury" data-add="0.65"><span class="ic">🎁</span>Luxury box<span class="px">+$0.65/can</span></button>
-          <button class="chip" data-pk="custom" data-add="1.20"><span class="ic">✨</span>Custom<span class="px">+$1.20/can</span></button>
+        <div style="font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Actuator</div>
+        <div class="chips" id="actGrid" style="margin-bottom:14px">
+          <button class="chip chip--active" data-act="White"><span class="ic">⚪</span>White<span class="px px--free">Included</span></button>
+          <button class="chip" data-act="Black"><span class="ic">⚫</span>Black<span class="px px--free">Included</span></button>
+        </div>
+        <div style="font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Overcap</div>
+        <div class="chips" id="capGrid">
+          <button class="chip chip--active" data-cap="Frosted White"><span class="ic">🧊</span>Frosted White<span class="px px--free">Included</span></button>
+          <button class="chip" data-cap="Black"><span class="ic">⚫</span>Black<span class="px px--free">Included</span></button>
+          <button class="chip" data-cap="White"><span class="ic">⚪</span>White<span class="px px--free">Included</span></button>
         </div>
       </div>
 
-      <!-- 6. Quantity -->
+      <!-- 7. Packaging (fixed) -->
       <div class="field">
         <div class="field__head">
-          <div class="field__label">⑥ Quantity <span class="field__count">Volume discount</span></div>
-          <div class="field__chosen"><strong id="qtyChosen">1,000 cans</strong><span class="cost" id="qtyDisc">−15%</span></div>
+          <div class="field__label">⑦ Packaging <span class="field__count">fixed</span></div>
+          <div class="field__chosen"><strong>Standard</strong><span class="free">Included</span></div>
         </div>
-        <div class="qtys" id="qtyGrid">
-          <button class="qty" data-qty="250"  data-mult="1.00"><div class="qty__count">250</div><div class="qty__unit">cans</div><div class="qty__per">MOQ</div></button>
-          <button class="qty" data-qty="500"  data-mult="0.92"><div class="qty__count">500</div><div class="qty__unit">cans</div><div class="qty__per">−8%</div><span class="qty__save">−8%</span></button>
-          <button class="qty qty--active qty--popular" data-qty="1000" data-mult="0.85"><div class="qty__count">1,000</div><div class="qty__unit">cans</div><div class="qty__per">−15%</div><span class="qty__save">Popular</span></button>
-          <button class="qty" data-qty="5000" data-mult="0.74"><div class="qty__count">5,000</div><div class="qty__unit">cans</div><div class="qty__per">−26%</div><span class="qty__save">−26%</span></button>
-          <button class="qty" data-qty="10000" data-mult="0.66"><div class="qty__count">10k</div><div class="qty__unit">cans</div><div class="qty__per">−34%</div><span class="qty__save">Best</span></button>
-        </div>
-        <div class="moq-note">📋 <span>Minimum order quantity is <b>250 cans</b>. Per-unit price drops as volume increases.</span></div>
-      </div>
-
-      <!-- 7. Production speed -->
-      <div class="field">
-        <div class="field__head">
-          <div class="field__label">⑦ Production Speed</div>
-          <div class="field__chosen"><strong id="spChosen">Standard</strong><span class="free" id="spCost">Included</span></div>
-        </div>
-        <div class="speeds" id="speedGrid">
-          <button class="speed speed--active" data-sp="standard" data-mult="1.00">
-            <div class="speed__t">🕒 Standard</div><div class="speed__d">2–4 weeks production</div><div class="speed__px speed__px--free">Included</div>
-          </button>
-          <button class="speed speed--rush" data-sp="rush" data-mult="1.15">
-            <div class="speed__t">⚡ Rush</div><div class="speed__d">~10 business days</div><div class="speed__px">+15% on production</div>
-          </button>
+        <div class="specrow">
+          <div class="spec"><div class="spec__k">Packaging</div><div class="spec__v">Standard <small>· 12 units / case</small></div></div>
         </div>
       </div>
 
-      <!-- 8. Add-ons -->
+      <!-- 8. Quantity (by the case) -->
       <div class="field">
         <div class="field__head">
-          <div class="field__label">⑧ Optional Add-ons</div>
+          <div class="field__label">⑧ Quantity <span class="field__count">by the case · MOQ 4</span></div>
+          <div class="field__chosen"><strong id="qtyChosen">4 cases</strong><span class="cost" id="qtyUnits">48 units</span></div>
         </div>
-        <div class="addons" id="addonGrid">
-          <button class="addon" data-fee="45">
-            <span class="addon__box">✓</span>
-            <div class="addon__body"><div class="addon__t">Physical pre-production proof</div><div class="addon__d">Approve a real sample can before the full run</div></div>
-            <span class="addon__px">+$45</span>
-          </button>
-          <button class="addon" data-fee="120">
-            <span class="addon__box">✓</span>
-            <div class="addon__body"><div class="addon__t">Professional label design service</div><div class="addon__d">Our designers create your label, print-ready</div></div>
-            <span class="addon__px">+$120</span>
-          </button>
+        <div class="stepper">
+          <button class="stepper__btn" id="caseMinus">−</button>
+          <div class="stepper__mid">
+            <div class="stepper__cases"><span id="caseVal">4</span> <span style="font-size:13px;color:var(--ink-2);font-weight:700">cases</span></div>
+            <div class="stepper__sub"><span id="caseUnits">48</span> units · <span id="casePerUnit">$9.00</span>/unit</div>
+          </div>
+          <button class="stepper__btn" id="casePlus">+</button>
+        </div>
+
+        <div class="tier-table" id="tierTable">
+          <div class="tier-row tier-row--head"><span>Volume</span><span>Per case</span><span>Per unit</span></div>
+          <div class="tier-row" data-min="1" data-max="1"   data-price="120"><span class="tier-row__case">1 case <span class="lockwarn">below MOQ</span></span><span>$120</span><span>$10.00</span></div>
+          <div class="tier-row" data-min="2" data-max="11"  data-price="108"><span class="tier-row__case">2 – 11 cases</span><span>$108</span><span>$9.00</span></div>
+          <div class="tier-row" data-min="12" data-max="23" data-price="102"><span class="tier-row__case">12 – 23 cases</span><span>$102</span><span>$8.50</span></div>
+          <div class="tier-row" data-min="24" data-max="60" data-price="96"><span class="tier-row__case">24 – 60 cases</span><span>$96</span><span>$8.00</span></div>
+        </div>
+        <div class="moq-note">📋 <span>Sold by the case (12 units). Minimum order is <b>4 cases (48 units)</b>. Larger volume = lower per-case price. For 60+ cases, request a custom quote.</span></div>
+        <div class="moq-warn" id="moqWarn">⚠️ <span>Below the 4-case minimum order quantity.</span></div>
+      </div>
+
+      <!-- 9. Production speed (fixed) -->
+      <div class="field">
+        <div class="field__head">
+          <div class="field__label">⑨ Production &amp; Shipping <span class="field__count">fixed</span></div>
+          <div class="field__chosen"><strong>Standard</strong><span class="free">Included</span></div>
+        </div>
+        <div class="specrow">
+          <div class="spec"><div class="spec__k">Lead time</div><div class="spec__v">2 – 4 weeks <small>from order confirmation</small></div></div>
         </div>
       </div>
 
@@ -874,169 +952,188 @@ img{display:block;max-width:100%}
   </div>
 </footer>
 
+<div class="dmodal" id="dmodal">
+  <div class="dmodal__card" role="dialog" aria-modal="true" aria-label="Online Designer">
+    <div class="dmodal__top">
+      <div class="dmodal__title">🎨 Online Designer — Extra Hold Hairspray 10 oz</div>
+      <button class="dmodal__x" id="dmodalX" aria-label="Close">✕</button>
+    </div>
+    <div class="dmodal__body">
+      <div class="dmodal__canvas">
+        <div>
+          <div class="lbl">Label editor loads here</div>
+          <div class="sub">In the live store this opens the PCDesigner canvas with your supplied template, sized to the 53 × 235 mm label area.</div>
+        </div>
+      </div>
+      <div class="dmodal__tools">
+        <span class="dmodal__tool">Aa Text</span>
+        <span class="dmodal__tool">🎨 Colors</span>
+        <span class="dmodal__tool">🖼️ Template</span>
+        <span class="dmodal__tool">↺ Undo</span>
+        <span class="dmodal__tool">👁️ Preview</span>
+      </div>
+    </div>
+    <div class="dmodal__note">Template-only for this SKU · upload &amp; free-design are disabled</div>
+    <div class="dmodal__foot">
+      <button class="btn-ghost" id="dmodalClose">Close</button>
+      <button class="btn-quote" id="dmodalDone">Save design &amp; continue →</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"><span class="ic">✓</span><span id="toastMsg">Configuration added to quote</span></div>
 
 <script>
 (function(){
   "use strict";
-  // ── State ──
+  const UNITS_PER_CASE = 12, MOQ = 4, MAXC = 60;
+  const CAN_WHITE  = "linear-gradient(90deg,#bfc6c6 0%,#eef3f3 26%,#ffffff 50%,#e4eaea 70%,#aab2b2 100%)";
+  const CAN_SILVER = "linear-gradient(90deg,#8b9494 0%,#ced5d5 26%,#f3f7f7 50%,#aeb6b6 70%,#7c8585 100%)";
+  const CAP_BLACK  = "linear-gradient(100deg,#3a4a4a,#1d2727 60%,#0d1414)";
+  const CAP_WHITE  = "linear-gradient(100deg,#eef2f2,#cfd6d6 60%,#b7bfbf)";
+  const CAP_FROST  = "linear-gradient(100deg,#f6fafa,#dde6e6 60%,#cbd5d5)";
+
   const S = {
-    base: 3.60, oz: "8.0", ml: "237ml",
-    dm: "upload",
-    finishAdd: 0, finishLabel: "Matte", finishKey: "matte",
-    fragFee: 0, fragKey: "stock",
-    packAdd: 0, packKey: "standard",
-    qty: 1000, qtyMult: 0.85,
-    spMult: 1.00, spKey: "standard",
-    addons: 0
+    canFinish:"Glossy White", labelFinish:"Gloss",
+    scent:"Green Tea Floral", actuator:"White", overcap:"Frosted White",
+    cases: MOQ
   };
   const $ = s => document.querySelector(s);
-  const fmt = n => "$" + Math.round(n).toLocaleString("en-US");
+  const fmt  = n => "$" + Math.round(n).toLocaleString("en-US");
   const fmt2 = n => "$" + n.toFixed(2);
 
   function activate(group, el, cls){
     group.querySelectorAll("."+cls).forEach(b=>b.classList.remove(cls+"--active"));
     el.classList.add(cls+"--active");
   }
-
-  function recalc(){
-    const perUnitBase = (S.base * S.qtyMult) + S.finishAdd + S.packAdd;
-    const production   = perUnitBase * S.qty;
-    const productionRush = production * S.spMult;
-    const oneTime      = S.fragFee + S.addons;
-    const total        = productionRush + oneTime;
-    const perCan       = total / S.qty;
-
-    // MOQ comparison (same config, 250 qty, no rush, no one-time)
-    const moqPerUnit = (S.base * 1.00) + S.finishAdd + S.packAdd;
-    const moqTotalEquiv = moqPerUnit * S.qty;             // what qty cans would cost at MOQ unit price
-    const saved = Math.max(0, moqTotalEquiv - production);
-    const discPct = Math.round((1 - S.qtyMult) * 100);
-
-    // Quote showcase
-    $("#qTotal").textContent = fmt(total);
-    $("#qPer").textContent   = fmt2(perCan);
-    $("#qQty").textContent   = S.qty.toLocaleString("en-US");
-    $("#qTick").textContent  = discPct>0 ? ("−"+discPct+"% vs MOQ") : "MOQ price";
-    $("#qTick").style.display = discPct>0 ? "" : "none";
-    $("#qSave").textContent  = saved>0 ? ("↓ Saved "+fmt(saved)+" vs 250-unit MOQ") : "Minimum order quantity";
-
-    // CTA bar
-    $("#ctaTotal").firstChild.textContent = fmt(total)+" ";
-    $("#ctaLead").textContent = "· " + (S.spKey==="rush" ? "~10-day rush" : "2–4 wk lead");
-
-    // chosen labels
-    $("#szChosen").textContent  = S.oz + " oz";
-    $("#qtyChosen").textContent = S.qty.toLocaleString("en-US") + " cans";
-    $("#qtyDisc").textContent   = discPct>0 ? ("−"+discPct+"%") : "MOQ";
-    $("#canLabelSub").textContent = S.oz + " oz · Finishing Spray";
-
-    // progress (count "non-default decisions" loosely → always show 4–6)
-    let done = 4;
-    if(S.fragKey==="custom") done++;
-    if(S.packKey!=="standard") done++;
-    done = Math.min(6, done);
-    $("#progDone").textContent = done;
-    $("#progFill").style.width = (done/6*100) + "%";
+  function casePrice(c){
+    if(c>=24) return 96;
+    if(c>=12) return 102;
+    if(c>=2)  return 108;
+    return 120;
   }
 
-  // ── Fill size ──
-  $("#sizeGrid").addEventListener("click", e=>{
-    const b = e.target.closest(".size"); if(!b) return;
-    activate($("#sizeGrid"), b, "size");
-    S.base = parseFloat(b.dataset.base); S.oz = b.dataset.oz; S.ml = b.dataset.ml;
+  function recalc(){
+    const c = S.cases;
+    const price = casePrice(c);
+    const total = price * c;
+    const units = c * UNITS_PER_CASE;
+    const perUnit = price / UNITS_PER_CASE;
+    const discPct = Math.round((120 - price) / 120 * 100);
+    const saved = price < 108 ? (108 - price) * c : 0;
+
+    // showcase
+    $("#qTotal").textContent     = fmt(total);
+    $("#qCasePrice").textContent = fmt(price);
+    $("#qCases").textContent     = c;
+    $("#qUnits").textContent     = units.toLocaleString("en-US");
+    $("#qPer").textContent       = fmt2(perUnit);
+    $("#qTick").textContent      = discPct>0 ? (discPct+"% off list") : "List price";
+    $("#qTick").style.display    = discPct>0 ? "" : "none";
+    $("#qSave").textContent      = saved>0 ? ("↓ Saved "+fmt(saved)+" vs 4-case price")
+                                           : "Meets 4-case minimum";
+
+    // stepper
+    $("#caseVal").textContent     = c;
+    $("#caseUnits").textContent   = units.toLocaleString("en-US");
+    $("#casePerUnit").textContent = fmt2(perUnit);
+    $("#caseMinus").disabled = c <= MOQ;
+    $("#casePlus").disabled  = c >= MAXC;
+
+    // chosen + CTA
+    $("#qtyChosen").textContent = c + (c===1?" case":" cases");
+    $("#qtyUnits").textContent  = units.toLocaleString("en-US") + " units";
+    $("#ctaTotal").firstChild.textContent = fmt(total) + " ";
+
+    // tier highlight
+    document.querySelectorAll("#tierTable .tier-row[data-min]").forEach(r=>{
+      const mn = +r.dataset.min, mx = +r.dataset.max;
+      r.classList.toggle("tier-row--active", c>=mn && c<=mx);
+      if(mn===1) r.classList.add("tier-row--locked");
+    });
+
+    $("#moqWarn").classList.toggle("show", c < MOQ);
+  }
+
+  function setCases(v){
+    S.cases = Math.max(MOQ, Math.min(MAXC, v));
     recalc();
+  }
+
+  // stepper
+  $("#caseMinus").addEventListener("click", ()=> setCases(S.cases-1));
+  $("#casePlus").addEventListener("click",  ()=> setCases(S.cases+1));
+  // click a tier row to jump to its minimum (skip locked)
+  document.querySelectorAll("#tierTable .tier-row[data-min]").forEach(r=>{
+    r.addEventListener("click", ()=>{
+      const mn = +r.dataset.min;
+      if(mn < MOQ) return;
+      setCases(mn);
+    });
   });
 
-  // ── Design method ──
-  $("#dmGrid").addEventListener("click", e=>{
-    const b = e.target.closest(".dm"); if(!b) return;
-    activate($("#dmGrid"), b, "dm");
-    S.dm = b.dataset.dm;
-    $("#dmChosen").textContent = b.querySelector(".dm__t").textContent;
-    recalc();
+  // can finish (base can color)
+  $("#canFinishGrid").addEventListener("click", e=>{
+    const b = e.target.closest(".sw"); if(!b) return;
+    activate($("#canFinishGrid"), b, "sw");
+    S.canFinish = b.dataset.label;
+    $("#cfChosen").textContent = b.dataset.label;
+    $("#canBody").style.background = b.dataset.cf==="silver" ? CAN_SILVER : CAN_WHITE;
+    syncTag();
   });
 
-  // ── Finish ──
+  // label finish
   $("#finishGrid").addEventListener("click", e=>{
     const b = e.target.closest(".sw"); if(!b) return;
     activate($("#finishGrid"), b, "sw");
-    S.finishAdd = parseFloat(b.dataset.add); S.finishKey = b.dataset.fn; S.finishLabel = b.dataset.label;
+    S.labelFinish = b.dataset.label;
     $("#fnChosen").textContent = b.dataset.label;
-    const c = $("#fnCost");
-    if(S.finishAdd===0){ c.textContent="Standard"; c.className="free"; }
-    else { c.textContent="+"+fmt2(S.finishAdd)+"/can"; c.className="cost"; }
-    // update can mockup
     $("#canLabel").dataset.finish = b.dataset.fn;
-    $("#finishTag").textContent = b.dataset.label + " label";
-    recalc();
+    syncTag();
   });
 
-  // ── Fragrance ──
+  // fragrance
   $("#fragGrid").addEventListener("click", e=>{
     const b = e.target.closest(".chip"); if(!b) return;
     activate($("#fragGrid"), b, "chip");
-    S.fragFee = parseFloat(b.dataset.fee); S.fragKey = b.dataset.fr;
-    $("#frChosen").textContent = b.textContent.replace(/Free|\+\$\d+/g,"").trim();
-    const c = $("#frCost");
-    if(S.fragFee===0){ c.textContent="Free"; c.className="free"; }
-    else { c.textContent="+"+fmt(S.fragFee)+" one-time"; c.className="cost"; }
-    $("#fragNote").style.display = S.fragKey==="custom" ? "flex" : "none";
-    recalc();
+    S.scent = b.dataset.fr;
+    $("#frChosen").textContent = b.dataset.fr;
   });
 
-  // ── Packaging ──
-  $("#packGrid").addEventListener("click", e=>{
+  // actuator + overcap
+  function syncCap(){
+    $("#capChosen").textContent = S.actuator + " / " + S.overcap;
+    $("#canCap").style.background =
+      S.overcap==="Black" ? CAP_BLACK : S.overcap==="White" ? CAP_WHITE : CAP_FROST;
+  }
+  $("#actGrid").addEventListener("click", e=>{
     const b = e.target.closest(".chip"); if(!b) return;
-    activate($("#packGrid"), b, "chip");
-    S.packAdd = parseFloat(b.dataset.add); S.packKey = b.dataset.pk;
-    $("#pkChosen").textContent = b.textContent.replace(/Free|\+\$[\d.]+\/can/g,"").trim();
-    const c = $("#pkCost");
-    if(S.packAdd===0){ c.textContent="Free"; c.className="free"; }
-    else { c.textContent="+"+fmt2(S.packAdd)+"/can"; c.className="cost"; }
-    recalc();
+    activate($("#actGrid"), b, "chip"); S.actuator = b.dataset.act; syncCap();
+  });
+  $("#capGrid").addEventListener("click", e=>{
+    const b = e.target.closest(".chip"); if(!b) return;
+    activate($("#capGrid"), b, "chip"); S.overcap = b.dataset.cap; syncCap();
   });
 
-  // ── Quantity ──
-  $("#qtyGrid").addEventListener("click", e=>{
-    const b = e.target.closest(".qty"); if(!b) return;
-    activate($("#qtyGrid"), b, "qty");
-    S.qty = parseInt(b.dataset.qty); S.qtyMult = parseFloat(b.dataset.mult);
-    recalc();
-  });
+  function syncTag(){
+    $("#finishTag").textContent = S.labelFinish + " label · " + S.canFinish + " can";
+  }
 
-  // ── Production speed ──
-  $("#speedGrid").addEventListener("click", e=>{
-    const b = e.target.closest(".speed"); if(!b) return;
-    activate($("#speedGrid"), b, "speed");
-    S.spMult = parseFloat(b.dataset.mult); S.spKey = b.dataset.sp;
-    $("#spChosen").textContent = S.spKey==="rush" ? "Rush" : "Standard";
-    const c = $("#spCost");
-    if(S.spKey==="rush"){ c.textContent="+15%"; c.className="cost"; }
-    else { c.textContent="Included"; c.className="free"; }
-    recalc();
-  });
+  // online designer modal
+  const dmodal = $("#dmodal");
+  function openDesigner(){ dmodal.classList.add("show"); }
+  function closeDesigner(){ dmodal.classList.remove("show"); }
+  document.querySelectorAll("[data-open-designer]").forEach(b=> b.addEventListener("click", openDesigner));
+  $("#dmodalX").addEventListener("click", closeDesigner);
+  $("#dmodalClose").addEventListener("click", closeDesigner);
+  $("#dmodalDone").addEventListener("click", ()=>{ closeDesigner(); toast("Design saved — continue configuring"); });
+  dmodal.addEventListener("click", e=>{ if(e.target===dmodal) closeDesigner(); });
+  document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeDesigner(); });
 
-  // ── Add-ons (toggle) ──
-  $("#addonGrid").addEventListener("click", e=>{
-    const b = e.target.closest(".addon"); if(!b) return;
-    b.classList.toggle("addon--active");
-    let sum = 0;
-    $("#addonGrid").querySelectorAll(".addon--active").forEach(a=> sum += parseFloat(a.dataset.fee));
-    S.addons = sum;
-    recalc();
-  });
+  // smart: jump to 12 cases
+  $("#applyCombo").addEventListener("click", ()=>{ setCases(12); toast("Set to 12 cases — $102/case"); });
 
-  // ── Smart combo apply ──
-  $("#applyCombo").addEventListener("click", ()=>{
-    $("#sizeGrid").querySelector('[data-oz="8.0"]').click();
-    $("#finishGrid").querySelector('[data-fn="matte"]').click();
-    $("#fragGrid").querySelector('[data-fr="stock"]').click();
-    $("#qtyGrid").querySelector('[data-qty="1000"]').click();
-    toast("Most-ordered combo applied");
-  });
-
-  // ── Quote / save ──
+  // quote / save
   let cart = 0;
   $("#quoteBtn").addEventListener("click", ()=>{
     cart++; $("#cartCnt").textContent = cart;
@@ -1051,7 +1148,7 @@ img{display:block;max-width:100%}
     clearTimeout(tT); tT = setTimeout(()=>t.classList.remove("show"), 2400);
   }
 
-  recalc();
+  syncCap(); syncTag(); recalc();
 })();
 </script>
 </body>
