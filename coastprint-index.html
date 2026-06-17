@@ -1,0 +1,2856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Coast Print — Commercial Printing, Business Cards & Signage | Torquay, VIC</title>
+<meta name="description" content="Coast Print — professional commercial printing in Torquay, Victoria. Business cards, flyers, large-format posters, signage, waterproof menus and graphic design. Trusted by Bellarine Peninsula businesses." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  /* =========================================================
+     Coast Print — Landing Page
+     Built with designer-canvas-ux-ui design tokens.
+     Goal: Get Casey into a product page in ≤2 clicks.
+     ========================================================= */
+
+  /* ---------- DESIGN TOKENS — Coast Print live brand ----------
+     Extracted directly from coastprint.com.au:
+       06CDE4 — Brand turquoise (util bar + CTA + "Top" bar) — PRIMARY
+       2196F3 — Material blue (promo text "NOW 25% OFF")
+       EC008C — CMYK magenta (logo swatch + bold accents)
+       FFED00 — CMYK yellow (logo swatch + highlights)
+       212123 — Footer ink (deep charcoal, not pure black)
+       C8E7FC — Soft sky (light section bg)
+  ------------------------------------------------------------------ */
+  :root {
+    /* Brand */
+    --nbd-mb-primary: #06CDE4;            /* CTA — brand turquoise */
+    --nbd-mb-primary-pressed: #05B3C7;
+    --nbd-mb-primary-soft: #C8F2F7;
+    --nbd-mb-accent: #2196F3;             /* Material blue accent (promo text) */
+    --nbd-mb-accent-soft: #E3F2FD;
+    --nbd-mb-magenta: #EC008C;            /* CMYK magenta highlight */
+    --nbd-mb-highlight: #FFED00;          /* CMYK yellow highlight */
+    --nbd-mb-highlight-soft: #FFFAB3;
+    --nbd-mb-ink: #212123;                /* Footer ink — charcoal */
+    /* Text */
+    --nbd-mb-text: #2A2A2A;
+    --nbd-mb-text-soft: #6A6A6A;
+    --nbd-mb-text-on-primary: #ffffff;
+    /* Surface */
+    --nbd-mb-bg: #ffffff;
+    --nbd-mb-bg-soft: #F7F9FA;
+    --nbd-mb-bg-canvas: #C8E7FC;          /* Soft sky */
+    --nbd-mb-overlay: rgba(33, 33, 35, 0.5);
+    /* Border */
+    --nbd-mb-border: #e5e5e5;
+    --nbd-mb-border-strong: #d1d1d1;
+    --nbd-mb-border-subtle: #f0f0f0;
+    /* Status */
+    --nbd-color-success: #10b981;
+    --nbd-color-success-soft: #d1fae5;
+    --nbd-color-warning: #f59e0b;
+    --nbd-color-warning-soft: #fef3c7;
+    --nbd-color-error: #ef4444;
+    --nbd-color-info: #3b82f6;
+    --nbd-color-info-soft: #dbeafe;
+
+    /* Spacing 4-pt */
+    --nbd-space-1: 4px;
+    --nbd-space-2: 8px;
+    --nbd-space-3: 12px;
+    --nbd-space-4: 16px;
+    --nbd-space-6: 24px;
+    --nbd-space-8: 32px;
+    --nbd-space-12: 48px;
+    --nbd-space-16: 64px;
+
+    /* Tap targets */
+    --nbd-tap-min: 44px;
+    --nbd-tap-desktop-min: 32px;
+    --nbd-tap-comfortable: 48px;
+
+    /* Radius */
+    --nbd-radius-sm: 4px;
+    --nbd-radius-md: 6px;
+    --nbd-radius-lg: 8px;
+    --nbd-radius-xl: 12px;
+    --nbd-radius-2xl: 16px;
+    --nbd-radius-full: 9999px;
+
+    /* Shadow */
+    --nbd-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --nbd-shadow-md: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+    --nbd-shadow-lg: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
+    --nbd-shadow-xl: 0 8px 24px 0 rgba(0, 0, 0, 0.16);
+    --nbd-shadow-card: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --nbd-shadow-toolbar: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --nbd-shadow-focus: 0 0 0 3px rgba(10, 61, 98, 0.25);
+
+    /* Z-index */
+    --nbd-z-bar: 100;
+
+    /* Motion */
+    --nbd-duration-fast: 120ms;
+    --nbd-duration-quick: 200ms;
+    --nbd-duration-normal: 220ms;
+    --nbd-duration-medium: 300ms;
+    --nbd-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --nbd-ease-out: ease-out;
+
+    /* Type — Montserrat (brand spec) */
+    --nbd-font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                       "Helvetica Neue", Arial, sans-serif;
+
+    /* Component */
+    --nbd-topbar-height-desktop: 54px;        /* Editor surfaces (per spec §9.2) */
+    --nbd-topbar-height-landing: 76px;        /* Marketing pages — accommodates 48px logo + breathing room */
+    --nbd-topbar-height-mobile-landing: 64px;
+    --nbd-cta-height: 44px;
+  }
+
+  /* ---------- RESET ---------- */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--nbd-font-family);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--nbd-mb-text);
+    background: var(--nbd-mb-bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  button { font-family: inherit; cursor: pointer; }
+  a { color: var(--nbd-mb-accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  img { max-width: 100%; display: block; }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Container */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--nbd-space-4);
+  }
+  @media (min-width: 768px) {
+    .container { padding: 0 var(--nbd-space-6); }
+  }
+
+  /* =========================================================
+     UTILITY BAR
+     ========================================================= */
+  .util-bar {
+    background: var(--nbd-mb-primary);
+    color: var(--nbd-mb-ink);
+    font-size: 12px;
+    padding: 8px var(--nbd-space-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nbd-space-4);
+    letter-spacing: 0.02em;
+    font-weight: 600;
+  }
+  .util-bar .left, .util-bar .right { display: flex; gap: var(--nbd-space-4); align-items: center; }
+  .util-bar a { color: var(--nbd-mb-ink); opacity: 0.9; }
+  .util-bar a:hover { opacity: 1; text-decoration: none; color: var(--nbd-mb-magenta); }
+  .util-bar strong { color: var(--nbd-mb-ink); font-weight: 800; }
+  .util-bar .dot {
+    width: 8px; height: 8px;
+    background: var(--nbd-mb-magenta);
+    border-radius: var(--nbd-radius-full);
+    display: inline-block;
+    margin-right: var(--nbd-space-1);
+    box-shadow: 0 0 8px rgba(236,0,140,0.6);
+  }
+  @media (max-width: 767px) {
+    .util-bar .right .hide-mobile { display: none; }
+  }
+
+  /* =========================================================
+     TOP BAR
+     ========================================================= */
+  .topbar {
+    height: var(--nbd-topbar-height-landing);
+    background: var(--nbd-mb-bg);
+    border-bottom: 1px solid var(--nbd-mb-border);
+    box-shadow: var(--nbd-shadow-md);
+    padding: 0 var(--nbd-space-6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nbd-space-4);
+    position: sticky;
+    top: 0;
+    z-index: var(--nbd-z-bar);
+  }
+  @media (max-width: 767px) {
+    .topbar {
+      height: var(--nbd-topbar-height-mobile-landing);
+      padding: 0 var(--nbd-space-4);
+    }
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nbd-space-3);
+    color: var(--nbd-mb-text);
+  }
+  .brand:hover { text-decoration: none; }
+  .brand-logo {
+    height: 52px;
+    width: auto;
+    display: block;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
+    transition: transform var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .brand:hover .brand-logo { transform: translateY(-1px) scale(1.02); }
+  @media (max-width: 767px) {
+    .brand-logo { height: 42px; }
+  }
+  .brand-name {
+    /* Hidden visually — logo image carries the name — but kept for screen readers via aria-label.
+       Comment out if you also want a text label beside the logo. */
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Nav links (desktop) */
+  .topbar-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--nbd-space-1);
+  }
+  .nav-link {
+    height: 36px;
+    padding: 0 var(--nbd-space-4);
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--nbd-radius-md);
+    color: var(--nbd-mb-ink);
+    font-size: 13.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background var(--nbd-duration-fast) var(--nbd-ease-out),
+                color var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .nav-link:hover { background: var(--nbd-mb-bg-canvas); color: var(--nbd-mb-ink); text-decoration: none; }
+  .nav-link:focus-visible {
+    outline: 2px solid var(--nbd-mb-primary);
+    outline-offset: 2px;
+  }
+  @media (max-width: 767px) { .topbar-nav { display: none; } }
+
+  .nbd-icon-btn {
+    width: 40px; height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    border-radius: var(--nbd-radius-sm);
+    color: var(--nbd-mb-text);
+    transition: background var(--nbd-duration-fast) var(--nbd-ease-out);
+    position: relative;
+  }
+  .nbd-icon-btn:hover { background: rgba(0, 0, 0, 0.04); }
+  .nbd-icon-btn:focus-visible {
+    outline: 2px solid var(--nbd-mb-primary);
+    outline-offset: 2px;
+  }
+  .nbd-icon-btn svg { width: 20px; height: 20px; }
+  .nbd-icon-btn .badge {
+    position: absolute;
+    top: 4px; right: 4px;
+    min-width: 16px; height: 16px;
+    padding: 0 4px;
+    background: var(--nbd-mb-primary);
+    color: #fff;
+    border-radius: var(--nbd-radius-full);
+    font-size: 10px;
+    font-weight: 600;
+    display: grid;
+    place-items: center;
+  }
+  .topbar-actions { display: flex; align-items: center; gap: var(--nbd-space-1); }
+
+  .login-btn {
+    height: 40px;
+    padding: 0 var(--nbd-space-4);
+    background: var(--nbd-mb-bg);
+    border: 2px solid var(--nbd-mb-border-strong);
+    border-radius: var(--nbd-radius-lg);
+    color: var(--nbd-mb-ink);
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition: all var(--nbd-duration-fast) var(--nbd-ease-out);
+    margin-left: var(--nbd-space-2);
+  }
+  .login-btn:hover {
+    background: var(--nbd-mb-bg-canvas);
+    border-color: var(--nbd-mb-ink);
+  }
+  .login-btn:focus-visible {
+    outline: 2px solid var(--nbd-mb-primary);
+    outline-offset: 2px;
+  }
+  /* Quick-Start CTA in topbar — cyan with black text (CMYK printer aesthetic) */
+  .start-btn {
+    height: 40px;
+    padding: 0 var(--nbd-space-4);
+    background: var(--nbd-mb-primary);
+    border: none;
+    border-radius: var(--nbd-radius-lg);
+    color: var(--nbd-mb-ink);
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    box-shadow: 0 4px 12px rgba(6,205,228,0.35);
+    transition: all var(--nbd-duration-fast) var(--nbd-ease-out);
+    margin-left: var(--nbd-space-2);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nbd-space-2);
+  }
+  .start-btn:hover {
+    background: var(--nbd-mb-primary-pressed);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(6,205,228,0.50);
+    color: var(--nbd-mb-ink);
+    text-decoration: none;
+  }
+  @media (max-width: 767px) {
+    .start-btn { display: none; }
+  }
+
+  /* =========================================================
+     HERO
+     ========================================================= */
+  .hero {
+    background: var(--nbd-mb-bg);
+    padding: var(--nbd-space-12) 0 var(--nbd-space-8);
+    border-bottom: 1px solid var(--nbd-mb-border-subtle);
+    position: relative;
+    overflow: hidden;
+  }
+  /* Subtle grid texture + warm radials matching brand */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(900px 500px at 85% -10%, rgba(255,237,0,0.18), transparent 60%),
+      radial-gradient(700px 400px at -5% 110%, rgba(0,153,255,0.10), transparent 60%),
+      linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size: auto, auto, 32px 32px, 32px 32px;
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--nbd-space-8);
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; gap: var(--nbd-space-6); }
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nbd-space-2);
+    padding: 0;
+    background: transparent;
+    color: var(--nbd-mb-magenta);
+    border-radius: 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    margin-bottom: var(--nbd-space-4);
+  }
+  .hero-eyebrow .dot {
+    width: 8px; height: 8px;
+    background: var(--nbd-mb-magenta);
+    border-radius: var(--nbd-radius-full);
+    box-shadow: 0 0 0 0 rgba(236,0,140,0.5);
+    animation: pulse-brand 2s infinite;
+  }
+  @keyframes pulse-brand {
+    0%   { box-shadow: 0 0 0 0 rgba(236,0,140,0.6); }
+    70%  { box-shadow: 0 0 0 8px rgba(236,0,140,0); }
+    100% { box-shadow: 0 0 0 0 rgba(236,0,140,0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .hero-title {
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    margin: 0 0 var(--nbd-space-3);
+    color: var(--nbd-mb-ink);
+  }
+  @media (max-width: 767px) {
+    .hero-title { font-size: 32px; }
+  }
+  /* Title accent — magenta on white reads stronger than cyan */
+  .hero-title .accent {
+    color: var(--nbd-mb-accent);
+    background: none;
+    padding: 0;
+  }
+  .hero-desc {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--nbd-mb-text-soft);
+    margin: 0 0 var(--nbd-space-6);
+    max-width: 540px;
+  }
+  .hero-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nbd-space-3);
+    align-items: center;
+  }
+
+  /* CTA Buttons */
+  .btn-primary {
+    height: var(--nbd-cta-height);
+    padding: 0 var(--nbd-space-6);
+    background: var(--nbd-mb-primary);
+    color: var(--nbd-mb-ink);
+    border: none;
+    border-radius: var(--nbd-radius-lg);
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--nbd-space-2);
+    transition: background var(--nbd-duration-fast) var(--nbd-ease-out),
+                transform var(--nbd-duration-fast) var(--nbd-ease-out),
+                box-shadow var(--nbd-duration-fast) var(--nbd-ease-out);
+    box-shadow: 0 4px 12px rgba(6,205,228,0.35);
+  }
+  .btn-primary:hover {
+    background: var(--nbd-mb-primary-pressed);
+    color: var(--nbd-mb-ink);
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(6,205,228,0.50);
+  }
+  .btn-primary:active { background: var(--nbd-mb-primary-pressed); transform: translateY(0); }
+  .btn-primary:focus-visible {
+    outline: 2px solid var(--nbd-mb-primary);
+    outline-offset: 2px;
+    box-shadow: var(--nbd-shadow-focus);
+  }
+  .btn-primary svg { width: 16px; height: 16px; }
+
+  .btn-secondary {
+    height: var(--nbd-cta-height);
+    padding: 0 var(--nbd-space-6);
+    background: var(--nbd-mb-ink);
+    color: #fff;
+    border: 1px solid var(--nbd-mb-ink);
+    border-radius: var(--nbd-radius-lg);
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--nbd-space-2);
+    transition: all var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .btn-secondary:hover {
+    background: #2a2a2a;
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+  .btn-secondary:focus-visible {
+    outline: 2px solid var(--nbd-mb-primary);
+    outline-offset: 2px;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nbd-space-4);
+    margin-top: var(--nbd-space-6);
+    padding-top: var(--nbd-space-6);
+    border-top: 1px solid var(--nbd-mb-border-subtle);
+  }
+  .hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--nbd-space-2);
+    font-size: 13px;
+    color: var(--nbd-mb-text-soft);
+  }
+  .hero-meta-item strong {
+    color: var(--nbd-mb-text);
+    font-weight: 600;
+  }
+  .hero-meta-item svg {
+    width: 16px; height: 16px;
+    color: var(--nbd-mb-ink);
+    stroke-width: 2;
+    fill: none;
+    stroke: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* Hero visual — real Coast Print banner photo from Wix CDN */
+  .hero-visual {
+    position: relative;
+    aspect-ratio: 5 / 4;
+    border-radius: var(--nbd-radius-xl);
+    overflow: hidden;
+    background: #1a1a1a;
+    box-shadow: var(--nbd-shadow-xl);
+    display: block;
+  }
+  .hero-visual-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  .hero-visual::before {
+    /* Subtle inner border */
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--nbd-radius-xl);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .hero-banner-text {
+    position: relative;
+    text-align: center;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    z-index: 1;
+    padding: 0 var(--nbd-space-6);
+  }
+  .hero-banner-text .l1,
+  .hero-banner-text .l2 {
+    display: block;
+    font-weight: 900;
+    text-shadow:
+      0 4px 0 rgba(0,0,0,0.25),
+      0 8px 24px rgba(0,0,0,0.35);
+  }
+  .hero-banner-text .l1 {
+    color: var(--nbd-mb-primary);
+    font-size: clamp(46px, 7vw, 92px);
+    -webkit-text-stroke: 0;
+  }
+  .hero-banner-text .l2 {
+    color: var(--nbd-mb-highlight);
+    font-size: clamp(54px, 8vw, 108px);
+    margin-top: 4px;
+    -webkit-text-stroke: 0;
+  }
+  @media (max-width: 767px) {
+    .hero-banner-text .l1 { font-size: 44px; }
+    .hero-banner-text .l2 { font-size: 52px; }
+  }
+  .hero-visual-tagline {
+    position: relative;
+    z-index: 1;
+    margin-top: var(--nbd-space-3);
+    font-size: 13px;
+    letter-spacing: 0.36em;
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--nbd-space-2);
+  }
+  .hero-visual-tagline::before,
+  .hero-visual-tagline::after {
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: rgba(255,255,255,0.5);
+  }
+  /* Dimension marks */
+  .hero-visual-dim {
+    position: absolute;
+    z-index: 2;
+    background: var(--nbd-mb-ink);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px var(--nbd-space-2);
+    border-radius: var(--nbd-radius-sm);
+    letter-spacing: 0.02em;
+  }
+  .hero-visual-dim.top  { top: 10px;  left: 50%;  transform: translateX(-50%); }
+  .hero-visual-dim.side {
+    right: 10px; top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    transform-origin: center;
+  }
+
+  /* =========================================================
+     SECTION HEAD (re-used)
+     ========================================================= */
+  .section {
+    padding: var(--nbd-space-12) 0;
+  }
+  .section--soft { background: var(--nbd-mb-bg-canvas); }
+  .section-head-row {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--nbd-space-4);
+    margin-bottom: var(--nbd-space-6);
+    flex-wrap: wrap;
+  }
+  .section-title-block .eyebrow {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--nbd-mb-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: var(--nbd-space-1);
+  }
+  .section-title {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--nbd-mb-ink);
+    line-height: 1.1;
+  }
+  @media (max-width: 767px) {
+    .section-title { font-size: 24px; }
+  }
+  .section-sub {
+    font-size: 14px;
+    color: var(--nbd-mb-text-soft);
+    margin-top: var(--nbd-space-1);
+  }
+  .section-link {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--nbd-mb-accent);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nbd-space-1);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .section-link svg { width: 14px; height: 14px; }
+
+  /* =========================================================
+     CATEGORY GRID (the main attraction)
+     ========================================================= */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--nbd-space-3);
+  }
+  @media (min-width: 640px) {
+    .cat-grid { grid-template-columns: repeat(3, 1fr); gap: var(--nbd-space-4); }
+  }
+
+  /* All cat-cards same size — 4 cols × 2 rows = 8 cards */
+  .cat-card--featured {
+    grid-column: span 1;
+  }
+
+  .cat-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: var(--nbd-radius-xl);
+    background: var(--nbd-mb-bg);
+    border: 1px solid var(--nbd-mb-border);
+    box-shadow: var(--nbd-shadow-md);
+    cursor: pointer;
+    transition: transform var(--nbd-duration-fast) var(--nbd-ease-out),
+                box-shadow var(--nbd-duration-fast) var(--nbd-ease-out),
+                border-color var(--nbd-duration-fast) var(--nbd-ease-out);
+    aspect-ratio: 1 / 1;
+    text-decoration: none;
+    color: inherit;
+  }
+  .cat-card--featured {
+    aspect-ratio: 2 / 1;
+  }
+  .cat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--nbd-shadow-xl);
+    border-color: var(--nbd-mb-text);
+    text-decoration: none;
+  }
+  .cat-card:focus-visible {
+    outline: 2px solid var(--nbd-mb-primary);
+    outline-offset: 2px;
+    text-decoration: none;
+  }
+  .cat-card:active { transform: translateY(0); }
+
+  .cat-card-visual {
+    flex: 1;
+    position: relative;
+    background: var(--cat-bg, linear-gradient(180deg, #1a1a1a 0%, #000000 100%));
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+  /* Yellow radial glow on hover */
+  .cat-card-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 40%, rgba(255,237,0,0.0), transparent 60%);
+    transition: background var(--nbd-duration-normal) var(--nbd-ease-out);
+    pointer-events: none;
+  }
+  .cat-card:hover .cat-card-visual::after {
+    background: radial-gradient(circle at 50% 40%, rgba(255,237,0,0.20), transparent 60%);
+  }
+  /* PNG metallic icon (or inline SVG) */
+  .cat-card-illo {
+    width: 64%;
+    max-width: 180px;
+    height: auto;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cat-card-illo img {
+    max-width: 100%;
+    max-height: 130px;
+    width: auto;
+    height: auto;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4));
+    transition: transform var(--nbd-duration-normal) var(--nbd-ease-out);
+  }
+  .cat-card-illo svg {
+    width: 84px;
+    height: 84px;
+    color: #ffffff;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    fill: none;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
+    transition: transform var(--nbd-duration-normal) var(--nbd-ease-out);
+    opacity: 0.95;
+  }
+  /* Full-bleed photo variant — fills the entire visual area */
+  .cat-card-visual.has-photo {
+    padding: 0;
+    display: block;
+  }
+  .cat-card-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 1;
+    transition: transform var(--nbd-duration-medium) var(--nbd-ease-out);
+  }
+  .cat-card:hover .cat-card-photo { transform: scale(1.06); }
+  .cat-card:hover .cat-card-illo img,
+  .cat-card:hover .cat-card-illo svg { transform: scale(1.06) translateY(-2px); }
+  .cat-card:hover .cat-card-illo svg { color: var(--nbd-mb-primary); opacity: 1; }
+  .cat-card--featured .cat-card-illo {
+    width: 44%;
+    max-width: 220px;
+  }
+  .cat-card--featured .cat-card-illo img { max-height: 170px; }
+  .cat-card-content {
+    padding: var(--nbd-space-3) var(--nbd-space-4) var(--nbd-space-4);
+    background: var(--nbd-mb-bg);
+    border-top: 1px solid var(--nbd-mb-border-subtle);
+  }
+  .cat-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 2px;
+    color: var(--nbd-mb-ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nbd-space-2);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .cat-card--featured .cat-card-title { font-size: 18px; }
+  .cat-card-sub {
+    font-size: 12px;
+    color: var(--nbd-mb-text-soft);
+    line-height: 1.45;
+  }
+  .cat-card--featured .cat-card-sub {
+    font-size: 13px;
+    margin-top: 2px;
+  }
+  .cat-card-arrow {
+    width: 28px; height: 28px;
+    border-radius: var(--nbd-radius-full);
+    background: var(--nbd-mb-highlight);
+    color: var(--nbd-mb-ink);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    transition: all var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .cat-card-arrow svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2.5; fill: none; }
+  .cat-card:hover .cat-card-arrow {
+    background: var(--nbd-mb-accent);
+    color: #fff;
+    transform: translateX(2px);
+  }
+  .cat-card-badge {
+    position: absolute;
+    top: var(--nbd-space-3);
+    right: var(--nbd-space-3);
+    z-index: 2;
+    padding: 4px var(--nbd-space-2);
+    background: var(--nbd-mb-accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    border-radius: var(--nbd-radius-sm);
+    text-transform: uppercase;
+  }
+
+  /* Category color presets — black base with CMYK colour tints.
+     Each card pairs its dark tone with a subtle process-colour bias. */
+  .cat-card[data-cat="businesscards"] .cat-card-visual { --cat-bg: linear-gradient(180deg, #1a1a1a 0%, #000000 100%); }
+  .cat-card[data-cat="flyers"]        .cat-card-visual { --cat-bg: linear-gradient(180deg, #002e3a 0%, #001518 100%); }
+  .cat-card[data-cat="folded"]        .cat-card-visual { --cat-bg: linear-gradient(180deg, #1a1a1a 0%, #000000 100%); }
+  .cat-card[data-cat="posters"]       .cat-card-visual { --cat-bg: linear-gradient(180deg, #2a0a1e 0%, #100410 100%); }
+  .cat-card[data-cat="plans"]         .cat-card-visual { --cat-bg: linear-gradient(180deg, #001f28 0%, #000a10 100%); }
+  .cat-card[data-cat="signage"]       .cat-card-visual { --cat-bg: linear-gradient(180deg, #1a1a1a 0%, #000000 100%); }
+  .cat-card[data-cat="waterproof"]    .cat-card-visual { --cat-bg: linear-gradient(180deg, #00424f 0%, #001b22 100%); }
+  .cat-card[data-cat="graphic"]       .cat-card-visual { --cat-bg: linear-gradient(180deg, #2a0a1e 0%, #0e0410 100%); }
+  .cat-card[data-cat="docprint"]      .cat-card-visual { --cat-bg: linear-gradient(180deg, #1a1a1a 0%, #000000 100%); }
+  .cat-card[data-cat="labels"]        .cat-card-visual { --cat-bg: linear-gradient(180deg, #2a200a 0%, #100c04 100%); }
+
+  /* =========================================================
+     POPULAR PRODUCTS — Coast Print content-card pattern
+     (16:9 aspect, normal → rollover cross-fade on hover.
+      All product info is rendered into the PNG itself —
+      Standard cards / Waterproof menus / Folded brochures / A-frame / Plans / Posters.)
+     ========================================================= */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--nbd-space-4);
+  }
+  @media (min-width: 768px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: var(--nbd-space-4); }
+  }
+  @media (min-width: 1024px) {
+    .product-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .product-grid { grid-template-columns: 1fr; }
+  }
+
+  .product-card {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--nbd-radius-lg);
+    background: var(--nbd-mb-bg-canvas);
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: var(--nbd-shadow-sm);
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--nbd-duration-fast) var(--nbd-ease-out),
+                box-shadow var(--nbd-duration-fast) var(--nbd-ease-out);
+    display: block;
+  }
+  .product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--nbd-shadow-lg);
+    text-decoration: none;
+  }
+  .product-card:focus-visible {
+    outline: 3px solid var(--nbd-mb-primary);
+    outline-offset: 3px;
+  }
+  /* Both layers fill the card, normal sits on top, rollover beneath */
+  .product-card .pc-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: opacity var(--nbd-duration-medium) var(--nbd-ease-in-out);
+  }
+  .product-card .pc-img.normal   { opacity: 1; z-index: 2; }
+  .product-card .pc-img.rollover { opacity: 0; z-index: 1; }
+  .product-card:hover  .pc-img.normal,
+  .product-card:focus-visible .pc-img.normal { opacity: 0; }
+  .product-card:hover  .pc-img.rollover,
+  .product-card:focus-visible .pc-img.rollover { opacity: 1; z-index: 2; }
+  /* Touch / no-hover: tap toggles rollover */
+  .product-card.is-revealed .pc-img.normal { opacity: 0; }
+  .product-card.is-revealed .pc-img.rollover { opacity: 1; z-index: 2; }
+
+  /* Content variant — gradient background + text overlay (no PNGs needed).
+     Used for Coast Print "Featured this week" cards. */
+  .product-card.pc-content {
+    aspect-ratio: 4 / 3;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--nbd-space-5, 20px);
+    background: linear-gradient(135deg, var(--pc-c1, #1a1a1a) 0%, var(--pc-c2, #000000) 100%);
+  }
+  .product-card.pc-content[data-tone="sand"]   { --pc-c1: #1a1a1a; --pc-c2: #000000; }
+  .product-card.pc-content[data-tone="cyan"]   { --pc-c1: #00BCE4; --pc-c2: #007a92; }
+  .product-card.pc-content[data-tone="magenta"]{ --pc-c1: #EC008C; --pc-c2: #99005A; }
+
+  /* Image variant — real product photo as background, content overlaid */
+  .product-card.pc-photo {
+    aspect-ratio: 4 / 3;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0;
+    background: #f0f0f0;
+    overflow: hidden;
+  }
+  .product-card.pc-photo .pc-photo-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+    transition: transform var(--nbd-duration-medium) var(--nbd-ease-out);
+  }
+  .product-card.pc-photo:hover .pc-photo-img { transform: scale(1.04); }
+  .product-card.pc-photo .pc-photo-overlay {
+    position: relative;
+    z-index: 1;
+    padding: var(--nbd-space-4) var(--nbd-space-5, 20px) var(--nbd-space-4);
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.0) 25%, rgba(0,0,0,0.92) 100%);
+    color: #fff;
+  }
+  .product-card.pc-photo .pc-eyebrow {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--nbd-mb-primary);
+    margin-bottom: var(--nbd-space-1);
+  }
+  .product-card.pc-photo .pc-title {
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 var(--nbd-space-2);
+    color: #fff;
+  }
+  .product-card.pc-photo .pc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .product-card.pc-photo .pc-price {
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .product-card.pc-photo .pc-price small {
+    font-size: 11px;
+    font-weight: 500;
+    opacity: 0.75;
+    margin-left: 4px;
+  }
+  .product-card.pc-photo .pc-arrow {
+    width: 32px; height: 32px;
+    border-radius: var(--nbd-radius-full);
+    background: var(--nbd-mb-primary);
+    display: grid;
+    place-items: center;
+    transition: background var(--nbd-duration-fast) var(--nbd-ease-out),
+                transform var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .product-card.pc-photo .pc-arrow svg {
+    width: 14px; height: 14px;
+    stroke: #000;
+    stroke-width: 2.5;
+    fill: none;
+  }
+  .product-card.pc-photo:hover .pc-arrow {
+    background: var(--nbd-mb-highlight);
+    transform: translateX(3px);
+  }
+  .product-card.pc-content[data-tone="teal"]   { --pc-c1: #00424f; --pc-c2: #00222a; }
+  .product-card.pc-content[data-tone="navy"]   { --pc-c1: #1a1a1a; --pc-c2: #000000; }
+  .product-card.pc-content[data-tone="ocean"]  { --pc-c1: #007a92; --pc-c2: #003f4d; }
+  .product-card.pc-content[data-tone="slate"]  { --pc-c1: #2a2a2a; --pc-c2: #000000; }
+  .product-card.pc-content[data-tone="mid"]    { --pc-c1: #2a0a1e; --pc-c2: #100410; }
+  .product-card.pc-content::after {
+    content: "";
+    position: absolute;
+    top: 0; right: 0;
+    width: 50%; height: 100%;
+    background: radial-gradient(circle at 80% 30%, rgba(255,255,255,0.18), transparent 60%);
+    pointer-events: none;
+  }
+  .pc-content .pc-eyebrow {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: var(--nbd-space-2);
+    position: relative;
+    z-index: 1;
+  }
+  .pc-content .pc-title {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--nbd-space-2);
+    position: relative;
+    z-index: 1;
+  }
+  .pc-content .pc-desc {
+    font-size: 13px;
+    line-height: 1.5;
+    opacity: 0.88;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .pc-content .pc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--nbd-space-4);
+    position: relative;
+    z-index: 1;
+  }
+  .pc-content .pc-price {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  .pc-content .pc-price small {
+    font-size: 11px;
+    font-weight: 500;
+    opacity: 0.7;
+    margin-left: 4px;
+  }
+  .pc-content .pc-arrow {
+    width: 32px; height: 32px;
+    border-radius: var(--nbd-radius-full);
+    background: rgba(255,255,255,0.18);
+    display: grid;
+    place-items: center;
+    transition: background var(--nbd-duration-fast) var(--nbd-ease-out),
+                transform var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .pc-content .pc-arrow svg {
+    width: 14px; height: 14px;
+    stroke: #fff;
+    stroke-width: 2.5;
+    fill: none;
+  }
+  .product-card.pc-content:hover .pc-arrow {
+    background: var(--nbd-mb-highlight);
+    transform: translateX(3px);
+  }
+  .product-card.pc-content:hover .pc-arrow svg { stroke: var(--nbd-mb-ink); }
+
+  /* Accessibility label hidden visually but exposed to AT */
+  .pc-sr {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* =========================================================
+     HOW IT WORKS (3 steps, trust)
+     ========================================================= */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--nbd-space-4);
+  }
+  @media (max-width: 900px) {
+    .steps-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .steps-grid { grid-template-columns: 1fr; }
+  }
+  .step-card {
+    padding: var(--nbd-space-6);
+    background: var(--nbd-mb-bg);
+    border: 1px solid var(--nbd-mb-border);
+    border-radius: var(--nbd-radius-xl);
+    box-shadow: var(--nbd-shadow-md);
+    position: relative;
+    transition: transform var(--nbd-duration-fast) var(--nbd-ease-out),
+                box-shadow var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .step-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--nbd-shadow-lg);
+  }
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px; height: 44px;
+    background: var(--nbd-mb-highlight);
+    color: var(--nbd-mb-ink);
+    border-radius: var(--nbd-radius-full);
+    font-size: 18px;
+    font-weight: 900;
+    margin-bottom: var(--nbd-space-3);
+    box-shadow: 0 4px 12px rgba(255,237,0,0.4);
+  }
+  .step-title {
+    font-size: 17px;
+    font-weight: 800;
+    margin: 0 0 var(--nbd-space-2);
+    color: var(--nbd-mb-ink);
+  }
+  .step-desc {
+    font-size: 13px;
+    color: var(--nbd-mb-text-soft);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .step-icon {
+    position: absolute;
+    top: var(--nbd-space-6);
+    right: var(--nbd-space-6);
+    width: 40px; height: 40px;
+    background: var(--nbd-mb-primary-soft);
+    color: var(--nbd-mb-primary);
+    border-radius: var(--nbd-radius-lg);
+    display: grid;
+    place-items: center;
+  }
+  .step-icon svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 1.5; fill: none; }
+
+
+  /* =========================================================
+     NEW PRINT TEMPLATES — product grid with real photos + price
+     ========================================================= */
+  .templates-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--nbd-space-4);
+  }
+  @media (min-width: 640px) { .templates-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1024px) { .templates-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .tmpl-card {
+    background: #fff;
+    border: 1px solid var(--nbd-mb-border);
+    border-radius: var(--nbd-radius-xl);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--nbd-duration-fast) var(--nbd-ease-out),
+                box-shadow var(--nbd-duration-fast) var(--nbd-ease-out),
+                border-color var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .tmpl-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--nbd-shadow-md);
+    border-color: var(--nbd-mb-primary);
+    text-decoration: none;
+  }
+  .tmpl-card-photo {
+    aspect-ratio: 1 / 1;
+    background: var(--nbd-mb-bg-soft);
+    overflow: hidden;
+    position: relative;
+  }
+  .tmpl-card-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    padding: var(--nbd-space-4);
+    transition: transform var(--nbd-duration-medium) var(--nbd-ease-out);
+  }
+  .tmpl-card:hover .tmpl-card-photo img { transform: scale(1.05); }
+  .tmpl-card-body {
+    padding: var(--nbd-space-4);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--nbd-space-1);
+  }
+  .tmpl-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--nbd-mb-ink);
+    margin: 0;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .tmpl-card-price {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--nbd-mb-accent);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .tmpl-card-meta {
+    font-size: 11.5px;
+    color: var(--nbd-mb-text-soft);
+    line-height: 1.45;
+    margin-top: var(--nbd-space-1);
+  }
+  .tmpl-card-btn {
+    margin-top: var(--nbd-space-3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--nbd-space-1);
+    padding: 8px var(--nbd-space-3);
+    background: var(--nbd-mb-primary);
+    color: var(--nbd-mb-ink);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: var(--nbd-radius-md);
+    transition: background var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .tmpl-card-btn svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2.5; fill: none; }
+  .tmpl-card:hover .tmpl-card-btn { background: var(--nbd-mb-primary-pressed); }
+
+  /* =========================================================
+     ONLINE DESIGN — square thumbnail grid
+     ========================================================= */
+  .design-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--nbd-space-3);
+  }
+  @media (min-width: 640px) { .design-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1024px) { .design-grid { grid-template-columns: repeat(5, 1fr); } }
+
+  .design-tile {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--nbd-radius-lg);
+    overflow: hidden;
+    background: var(--nbd-mb-bg-soft);
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .design-tile img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--nbd-duration-medium) var(--nbd-ease-out);
+  }
+  .design-tile:hover img { transform: scale(1.08); }
+  .design-tile-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(33,33,35,0.92) 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: var(--nbd-space-3);
+    transition: background var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .design-tile:hover .design-tile-overlay {
+    background: linear-gradient(180deg, rgba(6,205,228,0) 0%, rgba(33,33,35,0.95) 100%);
+  }
+  .design-tile-label {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .design-tile-cta {
+    position: absolute;
+    top: var(--nbd-space-2);
+    right: var(--nbd-space-2);
+    background: var(--nbd-mb-primary);
+    color: var(--nbd-mb-ink);
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 8px;
+    border-radius: var(--nbd-radius-full);
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity var(--nbd-duration-fast) var(--nbd-ease-out),
+                transform var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .design-tile:hover .design-tile-cta { opacity: 1; transform: translateY(0); }
+
+  /* =========================================================
+     LATEST POSTS — blog card grid
+     ========================================================= */
+  .posts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--nbd-space-5, 20px);
+  }
+  @media (min-width: 768px) { .posts-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .post-card {
+    background: #fff;
+    border: 1px solid var(--nbd-mb-border);
+    border-radius: var(--nbd-radius-xl);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--nbd-duration-fast) var(--nbd-ease-out),
+                box-shadow var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .post-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--nbd-shadow-md);
+    text-decoration: none;
+  }
+  .post-card-photo {
+    aspect-ratio: 5 / 4;
+    overflow: hidden;
+    background: var(--nbd-mb-bg-canvas);
+  }
+  .post-card-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--nbd-duration-medium) var(--nbd-ease-out);
+  }
+  .post-card:hover .post-card-photo img { transform: scale(1.06); }
+  .post-card-body {
+    padding: var(--nbd-space-5, 20px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--nbd-space-2);
+    flex: 1;
+  }
+  .post-card-meta {
+    font-size: 11.5px;
+    color: var(--nbd-mb-text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  .post-card-title {
+    font-size: 16.5px;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--nbd-mb-ink);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .post-card-excerpt {
+    font-size: 13px;
+    color: var(--nbd-mb-text-soft);
+    line-height: 1.55;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .post-card-readmore {
+    margin-top: auto;
+    padding-top: var(--nbd-space-2);
+    color: var(--nbd-mb-accent);
+    font-size: 12.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .post-card-readmore svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2.5; fill: none; }
+
+  /* =========================================================
+     TESTIMONIALS — quote cards with avatar
+     ========================================================= */
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--nbd-space-5, 20px);
+  }
+  @media (min-width: 768px) { .testimonial-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .testimonial-card {
+    background: #fff;
+    border-radius: var(--nbd-radius-xl);
+    padding: var(--nbd-space-6);
+    position: relative;
+    border: 1px solid var(--nbd-mb-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--nbd-space-4);
+  }
+  .testimonial-card::before {
+    content: "\201C";
+    position: absolute;
+    top: -8px;
+    left: var(--nbd-space-4);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 80px;
+    line-height: 1;
+    color: var(--nbd-mb-primary);
+    font-weight: 700;
+  }
+  .testimonial-quote {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--nbd-mb-text);
+    margin: 0;
+    flex: 1;
+    position: relative;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: var(--nbd-space-3);
+    padding-top: var(--nbd-space-3);
+    border-top: 1px solid var(--nbd-mb-border-subtle);
+  }
+  .testimonial-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--nbd-radius-full);
+    object-fit: cover;
+    border: 2px solid var(--nbd-mb-primary);
+    flex-shrink: 0;
+  }
+  .testimonial-name {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--nbd-mb-ink);
+    margin: 0;
+    line-height: 1.2;
+  }
+  .testimonial-role {
+    font-size: 11.5px;
+    color: var(--nbd-mb-text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    margin: 2px 0 0;
+  }
+
+
+  /* =========================================================
+     B2B PROMO STRIP (callout for B2B awareness)
+     ========================================================= */
+  .b2b-strip {
+    background: var(--nbd-mb-ink);
+    color: #fff;
+    border-radius: var(--nbd-radius-2xl);
+    box-shadow: var(--nbd-shadow-xl);
+    padding: var(--nbd-space-8);
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--nbd-space-6);
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (max-width: 767px) {
+    .b2b-strip { grid-template-columns: 1fr; padding: var(--nbd-space-6); }
+  }
+  .b2b-strip::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 90% 50%, rgba(255,237,0,0.18), transparent 50%);
+    pointer-events: none;
+  }
+  .b2b-strip-content { position: relative; }
+  .b2b-eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--nbd-mb-highlight);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: var(--nbd-space-2);
+  }
+  .b2b-strip h3 {
+    font-size: 26px;
+    font-weight: 900;
+    margin: 0 0 var(--nbd-space-2);
+    color: #fff;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .b2b-strip p {
+    margin: 0;
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .b2b-actions {
+    display: flex;
+    gap: var(--nbd-space-3);
+    align-items: center;
+    position: relative;
+    flex-wrap: wrap;
+  }
+  .btn-on-dark {
+    background: var(--nbd-mb-primary);
+    color: #fff;
+  }
+  .btn-on-dark:hover { background: var(--nbd-mb-primary-pressed); }
+  .btn-ghost-on-dark {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+    height: var(--nbd-cta-height);
+    padding: 0 var(--nbd-space-6);
+    border-radius: var(--nbd-radius-lg);
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    transition: all var(--nbd-duration-fast);
+  }
+  .btn-ghost-on-dark:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: #fff;
+    text-decoration: none;
+  }
+
+  /* =========================================================
+     CATEGORIES DROPDOWN — opens from topbar nav
+     "Categories" nav link → dropdown with small icon + name
+     ========================================================= */
+  .nav-dropdown {
+    position: relative;
+  }
+  .nav-dropdown > .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+  .nav-dropdown > .nav-link::after {
+    content: "";
+    width: 0; height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid currentColor;
+    margin-left: 4px;
+    transition: transform var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .nav-dropdown[aria-expanded="true"] > .nav-link::after { transform: rotate(180deg); }
+  .nav-dropdown[aria-expanded="true"] > .nav-link { background: var(--nbd-mb-bg-canvas); color: var(--nbd-mb-ink); }
+
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 280px;
+    background: #fff;
+    border: 1px solid var(--nbd-mb-border);
+    border-radius: var(--nbd-radius-lg);
+    box-shadow: var(--nbd-shadow-xl);
+    padding: 8px;
+    display: none;
+    z-index: calc(var(--nbd-z-bar) + 5);
+    animation: dropdown-in 180ms var(--nbd-ease-out);
+  }
+  .nav-dropdown[aria-expanded="true"] .nav-dropdown-menu { display: grid; gap: 2px; }
+
+  @keyframes dropdown-in {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .nav-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: var(--nbd-radius-md);
+    color: var(--nbd-mb-ink);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    text-decoration: none;
+    transition: background var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .nav-dropdown-item:hover {
+    background: var(--nbd-mb-bg-canvas);
+    text-decoration: none;
+  }
+  .nav-dropdown-item img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    flex-shrink: 0;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+  }
+  .nav-dropdown-item .label {
+    flex: 1;
+    line-height: 1.2;
+  }
+  .nav-dropdown-item .label small {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--nbd-mb-text-soft);
+    margin-top: 1px;
+  }
+  .nav-dropdown-divider {
+    height: 1px;
+    background: var(--nbd-mb-border-subtle);
+    margin: 6px 4px;
+  }
+  .nav-dropdown-footer {
+    padding: 10px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--nbd-mb-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-dropdown-footer:hover { background: var(--nbd-mb-bg-canvas); text-decoration: none; }
+  .nav-dropdown-footer svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2.5; fill: none; }
+
+  /* Mobile: dropdown becomes full-width below topbar */
+  @media (max-width: 767px) {
+    .nav-dropdown-menu {
+      position: fixed;
+      top: var(--nbd-topbar-height-mobile-landing);
+      left: 0;
+      right: 0;
+      min-width: 0;
+      max-height: calc(100vh - var(--nbd-topbar-height-mobile-landing));
+      overflow-y: auto;
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+    }
+  }
+
+  /* =========================================================
+     CATEGORY CARD — Photo variant (uses real product image)
+     Overrides the icon-on-dark default for cards that have
+     real product photography. The featured card uses a 2-col
+     layout (photo on left, content on right), while standard
+     cards stack photo above content.
+     ========================================================= */
+  .cat-card.has-photo .cat-card-visual {
+    background: var(--nbd-mb-bg-canvas);
+    padding: 0;
+  }
+  .cat-card.has-photo .cat-card-visual::after { display: none; }
+  .cat-card.has-photo .cat-card-illo {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+  .cat-card.has-photo .cat-card-illo img {
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: none;
+    transition: transform var(--nbd-duration-normal) var(--nbd-ease-out);
+  }
+  .cat-card.has-photo:hover .cat-card-illo img { transform: scale(1.04); }
+  /* Placeholder cards (no real asset yet) — keep brand icon centered on subtle gray */
+  .cat-card.is-placeholder .cat-card-visual {
+    background: linear-gradient(180deg, #f0f0f0 0%, #e0e0e0 100%);
+  }
+  .cat-card.is-placeholder .cat-card-visual::after { display: none; }
+  .cat-card.is-placeholder .cat-card-illo {
+    width: 50%;
+    max-width: 140px;
+    height: auto;
+    opacity: 0.55;
+    filter: grayscale(0.3);
+  }
+  .cat-card.is-placeholder .cat-card-illo img {
+    max-height: 110px;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.25));
+  }
+  .cat-card--featured.is-placeholder .cat-card-illo {
+    width: 38%;
+    max-width: 200px;
+  }
+  .cat-card--featured.is-placeholder .cat-card-illo img { max-height: 160px; }
+  .cat-card.is-placeholder::after {
+    content: "Coming soon";
+    position: absolute;
+    top: 10px; left: 10px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 3px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: var(--nbd-radius-sm);
+    z-index: 3;
+  }
+
+  /* =========================================================
+     "VIEW ALL CATEGORIES" CTA TILE
+     A dashed card that fills the 6th grid slot, inviting
+     users to see categories not yet on the home page.
+     ========================================================= */
+  .cat-cta-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--nbd-space-2);
+    border-radius: var(--nbd-radius-lg);
+    background: var(--nbd-mb-bg-soft);
+    border: 2px dashed var(--nbd-mb-border-strong);
+    padding: var(--nbd-space-6);
+    text-decoration: none;
+    color: var(--nbd-mb-text);
+    transition: border-color var(--nbd-duration-fast) var(--nbd-ease-out),
+                background var(--nbd-duration-fast) var(--nbd-ease-out),
+                transform var(--nbd-duration-fast) var(--nbd-ease-out);
+    min-height: 280px;
+  }
+  .cat-cta-tile:hover {
+    border-color: var(--nbd-mb-primary);
+    background: var(--nbd-mb-primary-soft);
+    text-decoration: none;
+    transform: translateY(-3px);
+    color: var(--nbd-mb-primary);
+  }
+  .cat-cta-tile .icon-stack {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    margin-bottom: var(--nbd-space-2);
+    max-width: 88px;
+  }
+  .cat-cta-tile .icon-stack img {
+    width: 40px; height: 40px;
+    object-fit: contain;
+    opacity: 0.6;
+    filter: grayscale(0.2);
+    transition: opacity var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .cat-cta-tile:hover .icon-stack img { opacity: 1; }
+  .cat-cta-tile h3 {
+    font-size: 17px;
+    font-weight: 800;
+    margin: 0;
+    color: var(--nbd-mb-ink);
+  }
+  .cat-cta-tile:hover h3 { color: var(--nbd-mb-primary); }
+  .cat-cta-tile p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--nbd-mb-text-soft);
+    line-height: 1.4;
+  }
+  .cat-cta-tile .arrow {
+    margin-top: var(--nbd-space-2);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--nbd-mb-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .cat-cta-tile .arrow svg {
+    width: 14px; height: 14px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+    transition: transform var(--nbd-duration-fast) var(--nbd-ease-out);
+  }
+  .cat-cta-tile:hover .arrow svg { transform: translateX(3px); }
+
+  /* =========================================================
+     ITEMS & ACCESSORIES — add-ons / hardware
+     Single-state cards (no rollover) on brand yellow.
+     Per brand spec colors_layout.png "Items" pattern.
+     ========================================================= */
+  .items-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--nbd-space-4);
+  }
+  @media (max-width: 900px) {
+    .items-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .items-grid { grid-template-columns: 1fr; }
+  }
+  .item-card {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--nbd-radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--nbd-mb-highlight);
+    box-shadow: var(--nbd-shadow-sm);
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--nbd-duration-fast) var(--nbd-ease-out),
+                box-shadow var(--nbd-duration-fast) var(--nbd-ease-out);
+    display: block;
+  }
+  .item-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--nbd-shadow-lg);
+    text-decoration: none;
+  }
+  .item-card:focus-visible {
+    outline: 3px solid var(--nbd-mb-primary);
+    outline-offset: 3px;
+  }
+  .item-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  /* Subtle add-to-cart pill on hover */
+  .item-card-cta {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 14px 18px;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.85) 100%);
+    display: flex; justify-content: flex-end; align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0;
+    transition: opacity var(--nbd-duration-normal) var(--nbd-ease-out);
+  }
+  .item-card:hover .item-card-cta { opacity: 1; }
+  .item-card-cta svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2.5; fill: none; }
+  .item-card.is-revealed .item-card-cta { opacity: 1; }
+
+  /* Content variant — text+icon inside, no image required */
+  .item-card.ic-content {
+    background: var(--nbd-mb-bg-canvas);
+    border: 1px solid var(--nbd-mb-border);
+    display: flex;
+    align-items: center;
+    padding: var(--nbd-space-6);
+    gap: var(--nbd-space-4);
+    aspect-ratio: auto;
+    min-height: 100px;
+  }
+  .item-card.ic-content .ic-icon {
+    width: 64px; height: 64px;
+    flex-shrink: 0;
+    border-radius: var(--nbd-radius-md);
+    background: #fff;
+    display: grid; place-items: center;
+    box-shadow: var(--nbd-shadow-sm);
+  }
+  .item-card.ic-content .ic-icon svg {
+    width: 32px; height: 32px;
+    color: var(--nbd-mb-primary);
+    stroke: currentColor;
+    stroke-width: 1.6;
+    fill: none;
+  }
+  .item-card.ic-content .ic-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .item-card.ic-content .ic-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--nbd-mb-ink);
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+  .item-card.ic-content .ic-sub {
+    font-size: 12.5px;
+    color: var(--nbd-mb-text-soft);
+    line-height: 1.45;
+    margin: 0;
+  }
+  .item-card.ic-content .item-card-cta {
+    background: none;
+    position: static;
+    padding: 0;
+    color: var(--nbd-mb-primary);
+    opacity: 1;
+    flex-shrink: 0;
+  }
+  .item-card.ic-content .item-card-cta svg { stroke: currentColor; }
+
+  /* Section variant — white bg so yellow cards pop */
+  .section--white { background: var(--nbd-mb-bg); }
+
+  /* =========================================================
+     FOOTER
+     ========================================================= */
+  .footer {
+    background: var(--nbd-mb-ink);
+    color: rgba(255,255,255,0.85);
+    padding: var(--nbd-space-12) 0 var(--nbd-space-6);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--nbd-space-8);
+  }
+  @media (max-width: 767px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: var(--nbd-space-6); }
+  }
+  .footer-logo {
+    height: auto;
+    max-width: 220px;
+    width: 100%;
+    margin-bottom: var(--nbd-space-3);
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+  }
+  .footer-brand {
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: var(--nbd-space-2);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .footer-tagline {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.55;
+    max-width: 320px;
+    margin-bottom: var(--nbd-space-3);
+  }
+  .footer-powered {
+    background: rgba(255,237,0,0.10);
+    border-left: 3px solid var(--nbd-mb-highlight);
+    padding: 10px 12px;
+    border-radius: 4px;
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.85);
+    max-width: 320px;
+  }
+  .footer-powered strong { color: var(--nbd-mb-highlight); }
+  .footer h4 {
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin: 0 0 var(--nbd-space-3);
+    position: relative;
+    padding-bottom: 10px;
+  }
+  .footer h4::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 28px; height: 3px;
+    background: var(--nbd-mb-highlight);
+  }
+  .footer ul { list-style: none; padding: 0; margin: 0; }
+  .footer ul li {
+    font-size: 13px;
+    margin-bottom: var(--nbd-space-2);
+    color: rgba(255,255,255,0.75);
+  }
+  .footer ul li a { color: inherit; }
+  .footer ul li a:hover { color: var(--nbd-mb-highlight); text-decoration: none; }
+  .footer-contact-row {
+    display: flex;
+    align-items: center;
+    gap: var(--nbd-space-2);
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: var(--nbd-space-2);
+  }
+  .footer-contact-row a { color: inherit; }
+  .footer-contact-row a:hover { color: var(--nbd-mb-highlight); text-decoration: none; }
+  .footer-contact-row svg {
+    width: 14px; height: 14px;
+    stroke: var(--nbd-mb-highlight);
+    stroke-width: 1.5;
+    fill: none;
+    flex-shrink: 0;
+  }
+  .footer-bottom {
+    margin-top: var(--nbd-space-8);
+    padding-top: var(--nbd-space-4);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--nbd-space-2);
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-bottom a { color: inherit; }
+  .footer-bottom a:hover { color: var(--nbd-mb-highlight); text-decoration: none; }
+
+</style>
+</head>
+<body>
+
+<!-- ============ UTILITY BAR ============ -->
+<div class="util-bar">
+  <div class="left">
+    <span><span class="dot"></span>Local printing on the Surf Coast · <strong>Open daily 9AM – 4:30PM</strong></span>
+  </div>
+  <div class="right">
+    <a href="https://www.facebook.com/coastprint" target="_blank" rel="noopener" class="hide-mobile" aria-label="Facebook">Facebook</a>
+    <a href="https://instagram.com/coastprinttorquay" target="_blank" rel="noopener" class="hide-mobile" aria-label="Instagram">Instagram</a>
+    <a href="mailto:print@coastprint.com.au" class="hide-mobile">print@coastprint.com.au</a>
+    <a href="tel:0352648017">📞 (03) 5264 8017</a>
+  </div>
+</div>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar" role="banner">
+  <a href="#" class="brand" aria-label="Coast Print home">
+    <!-- Inline SVG logo replicating the real Coast Print CMYK identity -->
+    <svg class="brand-logo" viewBox="0 0 220 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Wordmark — COAST (light) above, PRINT (heavy) below -->
+      <text x="2" y="28" font-family="Montserrat, sans-serif" font-weight="400" font-size="20" fill="#000000" letter-spacing="6">COAST</text>
+      <text x="2" y="58" font-family="Montserrat, sans-serif" font-weight="900" font-size="30" fill="#000000" letter-spacing="-0.5">PRINT</text>
+      <!-- CMYK swatch grid 2×2, right side -->
+      <g transform="translate(150, 8)">
+        <rect x="0"  y="0"  width="28" height="28" fill="#06CDE4"/>
+        <rect x="30" y="0"  width="28" height="28" fill="#EC008C"/>
+        <rect x="0"  y="30" width="28" height="28" fill="#FFED00"/>
+        <rect x="30" y="30" width="28" height="28" fill="#000000"/>
+      </g>
+    </svg>
+    <span class="brand-name">Coast Print — Commercial Printing, Torquay VIC</span>
+  </a>
+
+  <nav class="topbar-nav" aria-label="Primary">
+    <div class="nav-dropdown" data-dropdown aria-expanded="false">
+      <button type="button" class="nav-link" aria-haspopup="true">Shop</button>
+      <div class="nav-dropdown-menu" role="menu">
+        <a class="nav-dropdown-item" href="https://createprint.printjob.com/s/storefront/productOrder/order/40241" target="_blank" rel="noopener" role="menuitem">
+          <span class="label">Business Cards<small>Standard · Slim · Premium finishes</small></span>
+        </a>
+        <a class="nav-dropdown-item" href="https://createprint.printjob.com/s/storefront/productOrder/order/39807" target="_blank" rel="noopener" role="menuitem">
+          <span class="label">Flyers &amp; Leaflets<small>DL · A6 · A5 · A4 · Folded brochures</small></span>
+        </a>
+        <a class="nav-dropdown-item" href="https://createprint.printjob.com/s/storefront/productOrder/order/39802" target="_blank" rel="noopener" role="menuitem">
+          <span class="label">Posters &amp; Building Plans<small>Large format · A3 to A0</small></span>
+        </a>
+        <a class="nav-dropdown-item" href="https://createprint.printjob.com/s/storefront/productOrder/order/29468" target="_blank" rel="noopener" role="menuitem">
+          <span class="label">Coreflute<small>Real estate · Event · Outdoor signs</small></span>
+        </a>
+        <a class="nav-dropdown-item" href="https://createprint.printjob.com/s/storefront/productOrder/order/3125" target="_blank" rel="noopener" role="menuitem">
+          <span class="label">Metal A Frame<small>560 × 860mm powder-coated</small></span>
+        </a>
+        <a class="nav-dropdown-item" href="https://createprint.printjob.com/s/storefront/productOrder/order/3132" target="_blank" rel="noopener" role="menuitem">
+          <span class="label">Pull Up Banners<small>850 · 1000 · 1200mm wide</small></span>
+        </a>
+        <div class="nav-dropdown-divider"></div>
+        <a class="nav-dropdown-footer" href="https://createprint.printjob.com/" target="_blank" rel="noopener" role="menuitem">
+          Open full Coast Print shop
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+    <a href="#how" class="nav-link">How it works</a>
+    <a href="#blog" class="nav-link">Blog</a>
+    <a href="https://www.coastprint.com.au/contact" target="_blank" rel="noopener" class="nav-link">Contact</a>
+  </nav>
+
+  <div class="topbar-actions">
+    <button class="nbd-icon-btn" aria-label="My account — saved artwork &amp; reorders">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </button>
+    <button class="nbd-icon-btn" aria-label="Shopping cart">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 002 1.6h9.7a2 2 0 002-1.6L23 6H6"/></svg>
+    </button>
+    <button class="login-btn">Log in</button>
+    <a href="https://createprint.printjob.com/" target="_blank" rel="noopener" class="start-btn">
+      Design &amp; Order
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none" width="14" height="14"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</header>
+
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">
+          <span class="dot"></span>
+          Local production · Trusted on the Surf Coast since 2006
+        </div>
+        <h1 class="hero-title">
+          Commercial printing<br/>
+          <span class="accent">done beautifully.</span>
+        </h1>
+        <p class="hero-desc">
+          Business cards, flyers, signage, building plans, waterproof menus and large-format posters — designed online, printed locally in Torquay, and delivered across the Bellarine and Surf Coast.
+        </p>
+        <div class="hero-cta-row">
+          <a href="https://createprint.printjob.com/" target="_blank" rel="noopener" class="btn-primary">
+            Start your order
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#categories" class="btn-secondary">Browse categories</a>
+        </div>
+
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <span><strong>Fast</strong> local turnaround</span>
+          </div>
+          <div class="hero-meta-item">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-6 9 6v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg>
+            <span><strong>Online</strong> design tool</span>
+          </div>
+          <div class="hero-meta-item">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Printed in <strong>Torquay, VIC</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <img class="hero-visual-photo" src="https://static.wixstatic.com/media/5d7e6c_981f89798cf24e12b042a0949053a384~mv2.png/v1/fill/w_1547,h_619,al_c,q_85,usm_0.66_1.00_0.01/5d7e6c_981f89798cf24e12b042a0949053a384~mv2.png" alt="Coast Print Business Cards banner" loading="eager">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATEGORIES ============ -->
+<section class="section" id="categories">
+  <div class="container">
+    <div class="section-head-row">
+      <div class="section-title-block">
+        <div class="eyebrow">Browse by category</div>
+        <h2 class="section-title">What are you printing today?</h2>
+        <div class="section-sub">Six core categories — all produced in our Torquay shop and shipped across the Surf Coast. <a href="https://createprint.printjob.com/" target="_blank" rel="noopener" style="color: var(--nbd-mb-accent); font-weight: 700;">Browse full catalogue →</a></div>
+      </div>
+    </div>
+
+    <div class="cat-grid">
+      <!-- Business Cards -->
+      <a href="https://createprint.printjob.com/s/storefront/productOrder/order/40241" target="_blank" rel="noopener" class="cat-card" data-cat="businesscards" id="cat-businesscards">
+        <div class="cat-card-visual has-photo">
+          <img class="cat-card-photo" src="https://static.wixstatic.com/media/5d7e6c_a12c1ddc773047d9afe65750afa2b3b3~mv2.png/v1/fill/w_640,h_480,al_c,q_85,usm_0.66_1.00_0.01/5d7e6c_a12c1ddc773047d9afe65750afa2b3b3~mv2.png" alt="Business Cards" loading="lazy">
+        </div>
+        <div class="cat-card-content">
+          <h3 class="cat-card-title">
+            Business Cards
+            <span class="cat-card-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </h3>
+          <p class="cat-card-sub">Standard · Slim · Premium finishes</p>
+        </div>
+      </a>
+
+      <!-- Flyers & Brochures -->
+      <a href="https://createprint.printjob.com/s/storefront/productOrder/order/39807" target="_blank" rel="noopener" class="cat-card" data-cat="flyers" id="cat-flyers">
+        <div class="cat-card-visual has-photo">
+          <img class="cat-card-photo" src="https://static.wixstatic.com/media/5d7e6c_b370ba78d0bf4c098af0eb118d46d1b7~mv2.png/v1/fill/w_640,h_480,al_c,q_85,usm_0.66_1.00_0.01/5d7e6c_b370ba78d0bf4c098af0eb118d46d1b7~mv2.png" alt="Flyers and Brochures" loading="lazy">
+        </div>
+        <div class="cat-card-content">
+          <h3 class="cat-card-title">
+            Flyers &amp; Brochures
+            <span class="cat-card-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </h3>
+          <p class="cat-card-sub">DL · A6 · A5 · A4 · folded brochures</p>
+        </div>
+      </a>
+
+      <!-- Posters & Plans -->
+      <a href="https://createprint.printjob.com/s/storefront/productOrder/order/39802" target="_blank" rel="noopener" class="cat-card" data-cat="posters" id="cat-posters">
+        <div class="cat-card-visual has-photo">
+          <img class="cat-card-photo" src="https://static.wixstatic.com/media/5d7e6c_c98dd8a02262447b8d9b3f750a3c8ae6~mv2.png/v1/fill/w_640,h_480,al_c,q_85,usm_0.66_1.00_0.01/5d7e6c_c98dd8a02262447b8d9b3f750a3c8ae6~mv2.png" alt="Posters and Plans" loading="lazy">
+        </div>
+        <div class="cat-card-content">
+          <h3 class="cat-card-title">
+            Posters &amp; Plans
+            <span class="cat-card-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </h3>
+          <p class="cat-card-sub">Large format · A3 to A0 · Building plans</p>
+        </div>
+      </a>
+
+      <!-- Coreflute -->
+      <a href="https://createprint.printjob.com/s/storefront/productOrder/order/29468" target="_blank" rel="noopener" class="cat-card" data-cat="coreflute" id="cat-coreflute">
+        <div class="cat-card-visual has-photo">
+          <img class="cat-card-photo" src="https://static.wixstatic.com/media/5d7e6c_1ff0fb7afd7a4b4e8f7acd760f365d6d~mv2.png/v1/fill/w_640,h_480,al_c,q_85,usm_0.66_1.00_0.01/5d7e6c_1ff0fb7afd7a4b4e8f7acd760f365d6d~mv2.png" alt="Coreflute signs" loading="lazy">
+        </div>
+        <div class="cat-card-content">
+          <h3 class="cat-card-title">
+            Coreflute
+            <span class="cat-card-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </h3>
+          <p class="cat-card-sub">Real estate signs · Event signage · Outdoor</p>
+        </div>
+      </a>
+
+      <!-- Metal A Frame -->
+      <a href="https://createprint.printjob.com/s/storefront/productOrder/order/3125" target="_blank" rel="noopener" class="cat-card" data-cat="aframe" id="cat-aframe">
+        <span class="cat-card-badge">Popular</span>
+        <div class="cat-card-visual has-photo">
+          <img class="cat-card-photo" src="https://static.wixstatic.com/media/5d7e6c_c043c78f77fa4249b50e2468360c8519~mv2.png/v1/fill/w_640,h_480,al_c,q_85,usm_0.66_1.00_0.01/5d7e6c_c043c78f77fa4249b50e2468360c8519~mv2.png" alt="Metal A Frame" loading="lazy">
+        </div>
+        <div class="cat-card-content">
+          <h3 class="cat-card-title">
+            Metal A Frame
+            <span class="cat-card-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </h3>
+          <p class="cat-card-sub">560 × 860mm · Powder-coated · Built tough</p>
+        </div>
+      </a>
+
+      <!-- Pull Up Banners -->
+      <a href="https://createprint.printjob.com/s/storefront/productOrder/order/3132" target="_blank" rel="noopener" class="cat-card" data-cat="pullup" id="cat-pullup">
+        <div class="cat-card-visual has-photo">
+          <img class="cat-card-photo" src="https://static.wixstatic.com/media/5d7e6c_ee42506229cb4c86b0c6058432b2e4cf~mv2.png/v1/fill/w_640,h_480,al_c,q_85,usm_0.66_1.00_0.01/5d7e6c_ee42506229cb4c86b0c6058432b2e4cf~mv2.png" alt="Pull Up Banners" loading="lazy">
+        </div>
+        <div class="cat-card-content">
+          <h3 class="cat-card-title">
+            Pull Up Banners
+            <span class="cat-card-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </h3>
+          <p class="cat-card-sub">850 · 1000 · 1200mm wide · Includes case</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ NEW PRINT TEMPLATES ============ -->
+<section class="section" id="templates">
+  <div class="container">
+    <div class="section-head-row">
+      <div class="section-title-block">
+        <div class="eyebrow">New print templates</div>
+        <h2 class="section-title">Things we know you'll love.</h2>
+        <div class="section-sub">Hand-picked best sellers — start your order in one click. Real-time pricing as you choose options.</div>
+      </div>
+      <a href="https://coastprint.cmsmart.net/shop/" target="_blank" rel="noopener" class="section-link">
+        View all
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="templates-grid">
+      <a href="https://coastprint.cmsmart.net/product/waterproof-menus-flyers/" target="_blank" rel="noopener" class="tmpl-card">
+        <div class="tmpl-card-photo">
+          <img src="https://coastprint.cmsmart.net/wp-content/uploads/2024/09/Waterproof-Synthetic-Z-Fold-Menu-Menu-Spa-Hotel-Restaurant-Cafe-Take-Away-Pocket-Brown-Kraft-Folded-Flat-High-Quality-Marketing-Branding-Promotion-450x450.webp" alt="Waterproof Menus / Flyers" loading="lazy">
+        </div>
+        <div class="tmpl-card-body">
+          <h3 class="tmpl-card-title">Waterproof Menus / Flyers</h3>
+          <p class="tmpl-card-price">$30.91</p>
+          <p class="tmpl-card-meta">A3 · A4 · A5 — 200gsm or 280gsm Syntec waterproof. Black/white or full colour, single or double-sided.</p>
+          <span class="tmpl-card-btn">Start design <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/product/folded-brochures-6pp-dl-a4-to-dl-4pp-a5-a4-to-a5/" target="_blank" rel="noopener" class="tmpl-card">
+        <div class="tmpl-card-photo">
+          <img src="https://coastprint.cmsmart.net/wp-content/uploads/2024/07/ChatGPT-Image-Jan-21-2026-09_10_00-PM-450x450.png" alt="Folded Brochures" loading="lazy">
+        </div>
+        <div class="tmpl-card-body">
+          <h3 class="tmpl-card-title">Folded Brochures</h3>
+          <p class="tmpl-card-price">$70.70</p>
+          <p class="tmpl-card-meta">6pp DL (A4 to DL) · 4pp A5 (A4 to A5) — pro-folded on 150 / 170gsm gloss or matte art.</p>
+          <span class="tmpl-card-btn">Start design <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/product/metal-a-frame-viewable-panels-560mm-x-860mm/" target="_blank" rel="noopener" class="tmpl-card">
+        <div class="tmpl-card-photo">
+          <img src="https://coastprint.cmsmart.net/wp-content/uploads/2020/05/A481-2305-002_21-Aframe.png" alt="Metal A Frame" loading="lazy">
+        </div>
+        <div class="tmpl-card-body">
+          <h3 class="tmpl-card-title">Metal A Frame</h3>
+          <p class="tmpl-card-price">$209.09</p>
+          <p class="tmpl-card-meta">Viewable panels 560 × 860mm — powder-coated metal frame with rigid corflute insert.</p>
+          <span class="tmpl-card-btn">Start design <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/product/binding/" target="_blank" rel="noopener" class="tmpl-card">
+        <div class="tmpl-card-photo">
+          <img src="https://coastprint.cmsmart.net/wp-content/uploads/2024/07/ChatGPT-Image-Jan-21-2026-09_10_05-PM-450x450.png" alt="Document Binding" loading="lazy">
+        </div>
+        <div class="tmpl-card-body">
+          <h3 class="tmpl-card-title">Binding</h3>
+          <p class="tmpl-card-price">$5.00</p>
+          <p class="tmpl-card-meta">Plastic-coated metal binding · Black &amp; white. For booklets, reports and presentations.</p>
+          <span class="tmpl-card-btn">Add to cart <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/product/plan-printing/" target="_blank" rel="noopener" class="tmpl-card">
+        <div class="tmpl-card-photo">
+          <img src="https://coastprint.cmsmart.net/wp-content/uploads/2020/05/A481-2305-002_22-Building-Plans.png" alt="Plan Printing" loading="lazy">
+        </div>
+        <div class="tmpl-card-body">
+          <h3 class="tmpl-card-title">Plan Printing</h3>
+          <p class="tmpl-card-price">From $4.50<small style="font-size:12px;color:var(--nbd-mb-text-soft);font-weight:500;margin-left:4px;">/ page</small></p>
+          <p class="tmpl-card-meta">Architects, engineers, surveyors — A1, A0 and custom. Quantity = total pages × copies.</p>
+          <span class="tmpl-card-btn">Start design <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/product/flyers/" target="_blank" rel="noopener" class="tmpl-card">
+        <div class="tmpl-card-photo">
+          <img src="https://coastprint.cmsmart.net/wp-content/uploads/2020/05/A481-2305-002_01-A6.png" alt="Flyers" loading="lazy">
+        </div>
+        <div class="tmpl-card-body">
+          <h3 class="tmpl-card-title">Flyers</h3>
+          <p class="tmpl-card-price">$54.71</p>
+          <p class="tmpl-card-meta">DL · A6 · A5 · A4 — full colour both sides on 150gsm or 170gsm gloss / matte art stock.</p>
+          <span class="tmpl-card-btn">Start design <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/product/posters/" target="_blank" rel="noopener" class="tmpl-card">
+        <div class="tmpl-card-photo">
+          <img src="https://coastprint.cmsmart.net/wp-content/uploads/2024/06/ChatGPT-Image-Jan-21-2026-08_45_57-PM-450x450.png" alt="Posters" loading="lazy">
+        </div>
+        <div class="tmpl-card-body">
+          <h3 class="tmpl-card-title">Posters</h3>
+          <p class="tmpl-card-price">$22.73</p>
+          <p class="tmpl-card-meta">Large format A3 to A0 — premium art stock for retail, hospitality and real estate displays.</p>
+          <span class="tmpl-card-btn">Start design <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/create-your-own/?product_id=1030" target="_blank" rel="noopener" class="tmpl-card">
+        <div class="tmpl-card-photo">
+          <img src="https://coastprint.cmsmart.net/wp-content/uploads/2020/05/A481-2305-002_09-4pp-A6.png" alt="A6 Folded Cards" loading="lazy">
+        </div>
+        <div class="tmpl-card-body">
+          <h3 class="tmpl-card-title">A6 Folded Cards</h3>
+          <p class="tmpl-card-price">On request</p>
+          <p class="tmpl-card-meta">A5 scored centre to fold to A6 — perfect for invitations, Christmas cards and announcements.</p>
+          <span class="tmpl-card-btn">Start design <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section section--soft" id="how">
+  <div class="container">
+    <div class="section-head-row">
+      <div class="section-title-block">
+        <div class="eyebrow">4 steps</div>
+        <h2 class="section-title">How it works</h2>
+        <div class="section-sub">From "I need a print job" to "it's ready" — choose the design path that's right for you.</div>
+      </div>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+        </div>
+        <h3 class="step-title">Choose a product</h3>
+        <p class="step-desc">Browse our categories — business cards, flyers, posters, signage, waterproof menus, building plans and more.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 9h6V3M21 15h-6v6"/><path d="M9 3l6 6M15 21l-6-6"/><circle cx="12" cy="12" r="2"/></svg>
+        </div>
+        <h3 class="step-title">Select options</h3>
+        <p class="step-desc">Pick size, stock, finish, quantity. Real-time pricing as you adjust — no surprises at checkout.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M16 16l-4-4-4 4M12 12v9"/><path d="M20 16v3a2 2 0 01-2 2H6a2 2 0 01-2-2v-3"/></svg>
+        </div>
+        <h3 class="step-title">Upload or design online</h3>
+        <p class="step-desc">Drop your PDF, AI, PSD, PNG or JPG — or build a layout with our free online designer. No login required.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg>
+        </div>
+        <h3 class="step-title">Checkout &amp; collect</h3>
+        <p class="step-desc">Pay securely online. Pick up at our Torquay shop or arrange delivery across the Bellarine and Surf Coast.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ ONLINE DESIGN ============ -->
+<section class="section section--soft" id="online-design">
+  <div class="container">
+    <div class="section-head-row">
+      <div class="section-title-block">
+        <div class="eyebrow">Online design</div>
+        <h2 class="section-title">Things we know you'll love.</h2>
+        <div class="section-sub">Ready-to-edit templates for real estate, hospitality and corporate. Customise in minutes — no design software required.</div>
+      </div>
+      <a href="https://coastprint.cmsmart.net/create-your-own/" target="_blank" rel="noopener" class="section-link">
+        Open designer
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="design-grid">
+      <a href="https://coastprint.cmsmart.net/create-your-own/?product_id=5162" target="_blank" rel="noopener" class="design-tile">
+        <img src="https://coastprint.cmsmart.net/wp-content/uploads/2025/10/result_bellarine-property-header-Book-2048x2048-1-450x450.jpg" alt="8pp Property Books" loading="lazy">
+        <span class="design-tile-cta">Design now</span>
+        <div class="design-tile-overlay"><span class="design-tile-label">8pp Property Books</span></div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/create-your-own/?product_id=4717" target="_blank" rel="noopener" class="design-tile">
+        <img src="https://coastprint.cmsmart.net/wp-content/uploads/2025/08/result_A4-Booke-Flyers-Header-600x600-2-1-450x450.jpg" alt="Agent Booklet With Cover" loading="lazy">
+        <span class="design-tile-cta">Design now</span>
+        <div class="design-tile-overlay"><span class="design-tile-label">Agent Booklet with Cover</span></div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/create-your-own/?product_id=4535" target="_blank" rel="noopener" class="design-tile">
+        <img src="https://coastprint.cmsmart.net/wp-content/uploads/2025/08/BiASLWKHmUktZ5d4cDMpYGODd3ZgNnUWZoCWxAkP-450x450.jpg" alt="6pp Menu 350gsm" loading="lazy">
+        <span class="design-tile-cta">Design now</span>
+        <div class="design-tile-overlay"><span class="design-tile-label">6pp Menu · 350gsm</span></div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/create-your-own/?product_id=4441" target="_blank" rel="noopener" class="design-tile">
+        <img src="https://coastprint.cmsmart.net/wp-content/uploads/2025/07/Bellarine-Property-header-DL-scaled.jpg" alt="DL Just Sold/Listed" loading="lazy">
+        <span class="design-tile-cta">Design now</span>
+        <div class="design-tile-overlay"><span class="design-tile-label">DL Just Sold / Listed</span></div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/create-your-own/?product_id=4016" target="_blank" rel="noopener" class="design-tile">
+        <img src="https://coastprint.cmsmart.net/wp-content/uploads/2025/05/C4-Envelope-ABMC-scaled.jpg" alt="DL Env P/F ABMC" loading="lazy">
+        <span class="design-tile-cta">Design now</span>
+        <div class="design-tile-overlay"><span class="design-tile-label">DL Envelope · ABMC</span></div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/create-your-own/?product_id=4005" target="_blank" rel="noopener" class="design-tile">
+        <img src="https://coastprint.cmsmart.net/wp-content/uploads/2025/05/DL-Envelope-AB-Priority-scaled.jpg" alt="DL Env P/F PRIORITY AB" loading="lazy">
+        <span class="design-tile-cta">Design now</span>
+        <div class="design-tile-overlay"><span class="design-tile-label">DL Envelope · Priority AB</span></div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/create-your-own/?product_id=4001" target="_blank" rel="noopener" class="design-tile">
+        <img src="https://coastprint.cmsmart.net/wp-content/uploads/2025/05/DL-Envelope-Lorne-scaled.jpg" alt="DL Envelopes Window Lorne" loading="lazy">
+        <span class="design-tile-cta">Design now</span>
+        <div class="design-tile-overlay"><span class="design-tile-label">DL Envelope Window · Lorne</span></div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/create-your-own/?product_id=3981" target="_blank" rel="noopener" class="design-tile">
+        <img src="https://coastprint.cmsmart.net/wp-content/uploads/2025/05/Dl-Envelope-Apollo-Bay-Plain-Face-scaled.jpg" alt="DL Envelopes Window AB" loading="lazy">
+        <span class="design-tile-cta">Design now</span>
+        <div class="design-tile-overlay"><span class="design-tile-label">DL Envelope Window · Apollo Bay</span></div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/create-your-own/?product_id=1346" target="_blank" rel="noopener" class="design-tile">
+        <img src="https://coastprint.cmsmart.net/wp-content/uploads/2024/09/Waterproof-Synthetic-Z-Fold-Menu-Menu-Spa-Hotel-Restaurant-Cafe-Take-Away-Pocket-Brown-Kraft-Folded-Flat-High-Quality-Marketing-Branding-Promotion-450x450.webp" alt="Waterproof Menus / Flyers" loading="lazy">
+        <span class="design-tile-cta">Design now</span>
+        <div class="design-tile-overlay"><span class="design-tile-label">Waterproof Menus / Flyers</span></div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/create-your-own/?product_id=1030" target="_blank" rel="noopener" class="design-tile">
+        <img src="https://coastprint.cmsmart.net/wp-content/uploads/2020/05/A481-2305-002_09-4pp-A6.png" alt="A6 Christmas Cards" loading="lazy">
+        <span class="design-tile-cta">Design now</span>
+        <div class="design-tile-overlay"><span class="design-tile-label">A6 Christmas Cards</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LATEST POSTS ============ -->
+<section class="section" id="blog">
+  <div class="container">
+    <div class="section-head-row">
+      <div class="section-title-block">
+        <div class="eyebrow">Latest posts</div>
+        <h2 class="section-title">Interesting to read.</h2>
+        <div class="section-sub">Practical print guides, design tips, and stories from our Torquay shop floor.</div>
+      </div>
+      <a href="https://coastprint.cmsmart.net/blog/" target="_blank" rel="noopener" class="section-link">
+        Read the blog
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="posts-grid">
+      <a href="https://coastprint.cmsmart.net/how-to-design-signage-that-truly-attracts-customers-the-art-of-being-seen/" target="_blank" rel="noopener" class="post-card">
+        <div class="post-card-photo">
+          <img src="https://coastprint.cmsmart.net/wp-content/uploads/2025/12/6ce0ed78-5665-4a58-9b58-96abd18825ff-1-1-450x360.png" alt="How to Design Signage That Truly Attracts Customers" loading="lazy">
+        </div>
+        <div class="post-card-body">
+          <div class="post-card-meta">Melanie Swan · Dec 04, 2025</div>
+          <h3 class="post-card-title">How to Design Signage That Truly Attracts Customers: The Art of Being Seen</h3>
+          <p class="post-card-excerpt">Some signs you walk past without thinking. Others make you stop, turn your head, walk closer. Sometimes even step inside. Why? Because great signage isn't just design — it's emotion, clarity, and invitation.</p>
+          <span class="post-card-readmore">Read more <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/gloss-or-matte-which-paper-should-you-choose-the-ultimate-guide-for-businesses-in-2025/" target="_blank" rel="noopener" class="post-card">
+        <div class="post-card-photo">
+          <img src="https://coastprint.cmsmart.net/wp-content/uploads/2025/12/business-cards-1-450x360.jpg" alt="Gloss or Matte: Which Paper Should You Choose?" loading="lazy">
+        </div>
+        <div class="post-card-body">
+          <div class="post-card-meta">Melanie Swan · Dec 04, 2025</div>
+          <h3 class="post-card-title">Gloss or Matte: Which Paper Should You Choose? The Ultimate Guide for Businesses in 2025</h3>
+          <p class="post-card-excerpt">There's a moment right before a print project becomes real — when your design is done, your colours are ready, everything is perfect, except for one final, surprisingly emotional question: gloss or matte?</p>
+          <span class="post-card-readmore">Read more <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="https://coastprint.cmsmart.net/how-to-create-eye-catching-signage-that-attracts-customers/" target="_blank" rel="noopener" class="post-card">
+        <div class="post-card-photo">
+          <img src="https://coastprint.cmsmart.net/wp-content/uploads/2025/12/Open-Signs-Gallery-3-450x360.jpg" alt="How to Create Eye-Catching Signage" loading="lazy">
+        </div>
+        <div class="post-card-body">
+          <div class="post-card-meta">Melanie Swan · Dec 04, 2025</div>
+          <h3 class="post-card-title">How to Create Eye-Catching Signage That Attracts Customers</h3>
+          <p class="post-card-excerpt">A passerby slows down, turns their head, and walks in — all because your signage whispered the right message at the right time. Great signage doesn't shout, it invites. It doesn't overwhelm, it guides.</p>
+          <span class="post-card-readmore">Read more <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section section--soft" id="testimonials">
+  <div class="container">
+    <div class="section-head-row">
+      <div class="section-title-block">
+        <div class="eyebrow">Testimonials</div>
+        <h2 class="section-title">We love our clients.</h2>
+        <div class="section-sub">Real stories from the businesses we print for across Torquay, Geelong and the Bellarine.</div>
+      </div>
+    </div>
+
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-quote">
+          Coast Print consistently delivers high-quality print products with outstanding attention to detail. From business cards to large-format prints, everything arrives exactly as expected. Their turnaround time is fast, communication is clear, and the final results always reflect a professional finish. Highly recommended for businesses that value reliability and premium print quality.
+        </p>
+        <div class="testimonial-author">
+          <img class="testimonial-avatar" src="https://coastprint.cmsmart.net/wp-content/uploads/2018/02/avatar01-150x150.jpg" alt="David Lee" loading="lazy">
+          <div>
+            <p class="testimonial-name">David Lee</p>
+            <p class="testimonial-role">CEO</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="testimonial-quote">
+          Coast Print has helped elevate our brand through beautifully produced marketing materials. The consistency in print quality, combined with competitive pricing and dependable delivery, makes them our go-to printing partner. Every order reflects precision, durability, and professional craftsmanship. We wouldn't hesitate to recommend Coast Print to other businesses.
+        </p>
+        <div class="testimonial-author">
+          <img class="testimonial-avatar" src="https://coastprint.cmsmart.net/wp-content/uploads/2018/02/avatar03-150x150.jpg" alt="Sarah Chen" loading="lazy">
+          <div>
+            <p class="testimonial-name">Sarah Chen</p>
+            <p class="testimonial-role">Marketing Director</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="testimonial-quote">
+          Working with Coast Print has been a seamless experience. Their team is knowledgeable, responsive, and genuinely cares about getting the best outcome for each project. The print quality is sharp, colours are accurate, and materials feel premium. If you're looking for a trusted commercial printing company in Australia, Coast Print is an excellent choice.
+        </p>
+        <div class="testimonial-author">
+          <img class="testimonial-avatar" src="https://coastprint.cmsmart.net/wp-content/uploads/2018/02/avatar02-150x150.jpg" alt="James Patel" loading="lazy">
+          <div>
+            <p class="testimonial-name">James Patel</p>
+            <p class="testimonial-role">Real Estate Agent</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY COAST PRINT ============ -->
+<section class="section" id="b2b">
+  <div class="container">
+    <div class="b2b-strip">
+      <div class="b2b-strip-content">
+        <div class="b2b-eyebrow">Why Coast Print</div>
+        <h3>Quality printing, locally produced, delivered on time.</h3>
+        <p>From real estate marketing collateral to hospitality menus and corporate stationery — we work with companies across the Bellarine and Surf Coast to produce print that strengthens brand identity, supports sales teams, and enhances everyday business operations. Premium uncoated stocks including the eco-friendly Extract paper range (made from recycled coffee cups) available on request.</p>
+      </div>
+      <div class="b2b-actions">
+        <a href="https://createprint.printjob.com/" target="_blank" rel="noopener" class="btn-primary btn-on-dark">
+          Start your order
+          <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="https://www.coastprint.com.au/contact" target="_blank" rel="noopener" class="btn-ghost-on-dark">Contact us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <svg class="footer-logo" viewBox="0 0 220 70" xmlns="http://www.w3.org/2000/svg" aria-label="Coast Print">
+          <!-- White wordmark for dark footer -->
+          <text x="2" y="28" font-family="Montserrat, sans-serif" font-weight="400" font-size="20" fill="#ffffff" letter-spacing="6">COAST</text>
+          <text x="2" y="58" font-family="Montserrat, sans-serif" font-weight="900" font-size="30" fill="#ffffff" letter-spacing="-0.5">PRINT</text>
+          <!-- CMYK swatches keep brand colours -->
+          <g transform="translate(150, 8)">
+            <rect x="0"  y="0"  width="28" height="28" fill="#06CDE4"/>
+            <rect x="30" y="0"  width="28" height="28" fill="#EC008C"/>
+            <rect x="0"  y="30" width="28" height="28" fill="#FFED00"/>
+            <rect x="30" y="30" width="28" height="28" fill="#ffffff" opacity="0.18" stroke="#ffffff" stroke-width="1"/>
+          </g>
+        </svg>
+        <div class="footer-tagline">
+          Coast Print provides professional corporate printing designed to help businesses on the Bellarine and Surf Coast communicate clearly, consistently, and with impact. High-quality printed materials that strengthen brand identity, support sales teams, and elevate everyday business operations.
+        </div>
+        <div class="footer-powered">
+          <strong>Established 2006 · Torquay, Victoria</strong><br>
+          Local craft. National-standard print quality.
+        </div>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <div class="footer-contact-row">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.37 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.33 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <a href="tel:0352648017">(03) 5264 8017</a>
+        </div>
+        <div class="footer-contact-row">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+          <a href="mailto:print@coastprint.com.au">print@coastprint.com.au</a>
+        </div>
+        <div class="footer-contact-row">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Unit 2/12 Cylinders Drive, Torquay, VIC 3228
+        </div>
+        <div class="footer-contact-row" style="margin-top: 14px;">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          Open daily · 9:00 AM – 4:30 PM
+        </div>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="https://createprint.printjob.com/s/storefront/productOrder/order/40241" target="_blank" rel="noopener">Business Cards</a></li>
+          <li><a href="https://createprint.printjob.com/s/storefront/productOrder/order/39807" target="_blank" rel="noopener">Flyers &amp; Leaflets</a></li>
+          <li><a href="https://createprint.printjob.com/s/storefront/productOrder/order/39802" target="_blank" rel="noopener">Posters &amp; Building Plans</a></li>
+          <li><a href="https://createprint.printjob.com/s/storefront/productOrder/order/29468" target="_blank" rel="noopener">Coreflute</a></li>
+          <li><a href="https://createprint.printjob.com/s/storefront/productOrder/order/3125" target="_blank" rel="noopener">Metal A Frame</a></li>
+          <li><a href="https://createprint.printjob.com/s/storefront/productOrder/order/3132" target="_blank" rel="noopener">Pull Up Banners</a></li>
+          <li><a href="https://createprint.printjob.com/" target="_blank" rel="noopener"><strong>Open full shop →</strong></a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://www.coastprint.com.au/contact" target="_blank" rel="noopener">Contact us</a></li>
+          <li><a href="https://www.coastprint.com.au/blank-1" target="_blank" rel="noopener">Meet the team</a></li>
+          <li><a href="https://www.facebook.com/coastprint" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="https://instagram.com/coastprinttorquay" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span id="yr">2026</span> Coast Print · Designed by Netbase JSC. All rights reserved.</div>
+      <div><a href="#">Terms</a> · <a href="#">Privacy</a> · <a href="#">Refund policy</a> · <a href="#">Accessibility</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Auto year
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Categories dropdown toggle
+  document.querySelectorAll('[data-dropdown]').forEach(dd => {
+    const trigger = dd.querySelector('.nav-link');
+    const close = () => dd.setAttribute('aria-expanded', 'false');
+    const open  = () => dd.setAttribute('aria-expanded', 'true');
+    trigger.addEventListener('click', e => {
+      e.stopPropagation();
+      dd.getAttribute('aria-expanded') === 'true' ? close() : open();
+    });
+    // Close when clicking inside an item (so smooth-scroll still fires)
+    dd.querySelectorAll('.nav-dropdown-item, .nav-dropdown-footer').forEach(item => {
+      item.addEventListener('click', () => setTimeout(close, 80));
+    });
+    // Click outside closes
+    document.addEventListener('click', e => {
+      if (!dd.contains(e.target)) close();
+    });
+    // ESC closes
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') close();
+    });
+  });
+
+  // Smooth scroll for in-page nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id.length > 1 && document.querySelector(id)) {
+        e.preventDefault();
+        document.querySelector(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Category card click → would navigate to product list
+  document.querySelectorAll('.cat-card').forEach(c => {
+    c.addEventListener('click', e => {
+      e.preventDefault();
+      // In production: navigate to /category/{slug}
+    });
+  });
+
+  // Product card + Item card behaviour (matches brand spec):
+  //   Desktop: hover swaps normal → rollover (pure CSS) / reveals item CTA.
+  //   Touch:   first tap reveals rollover/CTA, second tap navigates.
+  const hasHover = window.matchMedia('(hover: hover)').matches;
+  document.querySelectorAll('.product-card, .item-card').forEach(card => {
+    card.addEventListener('click', e => {
+      if (hasHover) {
+        e.preventDefault();
+        // In production: navigate to /product/{slug}
+        return;
+      }
+      if (!card.classList.contains('is-revealed')) {
+        e.preventDefault();
+        // Collapse other revealed cards so only one is "open" on touch
+        document.querySelectorAll('.product-card.is-revealed, .item-card.is-revealed').forEach(c => {
+          if (c !== card) c.classList.remove('is-revealed');
+        });
+        card.classList.add('is-revealed');
+        clearTimeout(card._collapse);
+        card._collapse = setTimeout(() => card.classList.remove('is-revealed'), 5000);
+      } else {
+        e.preventDefault();
+        // 2nd tap = navigate. In production: real href.
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
