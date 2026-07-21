@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeyPage — Brand Exploration (for approval)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=Archivo:wght@600;700;800&family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;600;700&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Inter",system-ui,sans-serif;background:#ECEEE8;color:#12140F;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+  .mono{font-family:"Space Mono",monospace}
+
+  /* intro */
+  .intro{padding:64px 0 26px}
+  .intro .kick{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#8A7A2E}
+  .intro h1{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(34px,6vw,60px);letter-spacing:-.02em;margin:14px 0 12px}
+  .intro p{font-size:17px;color:#4A554B;max-width:64ch}
+  .intro .meta{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+  .intro .pill{background:#fff;border:1px solid #D6DBCF;border-radius:999px;padding:8px 14px;font-size:13px;color:#4A554B}
+  .intro .pill b{color:#12140F}
+
+  /* block */
+  .blk{border-radius:26px;padding:38px;margin-bottom:24px;border:1px solid #DADFD2;overflow:hidden;position:relative}
+  .blk-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .blk-num{font-family:"Space Mono",monospace;font-size:13px;font-weight:700}
+  .blk-name{font-size:28px;letter-spacing:-.01em}
+  .blk-badge{font-family:"Space Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:.07em;padding:3px 8px;border-radius:6px;align-self:center}
+  .blk-tag{font-size:15.5px;margin:8px 0 4px;max-width:70ch}
+  .blk-pos{font-size:14px;font-style:italic;opacity:.85;margin-bottom:26px}
+
+  .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+
+  .locks{display:grid;grid-template-rows:1fr 1fr;gap:14px}
+  .lock{border-radius:16px;min-height:132px;display:flex;align-items:center;justify-content:center;gap:15px}
+  .frame{flex:0 0 auto;display:grid;place-items:center}
+  .frame.sq{width:52px;height:52px;border-radius:15px}
+  .frame.circle{width:54px;height:54px;border-radius:50%}
+  .frame.squircle{width:54px;height:54px;border-radius:22px}
+  .frame svg{width:30px;height:30px}
+  .frame.bare svg{width:52px;height:52px}
+  .word{font-size:32px;letter-spacing:-.02em;font-weight:800}
+  .word b{font-weight:800}
+  .word i{font-style:normal}
+
+  .side{display:flex;flex-direction:column;gap:20px}
+  .sub{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;opacity:.65;margin-bottom:10px}
+  .marks{display:flex;align-items:center;gap:13px}
+  .marks .m2{width:36px;height:36px}.marks .m2 svg{width:20px;height:20px}
+  .marks .m3{width:24px;height:24px}.marks .m3 svg{width:14px;height:14px}
+  .marks .m2.bare svg,.marks .m3.bare svg{width:100%;height:100%}
+
+  .sw{display:flex;border-radius:12px;overflow:hidden;border:1px solid rgba(0,0,0,.08)}
+  .sw div{flex:1;height:64px;display:flex;align-items:flex-end;padding:7px}
+  .sw span{font-family:"Space Mono",monospace;font-size:9px;font-weight:700}
+
+  .spec .aa{font-size:44px;line-height:1}
+  .spec .nm{font-size:13.5px;margin-top:8px;opacity:.8}
+  .spec .nm b{opacity:1}
+
+  .apps{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .abtn{border:0;border-radius:12px;padding:11px 16px;font-weight:700;font-size:14px;color:#fff}
+  .achip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 11px 6px 8px;font-family:"Space Mono",monospace;font-size:11px;font-weight:700;background:#fff;border:1px solid rgba(0,0,0,.1)}
+  .achip svg{width:14px;height:14px}
+  .aicon{width:44px;height:44px;display:grid;place-items:center}
+  .aicon svg{width:26px;height:26px}
+  .best{font-size:13px;margin-top:18px;padding-top:16px;border-top:1px dashed rgba(0,0,0,.14);opacity:.85}
+  .best b{opacity:1}
+
+  footer{padding:36px 0 64px;font-family:"Space Mono",monospace;font-size:12px;color:#7C867B;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="intro">
+    <div class="kick">DeyPage · Brand exploration · v2</div>
+    <h1>Four different worlds.</h1>
+    <p>Not four coats of paint — four distinct ideas of what DeyPage could be. Each has its own logo concept, type voice, colour world and personality. Pick the direction that feels right; we'll then refine the winner and apply it to the site.</p>
+    <div class="meta">
+      <span class="pill"><b>Netbase JSC</b> · for Dey Page Global Ltd</span>
+      <span class="pill">Approve one direction → we build the HTML from it</span>
+    </div>
+  </section>
+
+  <!-- ========== 01 PINPOINT ========== -->
+  <section class="blk" style="background:#F4F6F1;color:#0C1F17">
+    <div class="blk-head">
+      <span class="blk-num" style="color:#B9820C">01</span>
+      <span class="blk-name" style="font-family:'Bricolage Grotesque';font-weight:800">Pinpoint</span>
+      <span class="blk-badge" style="background:#0D5A3A;color:#fff">Current lineage</span>
+    </div>
+    <p class="blk-tag">The trusted map of Nigerian business. Forest-green for credibility, a gold dot for the verified location. Calm, grown-up, dependable.</p>
+    <p class="blk-pos">“Find any business. Any state. Instantly.”</p>
+    <div class="grid">
+      <div class="locks">
+        <div class="lock" style="background:#F4F6F1;border:1px solid #E1E5DC">
+          <span class="frame sq" style="background:#0D5A3A"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11Z" fill="#fff"/><circle cx="12" cy="10" r="2.5" fill="#E6A817"/></svg></span>
+          <span class="word" style="font-family:'Bricolage Grotesque';color:#0C1F17">Dey<b style="color:#0D5A3A">Page</b></span>
+        </div>
+        <div class="lock" style="background:#0C1F17">
+          <span class="frame sq" style="background:#0D5A3A"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11Z" fill="#fff"/><circle cx="12" cy="10" r="2.5" fill="#E6A817"/></svg></span>
+          <span class="word" style="font-family:'Bricolage Grotesque';color:#fff">Dey<b style="color:#5FBE86">Page</b></span>
+        </div>
+      </div>
+      <div class="side">
+        <div><div class="sub">Mark</div><div class="marks">
+          <span class="frame m2 sq" style="background:#0D5A3A"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11Z" fill="#fff"/><circle cx="12" cy="10" r="2.5" fill="#E6A817"/></svg></span>
+          <span class="frame m3 sq" style="background:#0D5A3A"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11Z" fill="#fff"/><circle cx="12" cy="10" r="2.5" fill="#E6A817"/></svg></span>
+        </div></div>
+        <div><div class="sub">Palette</div><div class="sw">
+          <div style="background:#0D5A3A;color:#fff"><span>#0D5A3A</span></div>
+          <div style="background:#16A45F;color:#04271A"><span>#16A45F</span></div>
+          <div style="background:#E6A817;color:#3a2a04"><span>#E6A817</span></div>
+          <div style="background:#0C1F17;color:#fff"><span>#0C1F17</span></div>
+        </div></div>
+        <div class="spec"><div class="sub">Type</div>
+          <div class="aa" style="font-family:'Bricolage Grotesque';font-weight:800">Ag</div>
+          <div class="nm"><b>Bricolage Grotesque</b> + Figtree + Space Mono</div>
+        </div>
+        <div><div class="sub">In use</div><div class="apps">
+          <span class="abtn" style="background:#0D5A3A">List your business</span>
+          <span class="achip" style="color:#B9820C"><svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg> Verified</span>
+        </div></div>
+        <div class="best"><b>Best if:</b> you want maximum trust and the safest, most timeless look.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 02 THE SEAL ========== -->
+  <section class="blk" style="background:#F4F1E8;color:#171613">
+    <div class="blk-head">
+      <span class="blk-num" style="color:#1E8E5A">02</span>
+      <span class="blk-name" style="font-family:'Archivo';font-weight:800;text-transform:uppercase;letter-spacing:.04em">The Seal</span>
+    </div>
+    <p class="blk-tag">Verification is the whole brand. A rubber-stamp mark says “checked, approved, on the record.” Editorial, documentary, high-contrast — like an official register.</p>
+    <p class="blk-pos">“If it's on DeyPage, it's been verified.”</p>
+    <div class="grid">
+      <div class="locks">
+        <div class="lock" style="background:#F4F1E8;border:1px solid #E4DECB">
+          <span class="frame bare"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#171613" stroke-width="2"/><circle cx="20" cy="20" r="13.5" stroke="#171613" stroke-width="1"/><path d="M13.5 20.5l4.4 4.4 8-9" stroke="#1E8E5A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="word" style="font-family:'Archivo';text-transform:uppercase;letter-spacing:.13em;color:#171613;font-size:26px">DEY<b style="color:#1E8E5A">PAGE</b></span>
+        </div>
+        <div class="lock" style="background:#171613">
+          <span class="frame bare"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#F4F1E8" stroke-width="2"/><circle cx="20" cy="20" r="13.5" stroke="#F4F1E8" stroke-width="1"/><path d="M13.5 20.5l4.4 4.4 8-9" stroke="#37D08F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="word" style="font-family:'Archivo';text-transform:uppercase;letter-spacing:.13em;color:#F4F1E8;font-size:26px">DEY<b style="color:#37D08F">PAGE</b></span>
+        </div>
+      </div>
+      <div class="side">
+        <div><div class="sub">Mark</div><div class="marks">
+          <span class="frame m2 bare"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#171613" stroke-width="2"/><path d="M13.5 20.5l4.4 4.4 8-9" stroke="#1E8E5A" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="frame m3 bare"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#171613" stroke-width="2.4"/><path d="M13.5 20.5l4.4 4.4 8-9" stroke="#1E8E5A" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div></div>
+        <div><div class="sub">Palette</div><div class="sw">
+          <div style="background:#171613;color:#fff"><span>#171613</span></div>
+          <div style="background:#1E8E5A;color:#fff"><span>#1E8E5A</span></div>
+          <div style="background:#C8452D;color:#fff"><span>#C8452D</span></div>
+          <div style="background:#F4F1E8;color:#5A5647"><span>#F4F1E8</span></div>
+        </div></div>
+        <div class="spec"><div class="sub">Type</div>
+          <div class="aa" style="font-family:'Archivo';font-weight:800">Ag</div>
+          <div class="nm"><b>Archivo</b> (caps) + Inter + Space Mono</div>
+        </div>
+        <div><div class="sub">In use</div><div class="apps">
+          <span class="abtn" style="background:#171613">List your business</span>
+          <span class="achip" style="color:#171613;font-family:'Space Mono'"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1E8E5A" stroke-width="2"/><path d="M8.5 12l2.4 2.4 4.6-5" stroke="#1E8E5A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> APPROVED</span>
+        </div></div>
+        <div class="best"><b>Best if:</b> you want the field-verification to be the single, unmistakable hook.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 03 NAIJA MARKET ========== -->
+  <section class="blk" style="background:#FBF3E6;color:#2A1E17">
+    <div class="blk-head">
+      <span class="blk-num" style="color:#E4572E">03</span>
+      <span class="blk-name" style="font-family:'Fredoka';font-weight:600">Naija Market</span>
+    </div>
+    <p class="blk-tag">Warm, human and mobile-first — the energy of a Nigerian market. A chat-bubble mark nods to WhatsApp, the way people already do business. Coral and teal on cream feel friendly and local, not corporate.</p>
+    <p class="blk-pos">“Every business, one tap away.”</p>
+    <div class="grid">
+      <div class="locks">
+        <div class="lock" style="background:#FBF3E6;border:1px solid #EEDFC7">
+          <span class="frame squircle" style="background:#E4572E"><svg viewBox="0 0 24 24" fill="none"><path d="M5 4h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H10.5L6 19.5V16H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="#fff"/><circle cx="12" cy="10" r="2.4" fill="#0FA3A0"/></svg></span>
+          <span class="word" style="font-family:'Fredoka';font-weight:600;text-transform:lowercase;color:#2A1E17">dey<b style="color:#E4572E">page</b></span>
+        </div>
+        <div class="lock" style="background:#2A1E17">
+          <span class="frame squircle" style="background:#E4572E"><svg viewBox="0 0 24 24" fill="none"><path d="M5 4h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H10.5L6 19.5V16H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="#fff"/><circle cx="12" cy="10" r="2.4" fill="#0FA3A0"/></svg></span>
+          <span class="word" style="font-family:'Fredoka';font-weight:600;text-transform:lowercase;color:#FBF3E6">dey<b style="color:#FF8A5B">page</b></span>
+        </div>
+      </div>
+      <div class="side">
+        <div><div class="sub">Mark</div><div class="marks">
+          <span class="frame m2 squircle" style="background:#E4572E"><svg viewBox="0 0 24 24" fill="none"><path d="M5 4h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H10.5L6 19.5V16H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="#fff"/><circle cx="12" cy="10" r="2.4" fill="#0FA3A0"/></svg></span>
+          <span class="frame m3 squircle" style="background:#E4572E"><svg viewBox="0 0 24 24" fill="none"><path d="M5 4h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H10.5L6 19.5V16H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="#fff"/><circle cx="12" cy="10" r="2.4" fill="#0FA3A0"/></svg></span>
+        </div></div>
+        <div><div class="sub">Palette</div><div class="sw">
+          <div style="background:#E4572E;color:#fff"><span>#E4572E</span></div>
+          <div style="background:#0FA3A0;color:#fff"><span>#0FA3A0</span></div>
+          <div style="background:#F6B23E;color:#3a2a04"><span>#F6B23E</span></div>
+          <div style="background:#FBF3E6;color:#8A7A5E"><span>#FBF3E6</span></div>
+          <div style="background:#2A1E17;color:#fff"><span>#2A1E17</span></div>
+        </div></div>
+        <div class="spec"><div class="sub">Type</div>
+          <div class="aa" style="font-family:'Fredoka';font-weight:600">Ag</div>
+          <div class="nm"><b>Fredoka</b> + Nunito Sans + Space Mono</div>
+        </div>
+        <div><div class="sub">In use</div><div class="apps">
+          <span class="abtn" style="background:#E4572E;font-family:'Fredoka'">List your business</span>
+          <span class="achip" style="color:#0F8B88"><svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg> Verified</span>
+        </div></div>
+        <div class="best"><b>Best if:</b> you want to feel approachable and consumer-first, and lean into WhatsApp culture.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 04 COORDINATE ========== -->
+  <section class="blk" style="background:#0B0F14;color:#E7ECEF;border-color:#1E2730">
+    <div class="blk-head">
+      <span class="blk-num" style="color:#38E08B">04</span>
+      <span class="blk-name" style="font-family:'Space Grotesk';font-weight:700">Coordinate</span>
+    </div>
+    <p class="blk-tag" style="color:#AEB9C0">Map-native and modern. A GPS locator mark and a technical, precise wordmark. Near-black with one electric-green signal — feels like a live, data-driven product.</p>
+    <p class="blk-pos" style="color:#8FA0A8">“Find what's real, near you.”</p>
+    <div class="grid">
+      <div class="locks">
+        <div class="lock" style="background:#11161D;border:1px solid #202A34">
+          <span class="frame circle" style="background:#141B23;border:1px solid #2A3644"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="#E7ECEF" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#38E08B"/><path d="M12 1.6v3M12 19.4v3M1.6 12h3M19.4 12h3" stroke="#E7ECEF" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          <span class="word" style="font-family:'Space Grotesk';font-weight:700;text-transform:lowercase;color:#E7ECEF">deypage<i style="color:#38E08B">.</i></span>
+        </div>
+        <div class="lock" style="background:#E7ECEF">
+          <span class="frame circle" style="background:#0B0F14"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="#E7ECEF" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#38E08B"/><path d="M12 1.6v3M12 19.4v3M1.6 12h3M19.4 12h3" stroke="#E7ECEF" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          <span class="word" style="font-family:'Space Grotesk';font-weight:700;text-transform:lowercase;color:#0B0F14">deypage<i style="color:#0FA85E">.</i></span>
+        </div>
+      </div>
+      <div class="side">
+        <div><div class="sub" style="color:#8FA0A8">Mark</div><div class="marks">
+          <span class="frame m2 circle" style="background:#141B23;border:1px solid #2A3644"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="#E7ECEF" stroke-width="1.8"/><circle cx="12" cy="12" r="3" fill="#38E08B"/></svg></span>
+          <span class="frame m3 circle" style="background:#141B23;border:1px solid #2A3644"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="#E7ECEF" stroke-width="2"/><circle cx="12" cy="12" r="3.2" fill="#38E08B"/></svg></span>
+        </div></div>
+        <div><div class="sub" style="color:#8FA0A8">Palette</div><div class="sw" style="border-color:#2A3644">
+          <div style="background:#0B0F14;color:#E7ECEF"><span>#0B0F14</span></div>
+          <div style="background:#38E08B;color:#04271A"><span>#38E08B</span></div>
+          <div style="background:#35C9E0;color:#04271A"><span>#35C9E0</span></div>
+          <div style="background:#E7ECEF;color:#0B0F14"><span>#E7ECEF</span></div>
+        </div></div>
+        <div class="spec"><div class="sub" style="color:#8FA0A8">Type</div>
+          <div class="aa" style="font-family:'Space Grotesk';font-weight:700;color:#E7ECEF">Ag</div>
+          <div class="nm" style="color:#AEB9C0"><b style="color:#E7ECEF">Space Grotesk</b> + Inter + Space Mono</div>
+        </div>
+        <div><div class="sub" style="color:#8FA0A8">In use</div><div class="apps">
+          <span class="abtn" style="background:#38E08B;color:#04271A">List your business</span>
+          <span class="achip" style="background:#141B23;border-color:#2A3644;color:#38E08B"><svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg> Verified</span>
+        </div></div>
+        <div class="best" style="border-color:#2A3644;color:#AEB9C0"><b style="color:#E7ECEF">Best if:</b> you want to look like a cutting-edge tech/data product.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>DeyPage — 4 brand directions for approval · logos are scalable SVG, reverse cleanly on light &amp; dark · all fonts are free / open-source.</footer>
+</div>
+</body>
+</html>

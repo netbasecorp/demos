@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeyPage — Previews</title>
+<style>
+  :root{--ink:#0C1F17;--paper:#F6F7F3;--forest:#0D5A3A;--leaf:#16A45F;--gold:#B9820C;--line:#DBDED4;--muted:#5A6B60;--card:#fff}
+  @media(prefers-color-scheme:dark){:root{--ink:#EAF1EC;--paper:#0A140F;--forest:#2FA167;--line:rgba(255,255,255,.12);--muted:#9DB2A5;--card:#12241C}}
+  *{box-sizing:border-box;margin:0}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--paper);color:var(--ink);
+    line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px}
+  .wrap{max-width:760px;width:100%}
+  .kick{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+  h1{font-size:clamp(30px,6vw,46px);letter-spacing:-.02em;margin:12px 0 8px}
+  h1 b{color:var(--forest)}
+  .sub{color:var(--muted);max-width:56ch;margin-bottom:30px}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:600px){.cards{grid-template-columns:1fr}}
+  .card{display:block;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;
+    transition:transform .15s,border-color .15s,box-shadow .15s}
+  .card:hover{transform:translateY(-3px);border-color:var(--forest);box-shadow:0 12px 30px rgba(12,31,23,.1);text-decoration:none}
+  a{color:inherit;text-decoration:none}
+  .tag{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
+  .card h2{font-size:22px;margin:8px 0 6px}
+  .card p{color:var(--muted);font-size:14.5px}
+  .go{margin-top:14px;display:inline-flex;align-items:center;gap:7px;color:var(--forest);font-weight:600;font-size:14px}
+  footer{margin-top:30px;font-family:ui-monospace,monospace;font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="kick">DeyPage · Netbase JSC</div>
+    <h1>Dey<b>Page</b> — previews</h1>
+    <p class="sub">Two working previews for review: the brand direction exploration and the full homepage. Open either below.</p>
+    <div class="cards">
+      <a class="card" href="./deypage-brand-v2.0.html">
+        <span class="tag">Brand · v2.0</span>
+        <h2>Brand exploration</h2>
+        <p>Four distinct logo/type/colour directions for approval.</p>
+        <span class="go">Open preview →</span>
+      </a>
+      <a class="card" href="./deypage-home-v7.0.html">
+        <span class="tag">Home · v7.0</span>
+        <h2>Homepage</h2>
+        <p>Full directory homepage — search, states, badge, listings.</p>
+        <span class="go">Open preview →</span>
+      </a>
+    </div>
+    <footer>Find any business. Any state. Instantly.</footer>
+  </div>
+</body>
+</html>
