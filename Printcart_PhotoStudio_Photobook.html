@@ -81,7 +81,7 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; height: 100%; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
   body {
     font-family: var(--nbd-font-family);
     font-size: 14px;
@@ -295,7 +295,7 @@
   }
   @media (max-width: 1279px) {
     .editor { grid-template-columns: var(--nbd-tabnav-width) var(--nbd-panel-width) 1fr; }
-    .summary-col { display: none; }
+    .editor .summary-col { display: none; }
   }
 
   /* =========================================================
